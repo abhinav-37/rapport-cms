@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <title>Engitech</title>
+    <link rel="shortcut icon" type="image/x-icon" href="images/favicon.png" />
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="/css/flaticon.css" />
+    <link rel="stylesheet" href="/css/owl.carousel.min.css" />
+    <link rel="stylesheet" href="/css/owl.theme.css" />
+    <link rel="stylesheet" href="/css/magnific-popup.css" />
+
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/royal-preload.css" />
+    <style>
+        .demo {
+            background: linear-gradient(to right, #4e42b9, #e98223)
+        }
+
+        a:hover,
+        a:focus {
+            text-decoration: none;
+            outline: none;
+        }
+
+        #accordion .panel {
+            border: none;
+            border-radius: 5px;
+            box-shadow: none;
+            margin-bottom: 10px;
+            background: transparent;
+        }
+
+        #accordion .panel-heading {
+            padding: 0;
+            border: none;
+            border-radius: 5px;
+            background: transparent;
+            position: relative;
+        }
+
+        #accordion .panel-title a {
+            display: block;
+            padding: 20px 30px;
+            margin: 0;
+            background: rgba(0, 0, 0, 0.4);
+            font-size: 17px;
+            font-weight: bold;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: none;
+            border-radius: 5px;
+            position: relative;
+        }
+
+        #accordion .panel-title a.collapsed {
+            border: none;
+        }
+
+        #accordion .panel-title a:before,
+        #accordion .panel-title a.collapsed:before {
+            content: "\f107";
+            font-family: "Font Awesome 5 Free";
+            width: 30px;
+            height: 30px;
+            line-height: 27px;
+            text-align: center;
+            font-size: 25px;
+            font-weight: 900;
+            color: #fff;
+            position: absolute;
+            top: 15px;
+            right: 30px;
+            transform: rotate(180deg);
+            transition: all .4s cubic-bezier(0.080, 1.090, 0.320, 1.275);
+        }
+
+        #accordion .panel-title a.collapsed:before {
+            color: rgba(255, 255, 255, 0.5);
+            transform: rotate(0deg);
+        }
+
+        #accordion .panel-body {
+            padding: 20px 30px;
+            background: rgba(0, 0, 0, 0.1);
+            font-size: 15px;
+            color: #fff;
+            line-height: 28px;
+            letter-spacing: 1px;
+            border-top: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body class="royal_preloader">
+    <div id="page" class="site">
+        <%- include("partials/navbar")  %>
+
+        <div id="content" class="site-content">
+            <div class="page-header flex-middle">
+                <div class="container">
+                    <div class="inner flex-middle">
+                        <h1 class="page-title">PF Monthly Return</h1>
+                        <ul id="breadcrumbs" class="breadcrumbs none-style">
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="web-development.html">Services</a></li>
+                            <li class="active">PF Return</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <section class="service-web-pricing">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <div class="ot-heading">
+                                <span>// choose your plan</span>
+                                <h2 class="main-heading">Flexible Pricing Plans</h2>
+                            </div>
+                            <div class="space-5"></div>
+                            <p>We help businesses elevate their value through custom software development, product
+                                design,
+                                QA and consultancy services.</p>
+                            <div class="space-20"></div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+                            <div class="ot-pricing-table">
+                                <div class="icon-main"><span class="flaticon-tablet"></span></div>
+                                <div class="inner-table">
+                                    <h4 class="title-table">Rapport Start</h4>
+                                    <h2>Rs. 1499</h2>
+                                    <span>Rs.1499 + GST@18% </span>
+                                    <div class="details ">
+                                        <ul>
+                                            <li class="active">Free Consulting</li>
+                                            <li class="active">PF Return Filing For Employers Having Less Than 25
+                                                Employees</li>
+                                            <li class="active">PF Monthly Returns</li>
+
+                                        </ul>
+                                    </div>
+                                    <a href="#" class="octf-btn">Choose Plane</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+                            <div class="ot-pricing-table">
+                                <div class="icon-main"><span class="flaticon-report"></span></div>
+                                <div class="inner-table">
+                                    <h4 class="title-table">Rapport SELECT</h4>
+                                    <h2>Rs. 2499</h2>
+                                    <span>Rs.2499 + GST@18%</span>
+                                    <div class="details ">
+                                        <ul>
+                                            <li class="active">Free Consulting</li>
+                                            <li class="active">PF Return Filing For Employers Having Less Than 50
+                                                Employees</li>
+                                            <li class="active">PF Monthly Returns</li>
+
+                                        </ul>
+                                    </div>
+                                    <a href="#" class="octf-btn">Choose Plane</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6">
+                            <div class="ot-pricing-table">
+                                <div class="icon-main"><span class="flaticon-ui"></span></div>
+                                <div class="inner-table">
+                                    <h4 class="title-table">Rapport SUPER</h4>
+                                    <h2>Rs. 4999</h2>
+                                    <span>Rs.4999 + GST@18%
+                                    </span>
+                                    <div class="details ">
+                                        <ul>
+                                            <li class="active">Free Consulting</li>
+                                            <li class="active">PF Return Filing For Employers Having Less Than 100
+                                                Employees.</li>
+                                            <li class="active">PF Monthly Returns</li>
+
+                                        </ul>
+                                    </div>
+                                    <a href="#" class="octf-btn">Choose Plane</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class=" about-service">
+                <div class="container">
+                    <h3>What is PF Return</h3>
+                    <p>PF return is mandatory to fill monthly on or before 15th of every month, failure of which leads
+                        to
+                        Govt. penalties.
+                        Currently, employers and employees contribute 12 percent of basic wages each towards Employees
+                        Provident Fund Scheme
+                        (EPF), Employee Pension Scheme (EPS) and Employee Deposit Linked Insurance Scheme (EDLI). A
+                        provident fund is created
+                        with a purpose of providing financial security and stability to employees. A person starts his
+                        contribution to the PF
+                        fund once he joins a company as an employee. Further, the employers also contribute towards
+                        administration of the
+                        benefits under the EPF & MP Act.</p>
+                    <h3>Decision</h3>
+                    <p>It’s government of India mandate for all organizations/firms/proprietorship/ partnerships to get
+                        registered with EPFO
+                        (Employees' Provident Fund Organization) if employed more than 19 employees. Registration is a
+                        one-time process followed
+                        by PF monthly payment and PF monthly return.</p>
+                </div>
+            </section>
+            <section class="service-web-video">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-xl-12 col-lg-12">
+                            <div class="tab-video">
+                                <div class="ot-heading">
+                                    <span>// Procedure</span>
+                                    <h2 class="main-heading">Procedure for PF payments & PF returns</h2>
+                                </div>
+                                <div class="space-15"></div>
+                                <div class="ot-tabs">
+                                    <ul class="tabs-heading unstyle">
+                                        <li class="tab-link octf-btn current" data-tab="tab-1518">START ></li>
+                                        <li class="tab-link octf-btn" data-tab="tab-2518">Same Day</li>
+                                        <li class="tab-link octf-btn" data-tab="tab-3518">1 WORKING DAY</li>
+                                        <li class="tab-link octf-btn" data-tab="tab-4518">CONGRATULATIONS</li>
+                                    </ul>
+                                    <div id="tab-1518" class="tab-content current">
+                                        <p><a class="btn-details"></i>Connect</a></p>
+                                        <p>RapportHR received your request to file monthly return’s and make monthly
+                                            ESIC payments.
+                                        </p>
+
+                                    </div>
+                                    <div id="tab-2518" class="tab-content">
+                                        <p><a class="btn-details">Assignment of Resource</a></p>
+                                        <p>We will assign a dedicated resource who is professionally skilled in ESIC
+                                            payments & return filing. You can get in touch
+                                            with the assigned resource at any point of time for consultation and
+                                            assistance regarding ESIC monthly payments & ESIC
+                                            returns throughout your journey with RapportHR.</p>
+
+                                    </div>
+                                    <div id="tab-3518" class="tab-content">
+                                        <p><a class="btn-details"> Filing of ESIC Return</a></p>
+                                        <p>Our resource will repare the monthly ESIC returns and send you monthly
+                                            Contribution History and Challan Number over the
+                                            email for PF monthly payments for your company .</p>
+
+                                    </div>
+                                    <div id="tab-4518" class="tab-content">
+                                        <p><a class="btn-details">Your work is now completed</a></p>
+                                        <p>Our resource will guide you for online ESIC Challan Payment through
+                                            netbanking.</p>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+            <section class="service-web">
+                <div class="container">
+                    <div class="service-process">
+                        <div class="ot-heading">
+                            <span>// Documents required</span>
+                            <h2 class="main-heading">Documents Required for ESIC Returns</h2>
+                        </div>
+                        <div class="requirements-list">
+                            <ol>
+                                <li>Employer Login ID Password of EPF</li>
+                                <li>Monthly Salary Statement along with Paid Days</li>
+                                <li>New Joining along with family information/ Exits Information</li>
+                            </ol>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="faq">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12 ">
+                            <div class="ot-heading">
+                                <span>// FAQ</span>
+                                <h2 class="main-heading">Read Most <br>Frequent Questions</h2>
+                            </div>
+                            <div class="space-25"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="ot-accordions">
+                                <div class="acc-item">
+                                    <span class="acc-toggle">Q. Benefits of taking services from RapportHR ?
+                                        <i class="down flaticon-download-arrow"></i><i class="up flaticon-up-arrow"></i>
+                                    </span>
+                                    <div class="acc-content">
+                                        <p>Ans: At RapportHR, we are committed to offer our services to the
+                                            entrepreneurs and businesses as a very cost-effective
+                                            proposition. We believe that a customer is always right and the focus of any
+                                            business activity should be to serve the
+                                            customer with utmost loyalty. All our services come with SLAs (Service Level
+                                            Agreements) for on-time service delivery
+                                            and money back guarantee to ensure high level of customer satisfaction.</p>
+                                    </div>
+                                </div>
+                                <div class="acc-item">
+                                    <span class="acc-toggle">Q. What if I'm not happy with the service?
+                                        <i class="down flaticon-download-arrow"></i><i class="up flaticon-up-arrow"></i>
+                                    </span>
+                                    <div class="acc-content">
+                                        <p>Ans: At RapportHR, our valued customers are always kept in the loop as far as
+                                            service delivery timeline is concerned and
+                                            we inform our customers every time a milestone is achieved during each stage
+                                            of service request processing. But we also
+                                            believe that we may come across a customer who is not satisfied with our
+                                            efforts. For that we have a very responsive
+                                            Customer Care Department which work 24x7 to attend to and solve customer
+                                            complaints. We also have a money back guarantee
+                                            for those, who want their service charges to be refunded.</p>
+                                    </div>
+                                </div>
+                                <div class="acc-item">
+                                    <span class="acc-toggle">Q. How can I be sure that my documents are safe?
+                                        <i class="down flaticon-download-arrow"></i><i class="up flaticon-up-arrow"></i>
+                                    </span>
+                                    <div class="acc-content">
+                                        <p>Ans: At RapportHR, We believe it is our responsibility to protect our
+                                            customer information from unauthorized access. We
+                                            have put systems and processes in place to make sure that the customer
+                                            information is safe with us during its storage
+                                            and transfer between in house and third party servers. We continuously test
+                                            our systems and processes for security
+                                            breach and vulnerabilities are identified and fixed at a regular basis.</p>
+                                    </div>
+                                </div>
+                                <div class="acc-item">
+                                    <span class="acc-toggle">Q. What is RapportHR cashback policy?
+                                        <i class="down flaticon-download-arrow"></i><i class="up flaticon-up-arrow"></i>
+                                    </span>
+                                    <div class="acc-content">
+                                        <p>Ans: If a customer is not satisfied with the service we provided and if he
+                                            contacts our customer care helpline and files
+                                            a formal complaint within 15 days of service delivery date, RapportHR would
+                                            refund the entire or partial amount of
+                                            Professional Fee charged for that particular service.</p>
+                                    </div>
+                                </div>
+                                <div class="acc-item">
+                                    <span class="acc-toggle">Q. What is the process for online payment?
+                                        <i class="down flaticon-download-arrow"></i><i class="up flaticon-up-arrow"></i>
+                                    </span>
+                                    <div class="acc-content">
+                                        <p>Ans: A customer can buy our services directly from our online platform, for
+                                            which he need to make online payment. Once
+                                            he clicks on "Apply Now", a new window will open, a customer is required to
+                                            submit the information in the respective
+                                            fields and click "Make Payment". A unique ticket number will be auto
+                                            generated, the customer need to quote this number
+                                            as reference for any enquiry regarding his service request.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+
+        </div>
+
+
+        <%- include("partials/footer")  %>
+    </div><!-- #page -->
+    <a id="back-to-top" href="#" class="show"><i class="flaticon-up-arrow"></i></a>
+    <!-- jQuery -->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/jquery.magnific-popup.min.js"></script>
+    <script src="/js/jquery.isotope.min.js"></script>
+    <script src="/js/owl.carousel.min.js"></script>
+    <script src="/js/easypiechart.min.js"></script>
+    <script src="/js/jquery.countdown.min.js"></script>
+    <script src="/js/scripts.js"></script>
+    <script src="/js/header-mobile.js"></script>
+    <script src="/js/royal_preloader.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <script>
+        window.jQuery = window.$ = jQuery;
+        (function ($) {
+            "use strict";
+            //Preloader
+            Royal_Preloader.config({
+                mode: 'logo',
+                logo: 'images/logo.svg',
+                logo_size: [160, 75],
+                showProgress: true,
+                showPercentage: true,
+                text_colour: '#000000',
+                background: '#ffffff'
+            });
+        })(jQuery);
+    </script>
+</body>
+
+</html>
