@@ -7646,8 +7646,8 @@ svg:not(:root) {
     }
 }
 section {
-    padding-top: 120px;
-    padding-bottom: 130px;
+    padding-top: 20px;
+    padding-bottom: 30px;
     position: relative;
 }
 .pbt-120 {
