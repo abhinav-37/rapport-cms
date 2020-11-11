@@ -14,6 +14,10 @@ const Blog = require("./models/blog");
 const app = express();
 const servicePage = require("./models/servicePage");
 //middlewares
+//file uploads
+var multer = require('multer')
+
+
 app.use(express.static(path.join(__dirname, "public")));
 app.set("view engine", "ejs");
 app.use(
@@ -87,8 +91,24 @@ app.get("/services/:slug", async(req, res) => {
     }
    
 });
+
 //    Post request to get all the service page info from the admin //
-app.post("/websiteData", async (req, res) => {
+
+//multer
+let count = 0;
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, __dirname+"/public/uploads")
+  },
+    filename: function (req, file, cb) {
+        count += 1;
+        cb(null, req.body.serviceurl + "procedure" + count.toString()+"."+file.originalname.substring(file.originalname.length-3));
+  }
+})
+var upload = multer({ storage })
+
+app.post("/websiteData", upload.array("image"),  async (req, res) => {
+   
     const { nameOfService, serviceurl, rapportStart, rapportSelect, rapportSuper, about_service, procedureName, procedureDescription, documents_required, eligibility,advantages , faqQuestion, faqAnswer,stepsName, stepsDescription } = req.body;
     const servicePageObject = {
         name: nameOfService,
@@ -105,7 +125,10 @@ app.post("/websiteData", async (req, res) => {
     const newServicePage = new servicePage(servicePageObject);
     await newServicePage.save();
     res.render("adminPanel")
+
 });
+
+// ===========image upload ================= //
 
 
 app.listen(PORT, () => {

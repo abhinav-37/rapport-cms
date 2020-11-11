@@ -7,6 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <title>Engitech</title>
     <link rel="shortcut icon" type="image/x-icon" href="images/favicon.png" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;1,100;1,300;1,400&display=swap"
+        rel="stylesheet">
+
     <link rel="stylesheet" href="/css/bootstrap.min.css" />
     <link rel="stylesheet" href="/css/font-awesome.min.css" />
     <link rel="stylesheet" href="/css/flaticon.css" />
@@ -105,6 +109,45 @@
 
         .about-service .container h3 {
             color: #43baff;
+        }
+
+        .documents-required {
+            background-color: whitesmoke;
+        }
+
+        .ot-heading {
+            text-align: center;
+        }
+
+        .eligibility {
+            background-color: whitesmoke;
+        }
+
+
+        .seperator-hr {
+            height: 10px;
+            position: relative;
+            width: 70%;
+            background: radial-gradient(ellipse farthest-side at top center, rgba(73, 71, 71, 0.39), transparent)
+        }
+
+        .seperator-hr:before {
+            content: "";
+            display: block;
+            position: absolute;
+            top: 0px;
+            right: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(left, transparent, rgba(121, 21, 21, 0.068), rgba(175, 50, 50, 0.02), transparent)
+        }
+
+        ul {
+            list-style: square outside none;
+        }
+
+        .procedure-icon {
+            width: 20%;
         }
     </style>
 </head>
@@ -227,14 +270,15 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-xl-12 col-lg-12">
-                            <div class="tab-video">
+                            <div class="tab-video container">
                                 <div class="ot-heading">
                                     <span>// Procedure</span>
                                     <h2 class="main-heading">Procedure for PF payments & PF returns</h2>
+                                    <hr class="seperator-hr">
                                 </div>
                                 <div class="space-15"></div>
-                                <div class="ot-tabs">
-                                    <ul class="tabs-heading unstyle">
+                                <div class="ot-tabs" style="text-align:center">
+                                    <ul class="tabs-heading unstyle" style="display:flex; justify-content:center">
                                         <% let j=0 %>
                                         <% procedure.procedureName.forEach(function(data){ %>
                                         <li class='tab-link octf-btn <%= j==0 && "current" %>' data-tab="id<%= j %>">
@@ -246,7 +290,8 @@
                                     <% procedure.procedureDescription.forEach(function(data){ %>
 
                                     <div id="id<%= k %>" class="tab-content <%= k==0 && "current" %> ">
-
+                                        <img class="procedure-icon" src="/uploads/<%= slug %>procedure<%= k+1 %>.png  "
+                                            alt="">
                                         <p><%= data %>
                                         </p>
 
@@ -263,12 +308,13 @@
             </section>
             <% } %>
             <% if(documentsRequired){ %>
-            <section class="service-web">
+            <section class="documents-required">
                 <div class="container">
                     <div class="service-process">
                         <div class="ot-heading">
                             <span>// Documents required</span>
                             <h3 class="main-heading">Documents Required </h3>
+                            <hr class="seperator-hr">
                         </div>
                         <div class="requirements-list">
                             <%- documentsRequired %>
@@ -279,12 +325,13 @@
             </section>
             <% } %>
             <% if(advantages){ %>
-            <section class="service-web">
+            <section class="advantages">
                 <div class="container">
                     <div class="service-process">
                         <div class="ot-heading">
                             <span>//Advatages</span>
                             <h3 class="main-heading">Advantages of <%= name %> </h3>
+                            <hr class="seperator-hr">
                         </div>
                         <div class="requirements-list">
                             <%- advantages %>
@@ -295,12 +342,14 @@
             </section>
             <% } %>
             <% if(eligibility){ %>
-            <section class="service-web">
+            <section class="eligibility">
+
                 <div class="container">
                     <div class="service-process">
                         <div class="ot-heading">
                             <span>//Eligibility</span>
                             <h3 class="main-heading">Eligibility of <%= name %> </h3>
+                            <hr class="seperator-hr">
                         </div>
                         <div class="requirements-list">
 
@@ -319,6 +368,7 @@
                             <div class="ot-heading">
                                 <span>// Steps</span>
                                 <h3 class="main-heading">Steps for <br> <%= name %> </h3>
+                                <hr class="seperator-hr">
                             </div>
                             <div class="space-25"></div>
                         </div>
@@ -352,6 +402,7 @@
                             <div class="ot-heading">
                                 <span>// FAQ</span>
                                 <h3 class="main-heading">Read Most <br>Frequent Questions</h3>
+                                <hr class="seperator-hr">
                             </div>
                             <div class="space-25"></div>
                         </div>
@@ -410,7 +461,7 @@
             Royal_Preloader.config({
                 mode: 'logo',
                 logo: '/images/2d-pnd.png',
-                logo_size: [160, 75],
+                logo_size: [250, 75],
                 showProgress: false,
                 showPercentage: false,
                 text_colour: '#000000',

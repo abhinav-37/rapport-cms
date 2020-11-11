@@ -44,7 +44,7 @@
 <body>
     <div class="container">
         <h3>Page creator</h3>
-        <form action="/websiteData" method="post">
+        <form action="/websiteData" method="post" enctype="multipart/form-data">
             <div class="form-group">
                 <div class="form-group service_name">
                     <h4>Name</h4>
@@ -151,6 +151,9 @@
                                     <input type="text" name="procedureDescription" placeholder="Enter The description"
                                         class="form-control name_list" />
                                 </td>
+                                <td>
+                                    <input type="file" name="image" id="image">
+                                </td>
 
                                 <td><button type="button" name="add" id="addDescription" class="btn btn-success">Add
                                         More</button></td>
@@ -252,7 +255,7 @@
         });
         $('#addDescription').click(function () {
             i++;
-            $('#dynamic_field_procedure').append('<tr id="row' + i + '"> <td><input type = "text" name = "procedureName" placeholder = "Enter The name of the procedure" class= "form-control name_list" /></td ><td> <input type = "text" name = "procedureDescription" placeholder = "Enter The description"class= "form-control name_list" /></td ><td><button type="button" name="remove" id="' + i + '" class="btn btn-danger btn_remove">X</button></td></tr>');
+            $('#dynamic_field_procedure').append('<tr id="row' + i + '"> <td><input type = "text" name = "procedureName" placeholder = "Enter The name of the procedure" class= "form-control name_list" /></td ><td> <input type = "text" name = "procedureDescription" placeholder = "Enter The description"class= "form-control name_list" /></td > <td><input type = "file" name = "image" id = "image" ></td ><td><button type="button" name="remove" id="' + i + '" class="btn btn-danger btn_remove">X</button></td></tr>');
         });
         $('#addfaq').click(function () {
             i++;

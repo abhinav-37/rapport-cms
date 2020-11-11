@@ -390,7 +390,7 @@ h4,
 h5,
 h6 {
     font-family: "Montserrat", sans-serif;
-    font-weight: 800;
+    font-weight: 600;
     line-height: 1.2;
     margin: 0 0 20px;
     color: #1b1d21;
@@ -830,7 +830,7 @@ td {
     vertical-align: middle;
     font-weight: bold;
     text-align: center;
-    background: #43baff;
+    background: #f05454;
     cursor: pointer;
     border: 1px solid transparent;
     color: #fff;
@@ -1251,7 +1251,7 @@ a:active {
     line-height: 1;
 }
 #site-logo img {
-    width: 145px;
+    width: 195px;
 }
 #site-logo img.logo-static {
     display: block;
@@ -3554,7 +3554,7 @@ object {
 .ot-heading > span {
     font-size: 14px;
     font-weight: 800;
-    color: #7141b1;
+    color: #f05454;
     position: relative;
     display: inline-block;
     margin-bottom: 2px;
@@ -4814,7 +4814,7 @@ object {
     font-size: 14px;
 }
 .ot-accordions .acc-item .acc-toggle:hover {
-    color: #43baff;
+    color: #f05454;
 }
 .ot-accordions .acc-item .acc-content {
     display: none;
@@ -4830,10 +4830,10 @@ object {
     -moz-border-radius: 25px;
 }
 .ot-accordions .acc-item.current .acc-toggle {
-    color: #43baff;
+    color: #f05454;
 }
 .ot-accordions .acc-item.current .acc-toggle i {
-    color: #43baff;
+    color: #f05454;
 }
 .ot-accordions .acc-item.current .acc-toggle i.down {
     display: none;
@@ -5131,7 +5131,7 @@ object {
     font-size: 48px;
     font-weight: 800;
     line-height: 1;
-    color: #43baff;
+    color: #f05454;
     margin-bottom: 5px;
     position: relative;
     display: inline-block;
@@ -5173,7 +5173,7 @@ object {
     color: #1b1d21;
 }
 .ot-pricing-table .inner-table .details ul li.active:before {
-    color: #43baff;
+    color: #f05454;
 }
 .ot-pricing-table .inner-table .details.no-icon ul li:before {
     display: none;
@@ -5639,7 +5639,7 @@ object {
 }
 .ot-tabs .tab-link.current,
 .ot-tabs .tab-link:hover {
-    background: #43baff;
+    background: #f05454;
     color: #fff;
 }
 .ot-tabs .tab-link.current span,
@@ -7418,7 +7418,7 @@ svg:not(:root) {
     padding-bottom: 120px;
 }
 .tab-video {
-    padding: 120px 0 120px 150px;
+    padding: 120px 0 120px 0;
 }
 .tab-content p {
     line-height: 1.86;
@@ -7428,7 +7428,7 @@ svg:not(:root) {
     background-color: #211e3b;
 }
 .tab-video .ot-heading > span {
-    color: #8e88b8;
+    color: #f05454;
 }
 .tab-video .ot-heading h2 {
     color: #fff;
@@ -8121,7 +8121,7 @@ section {
     height: 100%;
     line-height: 44px;
     text-align: center;
-    background: #43baff;
+    background: #f05454;
     color: #fff;
     transition: all 0.3s linear;
     -webkit-transition: all 0.3s linear;
