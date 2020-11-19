@@ -1,5 +1,5 @@
 const express = require("express");
-const PORT = 8000;
+const PORT = 3000;
 const path = require("path");
 const ejs = require("ejs");
 const mongoose = require("mongoose");
@@ -77,8 +77,11 @@ app.get("/blog", (req, res) => {
 app.get("/blogSingle", (req, res) => {
     res.render("post")
 });
+
+
+//========================== Admin panel ======================//
 app.get("/adminPanel", (req, res) => {
-    res.render("adminPanel",{data:null})
+    res.render("adminPanel/dashboard",{data:null})
 });
 
 app.get("/services/:slug", async(req, res) => {
@@ -128,9 +131,9 @@ app.post("/websiteData", upload.array("image"),  async (req, res) => {
 
 });
 
-// ===========image upload ================= //
 
 
+// ================= admin panel finished ==================== //
 app.listen(PORT, () => {
     console.log(`Server started on PORT ${PORT}`);
 });
