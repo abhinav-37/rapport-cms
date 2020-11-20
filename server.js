@@ -15,7 +15,7 @@ const app = express();
 const servicePage = require("./models/servicePage");
 //middlewares
 //file uploads
-var multer = require('multer')
+let multer = require('multer')
 
 
 app.use(express.static(path.join(__dirname, "public")));
@@ -23,6 +23,13 @@ app.set("view engine", "ejs");
 app.use(
     bodyParser.urlencoded({
         extended: true,
+    })
+);
+app.use(
+    session({
+        secret: "keyboard cat",
+        resave: false,
+        saveUninitialized: false,
     })
 );
 //mongo db
@@ -37,7 +44,7 @@ mongoose
         console.log("database has been connected");
     });
 mongoose.set("useCreateIndex", true);
-//========================== Authentication start ==========================//
+//========================== User Schema start ==========================//
 //user schema
 const userSchema = new mongoose.Schema({
     first_name: String,
@@ -65,25 +72,141 @@ const User =  new mongoose.model("User", userSchema);
 passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
+//============== end user Schema ====================== //
 
-//============== end authentication ====================== //
 app.get("/", (req, res) => {
+    req.session.returnTo = req.originalUrl
     res.render("index")
 });
 
 app.get("/blog", (req, res) => {
+    req.session.returnTo = req.originalUrl
     res.render("blog-grid")
 });
 app.get("/blogSingle", (req, res) => {
+    req.session.returnTo = req.originalUrl
     res.render("post")
 });
 
+// ========================= Authentication start =================== //
+
+//GET requset for login
+app.get("/login/:type", function (req, res) {
+    req.session.returnTo = req.originalUrl
+    let passedMessage = req.query.message;
+    if (req.params.type === "customer") {
+        res.render("login", { user: req.user, passedMessage });
+    } else if(req.params.type === "admin") {
+        res.render("admin/login",{ passedMessage })
+    }
+});
+
+//GET request for regsiter
+app.get("/register/:type", function (req, res) {
+    req.session.returnTo = req.originalUrl
+     let passedMessage = req.query.message;
+    if (req.params.type === "customer") {
+    res.render("register", { user: req.user,passedMessage })
+    } else {
+         res.render("admin/register", {passedMessage })
+    }
+  
+});
+
+// POST for the registration of the user
+app.post("/register/:type", async function (req, res) {
+    const {first_name,last_name, username, password, contact_number,repassword } = req.body;
+
+    if (password === repassword) {
+        User.register({ username: username }, password, function (err, user) {
+        if (err) {
+            console.log(err);
+            var message = encodeURIComponent("Email Already Exists");
+            res.redirect("/register/customer?message="+message);
+        } else {
+            passport.authenticate("local")(req, res, async function () {
+                user.type = req.params.type;
+                user.contact_number = contact_number,
+                user.first_name = first_name,
+                user.last_name = last_name
+                await user.save();
+                if(req.params.type === "admin") res.redirect("/admin")
+                res.redirect(req.session.returnTo || '/');
+                delete req.session.returnTo;
+
+            });
+        }
+    });
+    } else {
+          var message = encodeURIComponent('Passwords do not match!');
+        if (req.params.type === "customer") {
+          res.redirect('/register/customer?message=' + message);
+        } else {
+             res.redirect('/register/admin?message=' + message);
+        }
+    }      
+});
+
+// POST for the login of the user
+app.post("/login/:type", async function (req, res) {
+        let user = await User.findOne({ username: req.body.username });
+        if (user) {
+            if (user.type === req.params.type) {
+                if (user.access) {
+                    const user = new User({
+                    username: req.body.username,
+                    password: req.body.password,
+                    });
+
+                    req.login(user, function (err) {
+                        if (err) {
+                            console.log(err);
+                            
+                        } else {
+                           
+                            passport.authenticate("local", function (err, user, info) {
+                               
+                                if (user) {
+                                   if(req.params.type === "admin") res.redirect("/admin")
+                                    res.redirect(req.session.returnTo || '/');
+                                    delete req.session.returnTo; 
+                                } else {
+                                    let message = encodeURIComponent('UserName Or Passport is incorrect !');
+                                    req.logOut();
+                                    if (req.params.type === "admin") {
+                                        res.redirect("/login/admin?message=" + message);
+                                    } else {
+                                        res.redirect("/login/customer?message=" + message);
+                                    }
+                                    
+                                }
+                               
+                            })(req, res, function () {});
+                        }
+                    }); 
+                } else {
+                    let message = encodeURIComponent('Authetication error!');
+                    res.redirect("/login/customer?message=" + message);
+                }
+              
+            }
+        } else {
+            let message = encodeURIComponent('Authentication error!!');
+            res.redirect('/login/customer?message=' + message);
+        }
+        
+   
+
+   
+})
 
 //========================== Admin panel ======================//
 app.get("/adminPanel", (req, res) => {
     res.render("adminPanel/dashboard",{data:null})
 });
-
+app.get("/admin/servicePage", (req, res) => {
+    res.render("adminPanel/serviceForm",{data:null})
+});
 app.get("/services/:slug", async(req, res) => {
     let pageData = await servicePage.findOne({ slug: req.params.slug });
     if (pageData) {
@@ -95,11 +218,11 @@ app.get("/services/:slug", async(req, res) => {
    
 });
 
-//    Post request to get all the service page info from the admin //
+// Post request to get all the service page info from the admin //
 
 //multer
 let count = 0;
-var storage = multer.diskStorage({
+let storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, __dirname+"/public/uploads")
   },
@@ -108,7 +231,7 @@ var storage = multer.diskStorage({
         cb(null, req.body.serviceurl + "procedure" + count.toString()+"."+file.originalname.substring(file.originalname.length-3));
   }
 })
-var upload = multer({ storage })
+let upload = multer({ storage })
 
 app.post("/websiteData", upload.array("image"),  async (req, res) => {
    
