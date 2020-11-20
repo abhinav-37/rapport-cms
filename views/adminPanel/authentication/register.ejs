@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <%- include("../partials/head.ejs") %>
+    <style>
+        .alert {
+            position: absolute;
+            z-index: 99999;
+            border-radius: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0;
+            top: -60px;
+        }
+
+        .alert button {
+            top: 0 !important;
+        }
+
+        .lgn-innr {
+            position: relative;
+        }
+    </style>
+</head>
+
+<body class="panel-data">
+    <!-- Including navbar and sidebar from the partials -->
+    <%- include("../partials/navbar_sidebar.ejs") %>
+
+    <div class="panel-content">
+        <div class="lgn-wrp grysh">
+            <div class="bg-img" style="background-image: url(/images/Rapport.jpg);"></div>
+            <div class="lgn-innr">
+                <% if(passedMessage){ %>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>Oops!</strong> <%= passedMessage %>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <% } %>
+                <div class="widget lgn-frm">
+                    <div class="frm-tl">
+                        <h4>Register to Admin</h4>
+                        <span>Fill your detail to get in</span>
+                    </div>
+                    <form method="POST" action="/register/admin">
+                        <div class="row mrg10">
+                            <div class="col-md-12 col-sm-12 col-lg-12">
+                                <input class="brd-rd5" name="first_name" type="text" placeholder="First name *" />
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-lg-12">
+                                <input class="brd-rd5" name="last_name" type="text" placeholder="Last name *" />
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-lg-12">
+                                <input class="brd-rd5" name="contact_number" type="number"
+                                    placeholder="contact Number *" />
+                            </div>
+
+                            <div class="col-md-12 col-sm-12 col-lg-12">
+                                <input class="brd-rd5" name="username" type="email" placeholder="Email *" />
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-lg-12">
+                                <input class="brd-rd5" name="password" type="password" placeholder="Password *" />
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-lg-12">
+                                <input class="brd-rd5" name="repassword" type="password"
+                                    placeholder="Retype Password *" />
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-lg-12">
+                                <button class="green-bg brd-rd5" type="submit">Register Now</button>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-lg-12"> Already have an account
+                                <a href="/login/admin" title="" class="frgt">Login</a>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <%- include("../partials/footerJs.ejs") %>
+        </div><!-- Login Wrapper -->
+    </div><!-- Panel Content -->
+
+</body>
+
+</html>

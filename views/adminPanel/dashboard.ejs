@@ -3,10 +3,37 @@
 
 <!-- Including head files from the partials -->
 <%- include("partials/head.ejs") %>
+<style>
+  .alert {
+    position: absolute;
+    border-radius: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    top: 100px;
+  }
+
+  .alert button {
+    top: 0 !important;
+  }
+
+  .panel-data {
+    position: relative;
+  }
+</style>
 
 <body class="panel-data">
   <!-- Including navbar and sidebar from the partials -->
   <%- include("partials/navbar_sidebar.ejs") %>
+  <% if(passedMessage){ %>
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+    <strong>Done!</strong> <%= passedMessage %>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <% } %>
   <div class="pg-tp">
     <i class="ion-cube"></i>
     <div class="pr-tp-inr">

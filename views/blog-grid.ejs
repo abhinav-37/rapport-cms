@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <title>Engitech</title>
-    <link rel="shortcut icon" type="image/x-icon" href="images/favicon.png" />
+    <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.png" />
     <link rel="stylesheet" href="/css/bootstrap.min.css" />
     <link rel="stylesheet" href="/css/font-awesome.min.css" />
     <link rel="stylesheet" href="/css/flaticon.css" />
@@ -28,7 +28,7 @@
                     <div class="inner flex-middle">
                         <h1 class="page-title">Blog Grid</h1>
                         <ul id="breadcrumbs" class="breadcrumbs none-style">
-                            <li><a href="index.html">Home</a></li>
+                            <li><a href="/">Home</a></li>
                             <li class="active">Blog Grid</li>
                         </ul>
                     </div>
@@ -40,44 +40,41 @@
             <div class="container">
                 <div class="blog-grid pgrid">
                     <div class="row">
+                        <% allBlogs.forEach(function(blog){ %>
                         <div class="col-lg-4 col-md-6 col-sm-12">
                             <article class="post-box blog-item">
                                 <div class="post-inner">
                                     <div class="entry-media">
-                                        <div class="post-cat">
-                                            <span class="posted-in">
-                                                <a href="#" rel="category tag">Development</a>
-                                            </span>
-                                        </div>
-                                        <a href="post.html"><img
-                                                src="https://images.unsplash.com/photo-1487611459768-bd414656ea10?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"
-                                                alt=""></a>
+                                        <% console.log(blog.id) %>
+                                        <a href="/blogSingle/<%= blog.id %> "><img
+                                                src="/uploads/<%= blog.nameOfImage %> " alt=""></a>
                                     </div>
                                     <div class="inner-post">
                                         <div class="entry-header">
                                             <div class="entry-meta">
-                                                <span class="posted-on">_ <a href="#">November 21, 2019</a></span>
-                                                <span class="byline">_ <a class="url fn n" href="#">Tom Black</a></span>
-                                                <span class="comment-num">_ <a href="#">3 Comments</a></span>
+                                                <span class="posted-on"><a><%= blog.timeStamp.toString().substring(0,16) %>
+                                                    </a></span>
+
                                             </div><!-- .entry-meta -->
 
-                                            <h3 class="entry-title"><a href="post.html">How Web Apps Can Benefit Online
-                                                    Stores?</a></h3>
+                                            <h3 class="entry-title"><a
+                                                    href="/blogSingle/<%= blog.id %> "><%= blog.title %> </a></h3>
                                         </div><!-- .entry-header -->
 
                                         <div class="btn-readmore">
-                                            <a href="post.html"><i class="flaticon-right-arrow-1"></i>LEARN MORE</a>
+                                            <a href="/blogSingle/<%= blog.id %> "><i
+                                                    class="flaticon-right-arrow-1"></i>LEARN MORE</a>
                                         </div>
                                     </div>
                                 </div>
                             </article>
                         </div>
+                        <% }) %>
+
 
                     </div>
                 </div>
-                <div class="ot-button text-center">
-                    <a href="#" class="octf-btn octf-btn-primary">Load More</a>
-                </div>
+
             </div>
         </div>
 
@@ -101,7 +98,7 @@
             //Preloader
             Royal_Preloader.config({
                 mode: 'logo',
-                logo: 'images/logo.svg',
+                logo: '/images/logo.svg',
                 logo_size: [160, 75],
                 showProgress: true,
                 showPercentage: true,

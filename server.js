@@ -32,6 +32,8 @@ app.use(
         saveUninitialized: false,
     })
 );
+app.use(passport.initialize());
+app.use(passport.session());
 //mongo db
 const mongoURI =
     "mongodb+srv://admin-Abhinav:admin-Abhinav@cluster0-fz1t0.mongodb.net/rapport";
@@ -79,15 +81,26 @@ app.get("/", (req, res) => {
     res.render("index")
 });
 
-app.get("/blog", (req, res) => {
+app.get("/blog", async (req, res) => {
     req.session.returnTo = req.originalUrl
-    res.render("blog-grid")
+    let allBlogs = await Blog.find();
+    res.render("blog-grid",{allBlogs});
 });
-app.get("/blogSingle", (req, res) => {
+app.get("/blogSingle/:blogId", async(req, res) => {
     req.session.returnTo = req.originalUrl
-    res.render("post")
+    let singleBlog = await Blog.findById(req.params.blogId)
+    res.render("post",{singleBlog})
 });
-
+app.get("/services/:slug", async (req, res) => {
+    req.session.returnTo = req.originalUrl
+    let pageData = await servicePage.findOne({ slug: req.params.slug });
+    if (pageData) {  
+        res.render("servicePage",{...pageData._doc});
+    } else {
+         res.render("pfReturn");
+    }
+   
+});
 // ========================= Authentication start =================== //
 
 //GET requset for login
@@ -97,7 +110,7 @@ app.get("/login/:type", function (req, res) {
     if (req.params.type === "customer") {
         res.render("login", { user: req.user, passedMessage });
     } else if(req.params.type === "admin") {
-        res.render("admin/login",{ passedMessage })
+        res.render("adminPanel/authentication/login",{ passedMessage })
     }
 });
 
@@ -108,7 +121,7 @@ app.get("/register/:type", function (req, res) {
     if (req.params.type === "customer") {
     res.render("register", { user: req.user,passedMessage })
     } else {
-         res.render("admin/register", {passedMessage })
+         res.render("adminPanel/authentication/register", {passedMessage })
     }
   
 });
@@ -130,7 +143,7 @@ app.post("/register/:type", async function (req, res) {
                 user.first_name = first_name,
                 user.last_name = last_name
                 await user.save();
-                if(req.params.type === "admin") res.redirect("/admin")
+                if(req.params.type === "admin") res.redirect("/adminPanel")
                 res.redirect(req.session.returnTo || '/');
                 delete req.session.returnTo;
 
@@ -138,12 +151,8 @@ app.post("/register/:type", async function (req, res) {
         }
     });
     } else {
-          var message = encodeURIComponent('Passwords do not match!');
-        if (req.params.type === "customer") {
-          res.redirect('/register/customer?message=' + message);
-        } else {
-             res.redirect('/register/admin?message=' + message);
-        }
+          var message = encodeURIComponent('Passwords do not match!');      
+          res.redirect('/register/'+ req.params.type +'?message=' + message);     
     }      
 });
 
@@ -167,11 +176,11 @@ app.post("/login/:type", async function (req, res) {
                             passport.authenticate("local", function (err, user, info) {
                                
                                 if (user) {
-                                   if(req.params.type === "admin") res.redirect("/admin")
+                                   if(req.params.type === "admin") res.redirect("/adminPanel")
                                     res.redirect(req.session.returnTo || '/');
                                     delete req.session.returnTo; 
                                 } else {
-                                    let message = encodeURIComponent('UserName Or Passport is incorrect !');
+                                    let message = encodeURIComponent('UserName Or Password is incorrect !');
                                     req.logOut();
                                     if (req.params.type === "admin") {
                                         res.redirect("/login/admin?message=" + message);
@@ -192,43 +201,57 @@ app.post("/login/:type", async function (req, res) {
             }
         } else {
             let message = encodeURIComponent('Authentication error!!');
-            res.redirect('/login/customer?message=' + message);
+            res.redirect('/login/'+req.params.type+'?message=' + message);
         }
-        
-   
-
-   
 })
 
 //========================== Admin panel ======================//
 app.get("/adminPanel", (req, res) => {
-    res.render("adminPanel/dashboard",{data:null})
+    let auth = req.isAuthenticated();
+    let passedMessage = req.query.message;
+    req.session.returnTo = req.originalUrl
+    if (auth && req.user.type === "admin") {
+        res.render("adminPanel/dashboard",{data:null, passedMessage})
+    } else {
+        res.redirect("/login/admin")
+    }
+    
 });
 app.get("/admin/servicePage", (req, res) => {
-    res.render("adminPanel/serviceForm",{data:null})
-});
-app.get("/services/:slug", async(req, res) => {
-    let pageData = await servicePage.findOne({ slug: req.params.slug });
-    if (pageData) {
-        
-        res.render("servicePage",{...pageData._doc});
-    } else {
-         res.render("pfReturn");
+     let auth = req.isAuthenticated()
+    req.session.returnTo = req.originalUrl
+    if (auth && req.user.type === "admin") {
+        res.render("adminPanel/serviceForm",{data:null})
+    }else {
+        res.redirect("/login/admin")
     }
-   
+    
 });
+
 
 // Post request to get all the service page info from the admin //
 
 //multer
+let nameOfImage = "";
 let count = 0;
 let storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, __dirname+"/public/uploads")
+        cb(null, __dirname + "/public/uploads")
+       
   },
     filename: function (req, file, cb) {
+        let parts = file.originalname.split(".");
+        let format = parts[parts.length-1]
+        let pathName = req.route.path.substring(1,)
         count += 1;
-        cb(null, req.body.serviceurl + "procedure" + count.toString()+"."+file.originalname.substring(file.originalname.length-3));
+        if (pathName === "blogsGenerator") { 
+            console.log(req.body.nameOfBlog);
+            cb(null, req.body.nameOfBlog + pathName + "." + format);
+            nameOfImage = req.body.nameOfBlog + pathName + "." + format
+        } else {
+            cb(null, req.body.serviceurl + pathName + count.toString()+"."+ format);
+        }
+        
   }
 })
 let upload = multer({ storage })
@@ -253,8 +276,37 @@ app.post("/websiteData", upload.array("image"),  async (req, res) => {
     res.render("adminPanel")
 
 });
+//blog form get request
+app.get("/blogsGenerator", function (req, res) {
+    let auth = req.isAuthenticated();
+    if (auth && req.user.type === "admin") {
+        res.render("adminPanel/blogForm")
+    } else {
+        res.redirect("/login/admin");
+
+    }
+})
 
 
+//blog post requests
+
+app.post("/blogsGenerator", upload.array("image"), async function (req, res) {
+    let auth = req.isAuthenticated();
+    if (auth && req.user.type === "admin") {
+        let newBlog = new Blog({
+            user: req.user.id,
+            title: req.body.nameOfBlog,
+            description: req.body.blog_description,
+            nameOfImage
+        });
+        await newBlog.save();
+        let message = encodeURIComponent('Blog Successfully created!');
+        res.redirect("/adminPanel?message="+message)
+    } else {
+        res.redirect("/login/admin");
+
+    }
+})
 
 // ================= admin panel finished ==================== //
 app.listen(PORT, () => {
