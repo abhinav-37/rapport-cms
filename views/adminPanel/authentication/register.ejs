@@ -27,7 +27,7 @@
 
 <body class="panel-data">
     <!-- Including navbar and sidebar from the partials -->
-    <%- include("../partials/navbar_sidebar.ejs") %>
+
 
     <div class="panel-content">
         <div class="lgn-wrp grysh">
@@ -42,11 +42,19 @@
                 </div>
                 <% } %>
                 <div class="widget lgn-frm">
+                    <% if(type === "admin"){ %>
                     <div class="frm-tl">
                         <h4>Register to Admin</h4>
                         <span>Fill your detail to get in</span>
                     </div>
-                    <form method="POST" action="/register/admin">
+                    <% }else if(type==="employee"){ %>
+                    <div class="frm-tl">
+                        <h4>Register An Employee</h4>
+                        <span>Fill The details of the employee</span>
+                    </div>
+                    <% } %>
+                    <!-- post method for type specific post requests -->
+                    <form method="POST" action="/register/<%= type %> ">
                         <div class="row mrg10">
                             <div class="col-md-12 col-sm-12 col-lg-12">
                                 <input class="brd-rd5" name="first_name" type="text" placeholder="First name *" />

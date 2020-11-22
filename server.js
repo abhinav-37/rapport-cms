@@ -13,6 +13,7 @@ const passportLocalMongoose = require("passport-local-mongoose");
 const Blog = require("./models/blog");
 const app = express();
 const servicePage = require("./models/servicePage");
+const CustomerResponse = require("./models/customerResponse");
 //middlewares
 //file uploads
 let multer = require('multer')
@@ -105,12 +106,13 @@ app.get("/services/:slug", async (req, res) => {
 
 //GET requset for login
 app.get("/login/:type", function (req, res) {
+    let type = req.params.type
     req.session.returnTo = req.originalUrl
     let passedMessage = req.query.message;
-    if (req.params.type === "customer") {
+    if (type === "customer") {
         res.render("login", { user: req.user, passedMessage });
-    } else if(req.params.type === "admin") {
-        res.render("adminPanel/authentication/login",{ passedMessage })
+    } else if(type === "admin" || type === "employee") {
+        res.render("adminPanel/authentication/login",{ passedMessage, user:req.user, type })
     }
 });
 
@@ -119,16 +121,51 @@ app.get("/register/:type", function (req, res) {
     req.session.returnTo = req.originalUrl
      let passedMessage = req.query.message;
     if (req.params.type === "customer") {
-    res.render("register", { user: req.user,passedMessage })
+        res.render("register", { user: req.user,passedMessage })
     } else {
-         res.render("adminPanel/authentication/register", {passedMessage })
+        res.render("adminPanel/authentication/register", {passedMessage, type:req.params.type })
     }
   
 });
 
 // POST for the registration of the user
 app.post("/register/:type", async function (req, res) {
-    const {first_name,last_name, username, password, contact_number,repassword } = req.body;
+    let auth = req.user
+    if (req.params.type === "employee") {
+        if (auth && req.user.type === "admin") {
+            const {first_name,last_name, username, password, contact_number,repassword } = req.body;
+
+            if (password === repassword) {
+                User.register({ username: username }, password, function (err, user) {
+                if (err) {
+                    console.log(err);
+                    var message = encodeURIComponent("Email Already Exists");
+                    res.redirect("/register/customer?message="+message);
+                } else {
+                    passport.authenticate("local")(req, res, async function () {
+                        console.log(req.params.type);
+                        user.type = req.params.type;
+                        user.contact_number = contact_number,
+                        user.first_name = first_name,
+                        user.last_name = last_name
+                        await user.save();
+                        res.redirect("/adminPanel")
+                        res.redirect(req.session.returnTo || '/');
+                        delete req.session.returnTo;
+
+                    });
+                }
+            });
+            } else {
+                var message = encodeURIComponent('Passwords do not match!');      
+                res.redirect('/register/'+ req.params.type +'?message=' + message);     
+            }      
+        } else {
+                var message = encodeURIComponent('Not Enough Authority!');      
+                res.redirect('/register/'+ req.params.type +'?message=' + message);
+        }
+    } else {
+         const {first_name,last_name, username, password, contact_number,repassword } = req.body;
 
     if (password === repassword) {
         User.register({ username: username }, password, function (err, user) {
@@ -138,12 +175,13 @@ app.post("/register/:type", async function (req, res) {
             res.redirect("/register/customer?message="+message);
         } else {
             passport.authenticate("local")(req, res, async function () {
+                console.log(req.params.type);
                 user.type = req.params.type;
                 user.contact_number = contact_number,
                 user.first_name = first_name,
                 user.last_name = last_name
                 await user.save();
-                if(req.params.type === "admin") res.redirect("/adminPanel")
+                if(req.params.type === "admin" || req.params.type === "employee") res.redirect("/adminPanel")
                 res.redirect(req.session.returnTo || '/');
                 delete req.session.returnTo;
 
@@ -153,7 +191,9 @@ app.post("/register/:type", async function (req, res) {
     } else {
           var message = encodeURIComponent('Passwords do not match!');      
           res.redirect('/register/'+ req.params.type +'?message=' + message);     
-    }      
+    }    
+    }
+     
 });
 
 // POST for the login of the user
@@ -176,18 +216,19 @@ app.post("/login/:type", async function (req, res) {
                             passport.authenticate("local", function (err, user, info) {
                                
                                 if (user) {
-                                   if(req.params.type === "admin") res.redirect("/adminPanel")
-                                    res.redirect(req.session.returnTo || '/');
-                                    delete req.session.returnTo; 
+                                    if (req.params.type === "admin" || req.params.type === "employee") {
+                                       
+                                        res.redirect("/adminPanel")
+                                    } else {
+                                        
+                                        res.redirect(req.session.returnTo || '/');
+                                        delete req.session.returnTo;
+                                    }
                                 } else {
                                     let message = encodeURIComponent('UserName Or Password is incorrect !');
                                     req.logOut();
-                                    if (req.params.type === "admin") {
-                                        res.redirect("/login/admin?message=" + message);
-                                    } else {
-                                        res.redirect("/login/customer?message=" + message);
-                                    }
-                                    
+                                    res.redirect("/login/"+ req.params.type +"?message=" + message);
+                      
                                 }
                                
                             })(req, res, function () {});
@@ -205,13 +246,21 @@ app.post("/login/:type", async function (req, res) {
         }
 })
 
+app.get("/logout", function (req, res) {
+    req.logOut();
+    res.redirect(req.session.returnTo || "/")
+})
 //========================== Admin panel ======================//
 app.get("/adminPanel", (req, res) => {
     let auth = req.isAuthenticated();
     let passedMessage = req.query.message;
     req.session.returnTo = req.originalUrl
-    if (auth && req.user.type === "admin") {
-        res.render("adminPanel/dashboard",{data:null, passedMessage})
+    if (auth) {
+        if (req.user.type === "admin" || req.user.type === "employee") {
+            res.render("adminPanel/dashboard",{data:null, passedMessage, user:req.user})
+        } else {
+             res.redirect("/login/admin")
+        }
     } else {
         res.redirect("/login/admin")
     }
@@ -221,7 +270,7 @@ app.get("/admin/servicePage", (req, res) => {
      let auth = req.isAuthenticated()
     req.session.returnTo = req.originalUrl
     if (auth && req.user.type === "admin") {
-        res.render("adminPanel/serviceForm",{data:null})
+        res.render("adminPanel/serviceForm",{data:null, user:req.user})
     }else {
         res.redirect("/login/admin")
     }
@@ -301,13 +350,48 @@ app.post("/blogsGenerator", upload.array("image"), async function (req, res) {
         });
         await newBlog.save();
         let message = encodeURIComponent('Blog Successfully created!');
-        res.redirect("/adminPanel?message="+message)
+        res.redirect("/adminPanel?message=" + message)
     } else {
         res.redirect("/login/admin");
 
     }
-})
+});
+app.get("/admin/taskDistribution", async function (req, res) {
+    let auth = req.isAuthenticated();
+    if (auth && req.user.type === "admin") {
+        let employees = await User.find({ type: "employee" })
+        
+        let customerResponses = await CustomerResponse.find().populate("employeeAssigned");
 
+        res.render("adminPanel/taskDistribution",{user: req.user, employees, customerResponses})
+    } else {
+        res.redirect("/login/admin")
+    }
+});
+app.post("/admin/taskDistribution", async function (req, res) {
+    let auth = req.isAuthenticated();
+    if (auth && req.user.type === "admin") {
+        const { employeeId, responseId } = req.body;
+        console.log(employeeId, responseId);
+        let customerResponse = await CustomerResponse.findOne({ _id: responseId })
+        customerResponse.employeeAssigned = employeeId
+        await customerResponse.save();
+        res.end("done");
+    }
+});
+app.get("/admin/customersAssigned", async function (req, res) {
+    let auth = req.isAuthenticated();
+    if (auth) {
+        if (req.user.type === "admin" || req.user.type === "employee") {
+            let customersAssigned = await CustomerResponse.find({ employeeAssigned: req.user.id });
+            res.render("adminPanel/customersAssigned", { customersAssigned, user:req.user });
+        } else {
+            res.redirect("/login/admin")
+        }
+    } else {
+        res.redirect("/login/admin")
+    }
+})
 // ================= admin panel finished ==================== //
 app.listen(PORT, () => {
     console.log(`Server started on PORT ${PORT}`);

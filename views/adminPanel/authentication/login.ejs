@@ -27,7 +27,7 @@
 
 <body class="panel-data">
     <!-- Including navbar and sidebar from the partials -->
-    <%- include("../partials/navbar_sidebar.ejs") %>
+
 
     <div class="panel-content">
         <div class="lgn-wrp grysh">
@@ -43,10 +43,15 @@
                 <% } %>
                 <div class="widget lgn-frm">
                     <div class="frm-tl">
+                        <% if(type === "admin"){ %>
                         <h4>Login to Admin</h4>
                         <span>Fill your detail to get in</span>
+                        <% }else{ %>
+                        <h4>Login as an Employee</h4>
+                        <span>Fill your detail to get in</span>
+                        <% } %>
                     </div>
-                    <form method="POST" action="/login/admin">
+                    <form method="POST" action="/login/<%= type %> ">
                         <div class="row mrg10">
                             <div class="col-md-12 col-sm-12 col-lg-12">
                                 <input class="brd-rd5" name="username" type="email" placeholder="Email *" />

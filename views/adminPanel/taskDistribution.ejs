@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<%- include("partials/head.ejs") %>
+<script src="https://cdn.ckeditor.com/ckeditor5/23.1.0/classic/ckeditor.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<style>
+    .rapport-start,
+    .rapport-super,
+    .rapport-select {
+        box-shadow: 0px 0px 5px black;
+        padding: 20px;
+    }
+
+    .pricing_area {
+        box-shadow: 0px 0px 5px black;
+        padding: 20px;
+    }
+
+    .procedure_area,
+    .about_service,
+    .documents_required,
+    .eligibility,
+    .faq_area,
+    .service_name,
+    .service_url,
+    .advantages,
+    .stepsArea {
+        box-shadow: 0px 0px 5px black;
+        padding: 20px;
+        margin-top: 30px;
+    }
+
+    .form-control,
+    .btn {
+        border-radius: 0;
+    }
+
+    .form-main {
+        margin-top: 150px;
+        margin-bottom: 50px;
+        padding-bottom: 30px;
+    }
+
+    .table-wrap {
+        padding: 0 100px 100px 100px;
+    }
+
+    th {
+        text-align: center;
+    }
+
+    td {
+        text-align: center;
+    }
+
+    .alert-container {
+        padding-top: 100px;
+        display: flex;
+        justify-content: center;
+
+
+    }
+
+    .alert {
+        width: 200px;
+        display: flex;
+        justify-content: space-around;
+        border-radius: 0;
+    }
+</style>
+
+
+
+<body>
+    <!-- Including navbar and sidebar from the partials -->
+    <%- include("partials/navbar_sidebar.ejs") %>
+    <!-- alert to show the message -->
+    <div class="container alert-container">
+        <div class="alert alert-success alert-dismissible fade " role="alert">
+            <strong>Success!</strong>
+            <button type="button" id="remove-alert">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>
+
+
+    <div class="table-wrap">
+        <table class="table style2 style3">
+            <thead class="table-inverse">
+                <tr>
+                    <th><span>#</span></th>
+                    <th><span>Full Name</span></th>
+                    <th><span>Contact Info.</span></th>
+                    <th><span>Email Id</span></th>
+                    <th><span>Task</span></th>
+                    <th><span>Assigned To</span></th>
+                    <th><span>Assign To</span></th>
+                    <th><span>Select</span></th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <% let count=1 %>
+                <% customerResponses.forEach(function(r){ %>
+                <tr>
+                    <td><span class="blue-bg indx"><%= count %> </span></td>
+                    <td>
+                        <h4><a href="#" title=""><%= r.full_name %> </a></h4>
+                    </td>
+                    <td>
+                        <span><%= r.contact_info %></span>
+                    </td>
+                    <td><span><%= r.emailId %> </span></td>
+                    <td><span><%= r.task %> </span></td>
+                    <% if(r.employeeAssigned){ %>
+                    <td><span><%= r.employeeAssigned.first_name %> <%= r.employeeAssigned.last_name %> </span></td>
+                    <% }else{ %>
+                    <td><span>Not Assigned. </span></td>
+                    <% } %>
+                    <td><span>
+                            <div class="form-group">
+                                <select responseId=<%= r.id %> class="custom-select" id="selectedEmployee">
+                                    <option selected value="#">List of employees...</option>
+                                    <% employees.forEach(function(e){ %>
+                                    <option value="<%= e.id %>"><%= e.first_name %> <%= e.last_name %> </option>
+                                    <% }) %>
+                                </select>
+                            </div>
+                        </span>
+                    </td>
+                    <td><Button id="submitButton"><span class="badge badge-success brd-rd5">Select</span></Button></td>
+
+                </tr>
+                <% count+=1 %>
+                <% }) %>
+
+
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        let submitButton = $("#submitButton");
+        let selectedEmployee = $("#selectedEmployee");
+        let alert = $(".alert");
+        submitButton.click(function () {
+            if (selectedEmployee.val() !== "#") {
+                $.ajax({
+                    url: "/admin/taskDistribution",
+                    type: "POST",
+                    data: { employeeId: selectedEmployee.val(), responseId: selectedEmployee.attr("responseId") },
+                    success: function (data) {
+                        alert.removeClass("fade");
+                        alert.addClass("show");
+
+                    }
+                });
+            }
+        });
+        $("#remove-alert").click(function () {
+            alert.addClass("fade");
+            alert.removeClass("show")
+        })
+    </script>
+    <%- include("partials/footerJs.ejs") %>
+</body>
+
+</html>
