@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<%- include("partials/head.ejs") %>
+<style>
+    .alert {
+        height: 50px;
+        position: absolute;
+        z-index: 99;
+        top: -20px;
+        border-radius: 0;
+    }
+
+    .panel-content {
+        position: relative;
+        padding-bottom: 40px;
+    }
+</style>
+
+<body class="panel-data">
+    <!-- Including navbar and sidebar from the partials -->
+    <%- include("partials/navbar_sidebar.ejs") %>
+
+
+
+
+    <div class="panel-content">
+        <% if(passedMessage){ %>
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+            <%= passedMessage %>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <% } %>
+        <div class="widget pad50-65">
+            <div class="widget-title2">
+                <h4>Law Updates Form</h4>
+                <span>Please fill out the form below Form elements.</span>
+            </div>
+            <form method="POST" action="/admin/lawUpdatesForm" class="form-wrp">
+                <div class="row mrg20">
+                    <div class="col-md-6 col-sm-6 col-lg-6">
+                        <input name="department" class="brd-rd30" type="text" placeholder="Department*" />
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-lg-6">
+                        <input name="authority" class="brd-rd30" type="text" placeholder="Authority*" />
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-lg-12">
+                        <input name="url" class="brd-rd30" type="text" placeholder="Url of the concerned website*" />
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-lg-12">
+                        <textarea name="subject" row="10" class="brd-rd30" type="text"
+                            placeholder="Subject*"></textarea>
+                    </div>
+
+                    <div class="col-md-12 col-sm-12 col-lg-12">
+                        <button class="green-bg brd-rd5" type="submit"><i class="fa fa-paper-plane"></i> Post</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div><!-- Panel Content -->
+
+    <%- include("partials/footerJs.ejs") %>
+</body>
+
+</html>

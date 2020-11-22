@@ -44,40 +44,76 @@
         }
     </style>
 </head>
+<style>
+    .blog_description {
+        margin: 20px 0;
+    }
 
+    .alert {
+        height: 50px;
+        position: absolute;
+        z-index: 99;
+        top: -20px;
+        border-radius: 0;
+    }
 
-<body>
+    .panel-content {
+        position: relative;
+        padding-bottom: 40px;
+    }
+</style>
+
+<body class="panel-data">
     <!-- Including navbar and sidebar from the partials -->
     <%- include("partials/navbar_sidebar.ejs") %>
-    <div class="container form-main">
-        <h3>Service Page creator</h3>
-        <form action="/blogsGenerator" method="post" enctype="multipart/form-data">
-            <div class="form-group">
-                <div class="form-group service_name">
-                    <h4>Name</h4>
-                    <label for="nameOfService">Enter the Title of the Blog</label>
-                    <input name="nameOfBlog" required type="text" class="form-control" id="nameOfService"
-                        placeholder="Name">
-                </div>
 
-                <div class="form-group service_name">
-                    <h4>Image upload</h4>
-                    <label for="image">Upload an image for the blog </label>
-                    <button><input type="file" name="image" id="image"></button>
-                </div>
-
-                <div class="form-group documents_required">
-                    <h4>Blog Description</h4>
-                    <textarea placeholder="It should be a list" name="blog_description" id="blog_description"
-                        class="form-control" rows="3"></textarea>
-                </div>
-
+    <div class="panel-content">
+        <% if(passedMessage){ %>
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+            <%= passedMessage %>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <% } %>
+        <div class="widget pad50-65">
+            <div class="widget-title2">
+                <h4>Blog creator</h4>
+                <span>Please fill out the form below Form elements.</span>
             </div>
-            <button class="btn btn-primary" type="submit">Submit</button>
-        </form>
+            <form action="/blogsGenerator" method="post" enctype="multipart/form-data" class="form-wrp">
+                <div class="row mrg20">
+                    <div class="col-md-6 col-sm-6 col-lg-12">
+                        <label for="nameOfService">Emter the name of the blog</label>
+                        <input name="nameOfBlog" required type="text" id="nameOfService" class="brd-rd30"
+                            placeholder="Enter the Title of the Blog*" />
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-lg-12">
+                        <div class="file-upload-box">
+                            <strong>Upload an image for the blog:</strong>
+                            <div class="file-box">
+                                <label class="fileContainer">
+                                    <span class="blue-bg brd-rd5">Browse</span>
+                                    No File Selected.
+                                    <input name="image" id="image" type="file">
+                                </label>
+                            </div>
+                        </div>
+                    </div>
 
-    </div>
+                    <div class="col-md-12 col-sm-12 col-lg-12 blog_description">
+                        <label for="blog_description">Blog Content</label>
+                        <textarea name="blog_description" id="blog_description" row="10" class="brd-rd30" type="text"
+                            placeholder="Blog Description*"></textarea>
+                    </div>
 
+                    <div class="col-md-12 col-sm-12 col-lg-12">
+                        <button class="green-bg brd-rd5" type="submit"><i class="fa fa-paper-plane"></i> Post</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div><!-- Panel Content -->
     <script>
         ClassicEditor
             .create(document.querySelector('#blog_description'), {

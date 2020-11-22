@@ -16,7 +16,9 @@ const servicePage = require("./models/servicePage");
 const CustomerResponse = require("./models/customerResponse");
 //middlewares
 //file uploads
-let multer = require('multer')
+let multer = require('multer');
+const dailyWages = require("./models/dailyWages");
+const lawUpdates = require("./models/lawUpdates");
 
 
 app.use(express.static(path.join(__dirname, "public")));
@@ -102,6 +104,15 @@ app.get("/services/:slug", async (req, res) => {
     }
    
 });
+app.get("/lawUpdates", async function (req, res) {
+    let updates = await lawUpdates.find();
+    res.render("lawUpdates", { user: req.user, updates });
+});
+app.get("/minimumWages", async function (req, res) {
+    let wages = await dailyWages.find();
+    res.render("minimumWages", { user: req.user, wages });
+});
+
 // ========================= Authentication start =================== //
 
 //GET requset for login
@@ -249,7 +260,8 @@ app.post("/login/:type", async function (req, res) {
 app.get("/logout", function (req, res) {
     req.logOut();
     res.redirect(req.session.returnTo || "/")
-})
+});
+
 //========================== Admin panel ======================//
 app.get("/adminPanel", (req, res) => {
     let auth = req.isAuthenticated();
@@ -291,13 +303,20 @@ let storage = multer.diskStorage({
     filename: function (req, file, cb) {
         let parts = file.originalname.split(".");
         let format = parts[parts.length-1]
-        let pathName = req.route.path.substring(1,)
+        let pathName = req.route.path.substring(1,);
+        console.log(pathName);
         count += 1;
         if (pathName === "blogsGenerator") { 
             console.log(req.body.nameOfBlog);
             cb(null, req.body.nameOfBlog + pathName + "." + format);
+            
             nameOfImage = req.body.nameOfBlog + pathName + "." + format
-        } else {
+        } else if (pathName === "admin/dailyWages") { 
+            console.log(file);
+            cb(null, Date.now().toString().substring(Date.now().toString().length -1)+file.originalname.replace(/\s/g,''));
+        }
+            
+        else {
             cb(null, req.body.serviceurl + pathName + count.toString()+"."+ format);
         }
         
@@ -328,8 +347,14 @@ app.post("/websiteData", upload.array("image"),  async (req, res) => {
 //blog form get request
 app.get("/blogsGenerator", function (req, res) {
     let auth = req.isAuthenticated();
-    if (auth && req.user.type === "admin") {
-        res.render("adminPanel/blogForm")
+    if (auth) {
+        if (req.user.type === "admin" || req.user.type === "employee") {
+            let passedMessage = req.query.message;
+            res.render("adminPanel/blogForm",{user:req.user, passedMessage})
+        } else {
+            res.redirect("/login/admin")
+        }
+       
     } else {
         res.redirect("/login/admin");
 
@@ -349,8 +374,9 @@ app.post("/blogsGenerator", upload.array("image"), async function (req, res) {
             nameOfImage
         });
         await newBlog.save();
+        nameOfImage = "";
         let message = encodeURIComponent('Blog Successfully created!');
-        res.redirect("/adminPanel?message=" + message)
+        res.redirect("/blogsGenerator?message=" + message)
     } else {
         res.redirect("/login/admin");
 
@@ -384,7 +410,84 @@ app.get("/admin/customersAssigned", async function (req, res) {
     if (auth) {
         if (req.user.type === "admin" || req.user.type === "employee") {
             let customersAssigned = await CustomerResponse.find({ employeeAssigned: req.user.id });
-            res.render("adminPanel/customersAssigned", { customersAssigned, user:req.user });
+            res.render("adminPanel/customersAssigned", { customersAssigned, user: req.user });
+        } else {
+            res.redirect("/login/admin")
+        }
+    } else {
+        res.redirect("/login/admin")
+    }
+});
+app.get("/admin/dailyWages", async function (req, res) {
+    let auth = req.isAuthenticated();
+    if (auth) {
+        if (req.user.type === "admin" || req.user.type === "employee") {
+             let passedMessage = req.query.message;
+            res.render("adminPanel/dailyWagesForm", {user: req.user, passedMessage });
+        } else {
+            res.redirect("/login/admin")
+        }
+    } else {
+        res.redirect("/login/admin")
+    }
+});
+app.post("/admin/dailyWages", upload.array("ratesPdf"),  async function (req, res) {
+    let auth = req.isAuthenticated();
+    if (auth) {
+        if (req.user.type === "admin" || req.user.type === "employee") {
+            const { schedule, category, ratesPerMonth, ratesPerDay } = req.body
+            
+            const newdailyWage = new dailyWages({
+                user: req.user.id,
+                schedule,
+                category,
+                minimumRates: {
+                    ratesPerDay,
+                    ratesPerMonth
+                }, 
+                filename: Date.now().toString().substring(Date.now().toString().length -1) + req.files[0].originalname.replace(/\s/g,'')
+            });
+            console.log(Date.now().toString() + req.files[0].originalname.replace(/\s/g,''));
+            await newdailyWage.save();
+            let message = encodeURIComponent('Done !');
+            res.redirect("/admin/dailyWages?message="+message)
+        } else {
+            res.redirect("/login/admin")
+        }
+    } else {
+        res.redirect("/login/admin")
+    }
+});
+
+app.get("/admin/lawUpdatesForm", async function (req, res) {
+    let auth = req.isAuthenticated();
+    if (auth) {
+        if (req.user.type === "admin" || req.user.type === "employee") {
+             let passedMessage = req.query.message;
+            res.render("adminPanel/lawUpdatesForm", {user: req.user, passedMessage });
+        } else {
+            res.redirect("/login/admin")
+        }
+    } else {
+        res.redirect("/login/admin")
+    }
+});
+
+app.post("/admin/lawUpdatesForm", async function (req, res) {
+    let auth = req.isAuthenticated();
+    if (auth) {
+        if (req.user.type === "admin" || req.user.type === "employee") {
+            const { department, authority, url, subject } = req.body;
+            const newLawUpdate = new lawUpdates({
+                user: req.user.id,
+                department,
+                authority,
+                url,
+                subject
+            });
+            await newLawUpdate.save();
+            let message = encodeURIComponent('Done Posting the update!');
+            res.redirect("/admin/lawUpdatesForm?message="+message)
         } else {
             res.redirect("/login/admin")
         }
