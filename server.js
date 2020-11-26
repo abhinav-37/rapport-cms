@@ -263,35 +263,6 @@ app.get("/logout", function (req, res) {
 });
 
 //========================== Admin panel ======================//
-app.get("/adminPanel", (req, res) => {
-    let auth = req.isAuthenticated();
-    let passedMessage = req.query.message;
-    req.session.returnTo = req.originalUrl
-    if (auth) {
-        if (req.user.type === "admin" || req.user.type === "employee") {
-            res.render("adminPanel/dashboard",{data:null, passedMessage, user:req.user})
-        } else {
-             res.redirect("/login/admin")
-        }
-    } else {
-        res.redirect("/login/admin")
-    }
-    
-});
-app.get("/admin/servicePage", (req, res) => {
-     let auth = req.isAuthenticated()
-    req.session.returnTo = req.originalUrl
-    if (auth && req.user.type === "admin") {
-        res.render("adminPanel/serviceForm",{data:null, user:req.user})
-    }else {
-        res.redirect("/login/admin")
-    }
-    
-});
-
-
-// Post request to get all the service page info from the admin //
-
 //multer
 let nameOfImage = "";
 let count = 0;
@@ -323,10 +294,72 @@ let storage = multer.diskStorage({
   }
 })
 let upload = multer({ storage })
+app.get("/adminPanel", (req, res) => {
+    let auth = req.isAuthenticated();
+    let passedMessage = req.query.message;
+    req.session.returnTo = req.originalUrl
+    if (auth) {
+        if (req.user.type === "admin" || req.user.type === "employee") {
+            res.render("adminPanel/dashboard",{data:null, passedMessage, user:req.user})
+        } else {
+             res.redirect("/login/admin")
+        }
+    } else {
+        res.redirect("/login/admin")
+    }
+    
+});
+app.get("/admin/servicePage", (req, res) => {
+    let auth = req.isAuthenticated()
+    let singleService;
+    req.session.returnTo = req.originalUrl
+    if (auth && req.user.type === "admin") {
+        res.render("adminPanel/serviceForm",{data:null, user:req.user,singleService:null})
+    }else {
+        res.redirect("/login/admin")
+    }
+    
+});
+app.get("/admin/serviceEditor", async function (req, res) {
+    let auth = req.isAuthenticated();
+    let passedMessage = req.query.message;
+    req.session.returnTo = req.originalUrl
+    if (auth) {
+        try {
+            let services = await servicePage.find();
+            res.render("adminPanel/serviceEditor", { services,user:req.user, passedMessage });
+        } catch (error) {
+            res.send(error)
+        }
+        
 
+    } else {
+        res.redirect("/login/admin")
+    }
+})
+app.get("/admin/singleServiceEditor/:id", async function (req, res) {
+    let auth = req.isAuthenticated();
+    if (auth) {
+        let singleService = await servicePage.findById(req.params.id);
+          res.render("adminPanel/serviceForm",{data:null, user:req.user, singleService})
+    } else {
+        res.redirect("/login/admin")
+    }
+})
+app.get("/admin/singleServiceDelete/:id", async function (req, res) {
+    let auth = req.isAuthenticated();
+    if (auth) {
+        await servicePage.deleteOne({ _id: req.params.id });
+        let message = encodeURIComponent('Service Page Deleted Successfully!');
+        res.redirect("/adminPanel?message="+message) 
+    } else {
+        res.redirect("/login/admin")
+    }
+})
+// Post request to get all the service page info from the admin //
 app.post("/websiteData", upload.array("image"),  async (req, res) => {
    
-    const { nameOfService, serviceurl, rapportStart, rapportSelect, rapportSuper, about_service, procedureName, procedureDescription, documents_required, eligibility,advantages , faqQuestion, faqAnswer,stepsName, stepsDescription } = req.body;
+    const {submit_button_above, nameOfService, serviceurl, rapportStart, rapportSelect, rapportSuper, about_service, procedureName, procedureDescription, documents_required, eligibility,advantages , faqQuestion, faqAnswer,stepsName, stepsDescription } = req.body;
     const servicePageObject = {
         name: nameOfService,
         slug: serviceurl,
@@ -339,9 +372,22 @@ app.post("/websiteData", upload.array("image"),  async (req, res) => {
         steps:{stepsName, stepsDescription},
         faq:{ faqQuestion,faqAnswer }
     }
-    const newServicePage = new servicePage(servicePageObject);
-    await newServicePage.save();
-    res.render("adminPanel")
+    let service = await servicePage.findById(submit_button_above );
+   
+    if (service) {
+        
+        let test = await servicePage.findOneAndUpdate({_id: service.id},  { $set: servicePageObject },  {  new: true  })
+        
+        let message = encodeURIComponent('Service Page updated Successfully!');
+        res.redirect("/adminPanel?message="+message) 
+    } else {
+       const newServicePage = new servicePage(servicePageObject);
+        await newServicePage.save();
+        let message = encodeURIComponent('Service Page Created Successfully!');
+        res.redirect("/adminPanel?message="+message) 
+    }
+   
+    
 
 });
 //blog form get request
@@ -360,10 +406,7 @@ app.get("/blogsGenerator", function (req, res) {
 
     }
 })
-
-
 //blog post requests
-
 app.post("/blogsGenerator", upload.array("image"), async function (req, res) {
     let auth = req.isAuthenticated();
     if (auth && req.user.type === "admin") {
@@ -382,6 +425,7 @@ app.post("/blogsGenerator", upload.array("image"), async function (req, res) {
 
     }
 });
+//Task distributions
 app.get("/admin/taskDistribution", async function (req, res) {
     let auth = req.isAuthenticated();
     if (auth && req.user.type === "admin") {
@@ -418,12 +462,14 @@ app.get("/admin/customersAssigned", async function (req, res) {
         res.redirect("/login/admin")
     }
 });
+
+//Daily wages
 app.get("/admin/dailyWages", async function (req, res) {
     let auth = req.isAuthenticated();
     if (auth) {
         if (req.user.type === "admin" || req.user.type === "employee") {
              let passedMessage = req.query.message;
-            res.render("adminPanel/dailyWagesForm", {user: req.user, passedMessage });
+            res.render("adminPanel/dailyWagesForm", {user: req.user, passedMessage,singleWage:null });
         } else {
             res.redirect("/login/admin")
         }
@@ -431,13 +477,56 @@ app.get("/admin/dailyWages", async function (req, res) {
         res.redirect("/login/admin")
     }
 });
-app.post("/admin/dailyWages", upload.array("ratesPdf"),  async function (req, res) {
+app.get("/admin/dailyWagesUpdate", async function (req, res) {
     let auth = req.isAuthenticated();
     if (auth) {
         if (req.user.type === "admin" || req.user.type === "employee") {
-            const { schedule, category, ratesPerMonth, ratesPerDay } = req.body
+            let passedMessage = req.query.message;
+            let wages = await dailyWages.find();
+            res.render("adminPanel/dailyWagesEdit", { user: req.user, passedMessage, wages });
+        } else {
+            res.redirect("/login/admin")
+        }
+    } else {
+        res.redirect("/login/admin")
+    }
+});
+app.get("/admin/singWageEditor/:id", async function (req, res) {
+     let auth = req.isAuthenticated();
+    if (auth) {
+        if (req.user.type === "admin" || req.user.type === "employee") {
+            let singleWage = await dailyWages.findById(req.params.id);
+            let passedMessage = req.query.message;
+            res.render("adminPanel/dailyWagesForm", {user: req.user, passedMessage, singleWage });
+        } else {
+            res.redirect("/login/admin")
+        }
+    } else {
+        res.redirect("/login/admin")
+    }
+})
+app.get("/admin/singleWageDelete/:id", async function (req, res) {
+     let auth = req.isAuthenticated();
+    if (auth) {
+        if (req.user.type === "admin" || req.user.type === "employee") {
+             await dailyWages.deleteOne({ _id: req.params.id });
+            let message = encodeURIComponent('Wage Deleted Successfully!');
+        res.redirect("/adminPanel?message="+message)
+        } else {
+            res.redirect("/login/admin")
+        }
+    } else {
+        res.redirect("/login/admin")
+    }
+})
+app.post("/admin/dailyWages", upload.array("ratesPdf"), async function (req, res) {
+    let auth = req.isAuthenticated();
+    if (auth) {
+        if (req.user.type === "admin" || req.user.type === "employee") {
+            const {state_select, schedule, category, ratesPerMonth, ratesPerDay } = req.body
             
             const newdailyWage = new dailyWages({
+                state:state_select,
                 user: req.user.id,
                 schedule,
                 category,
@@ -445,12 +534,30 @@ app.post("/admin/dailyWages", upload.array("ratesPdf"),  async function (req, re
                     ratesPerDay,
                     ratesPerMonth
                 }, 
-                filename: Date.now().toString().substring(Date.now().toString().length -1) + req.files[0].originalname.replace(/\s/g,'')
+                filename: req.files.length !==0 && Date.now().toString().substring(Date.now().toString().length -1) + req.files[0].originalname.replace(/\s/g,'')
             });
-            console.log(Date.now().toString() + req.files[0].originalname.replace(/\s/g,''));
-            await newdailyWage.save();
-            let message = encodeURIComponent('Done !');
-            res.redirect("/admin/dailyWages?message="+message)
+            let wage = await dailyWages.findById(req.body.submit_button);
+            if (wage) {
+                if (req.files.length !== 0) {
+                    let test = await servicePage.findOneAndUpdate({ _id: wage.id }, { $set: newdailyWage }, { new: true });
+                } else {
+                    let test = await servicePage.findOneAndUpdate({ _id: wage.id }, { $set: { state:state_select,
+                    user: req.user.id,
+                    schedule,
+                    category,
+                    minimumRates: {
+                        ratesPerDay,
+                        ratesPerMonth
+                }, } }, { new: true });
+                }
+                 let message = encodeURIComponent('Done Editing The Wage !');
+                res.redirect("/admin/dailyWages?message="+message)
+            } else {
+                await newdailyWage.save();
+                let message = encodeURIComponent('Done Adding new Wage !');
+                res.redirect("/admin/dailyWages?message="+message)
+            }
+            
         } else {
             res.redirect("/login/admin")
         }
@@ -459,12 +566,14 @@ app.post("/admin/dailyWages", upload.array("ratesPdf"),  async function (req, re
     }
 });
 
+//Law updates
 app.get("/admin/lawUpdatesForm", async function (req, res) {
     let auth = req.isAuthenticated();
     if (auth) {
         if (req.user.type === "admin" || req.user.type === "employee") {
-             let passedMessage = req.query.message;
-            res.render("adminPanel/lawUpdatesForm", {user: req.user, passedMessage });
+            let passedMessage = req.query.message;
+            let SingleLawUpdate=null;
+            res.render("adminPanel/lawUpdatesForm", {user: req.user, passedMessage, SingleLawUpdate});
         } else {
             res.redirect("/login/admin")
         }
@@ -472,12 +581,53 @@ app.get("/admin/lawUpdatesForm", async function (req, res) {
         res.redirect("/login/admin")
     }
 });
-
+app.get("/admin/lawUpdatesFormUpdate", async function (req, res) {
+    let auth = req.isAuthenticated();
+    if (auth) {
+        if (req.user.type === "admin" || req.user.type === "employee") {
+            let passedMessage = req.query.message;
+            let updates = await lawUpdates.find();
+            res.render("adminPanel/lawUpdatesEditor", {user: req.user, passedMessage,updates });
+        } else {
+            res.redirect("/login/admin")
+        }
+    } else {
+        res.redirect("/login/admin")
+    }
+});
+app.get("/admin/singleLawEditor/:id", async function (req, res) {
+    let auth = req.isAuthenticated();
+    if (auth) {
+        if (req.user.type === "admin" || req.user.type === "employee") {
+            let SingleLawUpdate = await lawUpdates.findById(req.params.id);
+            let passedMessage = req.query.message;
+            res.render("adminPanel/lawUpdatesForm", {user: req.user, passedMessage,SingleLawUpdate });
+        } else {
+            res.redirect("/login/admin")
+        }
+    } else {
+        res.redirect("/login/admin")
+    }
+});
+app.get("/admin/singleLawDelete/:id", async function (req, res) {
+    let auth = req.isAuthenticated();
+    if (auth) {
+        if (req.user.type === "admin" || req.user.type === "employee") {
+             await lawUpdates.deleteOne({ _id: req.params.id });
+             let message = encodeURIComponent('Law Update  Deleted Successfully!');
+        res.redirect("/adminPanel?message="+message)
+        } else {
+            res.redirect("/login/admin")
+        }
+    } else {
+        res.redirect("/login/admin")
+    }
+});
 app.post("/admin/lawUpdatesForm", async function (req, res) {
     let auth = req.isAuthenticated();
     if (auth) {
         if (req.user.type === "admin" || req.user.type === "employee") {
-            const { department, authority, url, subject } = req.body;
+            const { submit_button, department, authority, url, subject } = req.body;
             const newLawUpdate = new lawUpdates({
                 user: req.user.id,
                 department,
@@ -485,9 +635,17 @@ app.post("/admin/lawUpdatesForm", async function (req, res) {
                 url,
                 subject
             });
-            await newLawUpdate.save();
-            let message = encodeURIComponent('Done Posting the update!');
-            res.redirect("/admin/lawUpdatesForm?message="+message)
+            let update = await lawUpdates.findById(submit_button);
+            if (update) {
+                let test = await servicePage.findOneAndUpdate({ _id: update.id }, { $set: newLawUpdate }, { new: true });
+                let message = encodeURIComponent('Done editing the update!');
+                res.redirect("/adminpanel?message="+message)
+            } else {
+                await newLawUpdate.save();
+                let message = encodeURIComponent('Done Posting the update!');
+                res.redirect("/admin/lawUpdatesForm?message="+message)
+            }
+           
         } else {
             res.redirect("/login/admin")
         }

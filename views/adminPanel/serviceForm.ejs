@@ -50,6 +50,196 @@
 <body>
     <!-- Including navbar and sidebar from the partials -->
     <%- include("partials/navbar_sidebar.ejs") %>
+    <% if(singleService){ %>
+    <div class="container form-main">
+        <h3>Service Page Editor</h3>
+        <form action="/websiteData" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <div class="form-group service_name">
+                    <h4>Name</h4>
+                    <label for="nameOfService">Enter the name of the service</label>
+                    <input value="<%= singleService.name %> " name="nameOfService" required type="text"
+                        class="form-control" id="nameOfService" placeholder="Name">
+                </div>
+                <div class="form-group service_url">
+
+                    <h4>URL</h4>
+                    <label for="serviceurl">Enter the last name of the url of the service i.e It is the url which will
+                        be shown up in the
+                        navbar. <strong>It should be unique</strong> <br> <strong>It should not contain spaces if space
+                            is required the use " _ " eg " name_of_service "</strong> </label>
+                    <input value="<%= singleService.slug %> " name="serviceurl" required type="text"
+                        class="form-control" id="serviceurl" placeholder="eg. service_name">
+                </div>
+                <div class="pricing_area">
+                    <h4>Pricing info</h4>
+                    <div class="form-group rapport-start">
+
+                        <div class="form-group">
+                            <label for="rapportStart"> Area to add rapport start.</label>
+                            <input value=<%=Number(singleService.pricingCards.rapportStart[0])  %> name="rapportStart"
+                                id="rapportStart" type="number" class="form-control" placeholder="Enter the amount">
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dynamic_field">
+                                <tr>
+                                    <td><input type="text" name="rapportStart" placeholder="Enter a feature"
+                                            class="form-control name_list" />
+                                    </td>
+
+                                    <td><button type="button" name="add" id="add" class="btn btn-success">Add
+                                            More</button></td>
+                                </tr>
+                            </table>
+
+                        </div>
+
+                    </div>
+                    <div class="form-group rapport-select">
+
+                        <div class="form-group">
+                            <label for="rapportSelect"> Area to add rapport Select.</label>
+                            <input value=<%=Number(singleService.pricingCards.rapportSelect[0]) %> name="rapportSelect"
+                                id="rapportSelect" type="number" class="form-control" placeholder="Enter the amount">
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dynamic_field2">
+                                <tr>
+                                    <td><input type="text" name="rapportSelect" placeholder="Enter a feature"
+                                            class="form-control name_list" />
+                                    </td>
+
+                                    <td><button type="button" name="add" id="add2" class="btn btn-success">Add
+                                            More</button></td>
+                                </tr>
+                            </table>
+
+                        </div>
+
+                    </div>
+                    <div class="form-group rapport-super">
+
+                        <div class="form-group">
+                            <label for="rapportSuper"> Area to add rapport super.</label>
+                            <input value=<%=Number(singleService.pricingCards.rapportSuper[0])%> name="rapportSuper"
+                                id="rapportSuper" type="number" class="form-control" placeholder="Enter the amount">
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dynamic_field3">
+                                <tr>
+                                    <td><input type="text" name="rapportSuper" placeholder="Enter a feature"
+                                            class="form-control name_list" />
+                                    </td>
+
+                                    <td><button type="button" name="add" id="add3" class="btn btn-success">Add
+                                            More</button></td>
+                                </tr>
+                            </table>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="form-group about_service">
+                    <h4>About service</h4>
+                    <label for="about_service"> Area to write about the Service</label>
+                    <textarea
+                        placeholder="Write heading using the heading selector and description using the description selector"
+                        name="about_service" id="about_service" class="form-control"
+                        rows="3"><%- singleService.aboutService %> </textarea>
+                </div>
+                <div class="form-group procedure_area">
+                    <h4>Procedure section</h4>
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dynamic_field_procedure">
+                            <tr>
+                                <td>
+                                    <input type="text" name="procedureName"
+                                        placeholder="Enter The name of the procedure" class="form-control name_list" />
+                                </td>
+                                <td>
+                                    <input type="text" name="procedureDescription" placeholder="Enter The description"
+                                        class="form-control name_list" />
+                                </td>
+                                <td>
+                                    <input type="file" name="image" id="image">
+                                </td>
+
+                                <td><button type="button" name="add" id="addDescription" class="btn btn-success">Add
+                                        More</button></td>
+                            </tr>
+                        </table>
+
+                    </div>
+                </div>
+
+                <div class="form-group documents_required">
+                    <h4>Documents required</h4>
+                    <label for="documents_required"> Area to write about the Documents required </label>
+                    <textarea placeholder="It should be a list" name="documents_required" id="documents_required"
+                        class="form-control" rows="3"><%- singleService.documentsRequired %></textarea>
+                </div>
+                <div class="form-group advantages">
+                    <h4>Advantages</h4>
+                    <label for="advantages"> Area to write about the Advantages of the service </label>
+                    <textarea placeholder="It should be a list" name="advantages" id="advantages" class="form-control"
+                        rows="3"><%- singleService.advantages %></textarea>
+                </div>
+                <div class="form-group eligibility">
+                    <h4>Eligibility</h4>
+                    <label for="eligibility">Enter the Eligibility of the service</label>
+                    <input value="<%=singleService.eligibility  %> " name="eligibility" type="text" class="form-control"
+                        id="eligibility" placeholder="Eligibility">
+                </div>
+                <div class="form-group stepsArea">
+                    <h4>Steps for the service </h4>
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dynamic_field_steps">
+                            <tr>
+                                <td>
+                                    <input type="text" name="stepsName" placeholder="Enter The Name of the step"
+                                        class="form-control name_list" />
+                                </td>
+                                <td>
+                                    <input type="text" name="stepsDescription" placeholder="Enter The Description"
+                                        class="form-control name_list" />
+                                </td>
+
+                                <td><button type="button" name="add" id="addsteps" class="btn btn-success">Add
+                                        More</button></td>
+                            </tr>
+                        </table>
+
+                    </div>
+                </div>
+                <div class="form-group faq_area">
+                    <h4>F.A.Q</h4>
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dynamic_field_faq">
+                            <tr>
+                                <td>
+                                    <input type="text" name="faqQuestion" placeholder="Enter The Question"
+                                        class="form-control name_list" />
+                                </td>
+                                <td>
+                                    <input type="text" name="faqAnswer" placeholder="Enter The answer"
+                                        class="form-control name_list" />
+                                </td>
+
+                                <td><button type="button" name="add" id="addfaq" class="btn btn-success">Add
+                                        More</button></td>
+                            </tr>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+            <button value="<%= singleService.id %>" class="btn btn-primary" name="submit_button_above"
+                type="submit">Submit</button>
+        </form>
+
+    </div>
+    <% }else{ %>
     <div class="container form-main">
         <h3>Service Page creator</h3>
         <form action="/websiteData" method="post" enctype="multipart/form-data">
@@ -236,6 +426,8 @@
         </form>
 
     </div>
+    <% } %>
+
 
     <script>
         ClassicEditor

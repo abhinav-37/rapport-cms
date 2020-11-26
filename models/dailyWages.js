@@ -17,6 +17,10 @@ const dailyWagesSchema = new mongoose.Schema({
         type: Object,
         required:true
     },
+    state: {
+        type: String,
+        required:true  
+    },
     timeStamp: {
         type: Date,
         default: Date.now()

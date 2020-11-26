@@ -1,14 +1,14 @@
 @charset "UTF-8";
 /*
-Theme Name: Engitech
-Theme URI: http://templates.thememodern.com/engitech/index.html
+Theme Name: Rapport
+Theme URI: http://templates.thememodern.com/Rapport/index.html
 Author: ThemeModern
 Author URI: http://thememodern.com
-Description: Engitech is a WordPress theme for IT Solution and Services Company. Engitech is easy to use, it provides everything you need to create great looking website. With Engitech you can impress your customer by it’s professional design and the interactivity. Engitech built with latest website technology to ensure your website is looks nice on desktop and mobile. Get Engitech now!
+Description: Rapport is a WordPress theme for IT Solution and Services Company. Rapport is easy to use, it provides everything you need to create great looking website. With Rapport you can impress your customer by it’s professional design and the interactivity. Rapport built with latest website technology to ensure your website is looks nice on desktop and mobile. Get Rapport now!
 Version: 1.0
 License: GNU General Public License v2+
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Text Domain: engitech
+Text Domain: Rapport
 Domain Path: /languages/
 Tags: one-column, two-columns, left-sidebar, right-sidebar, full-width-template, post-formats, theme-options, threaded-comments, translation-ready
 
@@ -7185,7 +7185,7 @@ svg:not(:root) {
     margin: 0;
     text-align: center;
 }
-.img-Engitech {
+.img-Rapport {
     position: absolute;
     top: -190px;
     width: 100%;
@@ -7881,7 +7881,7 @@ section {
     .right-about-v4 {
         margin-left: 0;
     }
-    .img-Engitech {
+    .img-Rapport {
         display: none;
     }
     .tab-video {

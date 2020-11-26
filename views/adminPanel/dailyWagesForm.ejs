@@ -105,12 +105,14 @@
         <% } %>
     </div>
 
+    <% if(singleWage){ %>
 
     <div class="table-wrap">
+        <p>*Please upload the file again before submitting the file if you are not going to update the file.</p>
         <table class="table style2 style3">
             <thead class="table-inverse">
                 <tr>
-
+                    <th><span>State</span></th>
                     <th><span>Schedule of Employment</span></th>
                     <th><span>Category of workmen/Employees</span></th>
                     <th><span>Minimum rates of wages in Rupees</span><br><span class="month-day"><span>Per Month
@@ -125,6 +127,140 @@
                 <form action="/admin/dailyWages" enctype="multipart/form-data" method="post">
                     <div class="form-group">
                         <tr>
+                            <td>
+                                <div class="form-group">
+                                    <select name="state_select" class="custom-select" id="selectedEmployee">
+                                        <option selected value="#">Select a State...</option>
+                                        <option value="Andhra Pradesh">Andhra Pradesh</option>
+                                        <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+                                        <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                                        <option value="Assam">Assam</option>
+                                        <option value="Bihar">Bihar</option>
+                                        <option value="Chandigarh">Chandigarh</option>
+                                        <option value="Chhattisgarh">Chhattisgarh</option>
+                                        <option value="Dadar and Nagar Haveli">Dadar and Nagar Haveli</option>
+                                        <option value="Daman and Diu">Daman and Diu</option>
+                                        <option value="Delhi">Delhi</option>
+                                        <option value="Lakshadweep">Lakshadweep</option>
+                                        <option value="Puducherry">Puducherry</option>
+                                        <option value="Goa">Goa</option>
+                                        <option value="Gujarat">Gujarat</option>
+                                        <option value="Haryana">Haryana</option>
+                                        <option value="Himachal Pradesh">Himachal Pradesh</option>
+                                        <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+                                        <option value="Jharkhand">Jharkhand</option>
+                                        <option value="Karnataka">Karnataka</option>
+                                        <option value="Kerala">Kerala</option>
+                                        <option value="Madhya Pradesh">Madhya Pradesh</option>
+                                        <option value="Maharashtra">Maharashtra</option>
+                                        <option value="Manipur">Manipur</option>
+                                        <option value="Meghalaya">Meghalaya</option>
+                                        <option value="Mizoram">Mizoram</option>
+                                        <option value="Nagaland">Nagaland</option>
+                                        <option value="Odisha">Odisha</option>
+                                        <option value="Punjab">Punjab</option>
+                                        <option value="Rajasthan">Rajasthan</option>
+                                        <option value="Sikkim">Sikkim</option>
+                                        <option value="Tamil Nadu">Tamil Nadu</option>
+                                        <option value="Telangana">Telangana</option>
+                                        <option value="Tripura">Tripura</option>
+                                        <option value="Uttar Pradesh">Uttar Pradesh</option>
+                                        <option value="Uttarakhand">Uttarakhand</option>
+                                        <option value="West Bengal">West Bengal</option>
+                                    </select>
+                                </div>
+                            </td>
+                            <td><span> <input value="<%= singleWage.schedule %> " class="form-control" type="text"
+                                        name="schedule"> </span></td>
+                            <td>
+                                <input value="<%= singleWage.category %>" class="form-control" type="text"
+                                    name="category">
+                            </td>
+
+                            <td>
+                                <span class="rates-form"><input
+                                        value=<%= Number(singleWage.minimumRates.ratesPerMonth) %> class="form-control "
+                                        type="number" name="ratesPerMonth">
+                                    <input value=<%= Number(singleWage.minimumRates.ratesPerDay) %>
+                                        class="form-control " type="number" name="ratesPerDay" id=""></span>
+                            </td>
+
+                            <td><span><input required class="form-control" type="file" name="ratesPdf" id=""></span>
+                            </td>
+                            <td><Button value="<%= singleWage.id %>" type="submit" name="submit_button"
+                                    id="submitButton"><span class="badge badge-success brd-rd5">Sumbit</span></Button>
+                            </td>
+
+                        </tr>
+                    </div>
+                </form>
+
+            </tbody>
+        </table>
+    </div>
+    <% }else{ %>
+    <div class="table-wrap">
+        <table class="table style2 style3">
+            <thead class="table-inverse">
+                <tr>
+                    <th><span>State</span></th>
+                    <th><span>Schedule of Employment</span></th>
+                    <th><span>Category of workmen/Employees</span></th>
+                    <th><span>Minimum rates of wages in Rupees</span><br><span class="month-day"><span>Per Month
+                            </span><span> Per
+                                Day</span></span>
+                    </th>
+                    <th><span>Add pdf</span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <form action="/admin/dailyWages" enctype="multipart/form-data" method="post">
+                    <div class="form-group">
+                        <tr>
+                            <td>
+                                <div class="form-group">
+                                    <select name="state_select" class="custom-select" id="selectedEmployee">
+                                        <option selected value="#">Select a State...</option>
+                                        <option value="Andhra Pradesh">Andhra Pradesh</option>
+                                        <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+                                        <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                                        <option value="Assam">Assam</option>
+                                        <option value="Bihar">Bihar</option>
+                                        <option value="Chandigarh">Chandigarh</option>
+                                        <option value="Chhattisgarh">Chhattisgarh</option>
+                                        <option value="Dadar and Nagar Haveli">Dadar and Nagar Haveli</option>
+                                        <option value="Daman and Diu">Daman and Diu</option>
+                                        <option value="Delhi">Delhi</option>
+                                        <option value="Lakshadweep">Lakshadweep</option>
+                                        <option value="Puducherry">Puducherry</option>
+                                        <option value="Goa">Goa</option>
+                                        <option value="Gujarat">Gujarat</option>
+                                        <option value="Haryana">Haryana</option>
+                                        <option value="Himachal Pradesh">Himachal Pradesh</option>
+                                        <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+                                        <option value="Jharkhand">Jharkhand</option>
+                                        <option value="Karnataka">Karnataka</option>
+                                        <option value="Kerala">Kerala</option>
+                                        <option value="Madhya Pradesh">Madhya Pradesh</option>
+                                        <option value="Maharashtra">Maharashtra</option>
+                                        <option value="Manipur">Manipur</option>
+                                        <option value="Meghalaya">Meghalaya</option>
+                                        <option value="Mizoram">Mizoram</option>
+                                        <option value="Nagaland">Nagaland</option>
+                                        <option value="Odisha">Odisha</option>
+                                        <option value="Punjab">Punjab</option>
+                                        <option value="Rajasthan">Rajasthan</option>
+                                        <option value="Sikkim">Sikkim</option>
+                                        <option value="Tamil Nadu">Tamil Nadu</option>
+                                        <option value="Telangana">Telangana</option>
+                                        <option value="Tripura">Tripura</option>
+                                        <option value="Uttar Pradesh">Uttar Pradesh</option>
+                                        <option value="Uttarakhand">Uttarakhand</option>
+                                        <option value="West Bengal">West Bengal</option>
+                                    </select>
+                                </div>
+                            </td>
                             <td><span> <input class="form-control" type="text" name="schedule"> </span></td>
                             <td>
                                 <input class="form-control" type="text" name="category">
@@ -148,7 +284,7 @@
             </tbody>
         </table>
     </div>
-
+    <% } %>
     <script>
         let alert = $(".alert");
         $('input[type="file"]').on('change', function () {

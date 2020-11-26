@@ -42,12 +42,31 @@
         </ul>
         <h4 style="display: none;">Forms</h4>
         <ul class="drp-sec">
-            <li><a href="/admin/servicePage"> <i class="fas fa-file-alt"></i>Service Page Generator</a>
-            </li>
-            <li><a href="/admin/dailyWages"><i class="fas fa-wallet"></i> Daily Wages Form</a></li>
-            <li><a href="/blogsGenerator"><i class="fab fa-blogger"></i> Blog Generator</a></li>
-            <li><a href="/admin/lawUpdatesForm"><i class="fas fa-gavel"></i> Law Updates Form</a></li>
 
+
+            <li><a href="/blogsGenerator"><i class="fab fa-blogger"></i> Blog Generator</a></li>
+            <li class="has-drp"><a href="#" title=""><i class="fas fa-wallet"></i> <span>Daily Wages</span></a>
+                <ul class="sb-drp">
+                    <li><a href="/admin/dailyWages"> Create New</a></li>
+                    <li><a href="/admin/dailyWagesUpdate">Update Existing</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="has-drp"><a href="#" title=""><i class="fas fa-gavel"></i> <span>Law Updates</span></a>
+                <ul class="sb-drp">
+                    <li><a href="/admin/lawUpdatesForm">Create New</a></li>
+                    <li><a href="/admin/lawUpdatesFormUpdate">Update Existing</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="has-drp"><a href="#" title=""><i class="fas fa-file-alt"></i> <span>Services</span></a>
+                <ul class="sb-drp">
+                    <li><a href="/admin/servicePage"> Create New</a>
+                    </li>
+                    <li><a href="/admin/serviceEditor">Update Existing</a>
+                    </li>
+                </ul>
+            </li>
         </ul>
         <% if(user.type === "admin"){ %>
         <h4 style="display: none;">Admin Specific</h4>

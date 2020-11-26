@@ -33,6 +33,40 @@
             </button>
         </div>
         <% } %>
+        <% if(SingleLawUpdate){ %>
+        <div class="widget pad50-65">
+            <div class="widget-title2">
+                <h4>Law Updates Editing Form</h4>
+                <span>Please fill out the form below Form elements.</span>
+            </div>
+            <form method="POST" action="/admin/lawUpdatesForm" class="form-wrp">
+                <div class="row mrg20">
+                    <div class="col-md-6 col-sm-6 col-lg-6">
+                        <input value="<%=SingleLawUpdate.department  %>" name="department" class="brd-rd30" type="text"
+                            placeholder="Department*" />
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-lg-6">
+                        <input value="<%=SingleLawUpdate.authority  %>" name="authority" class="brd-rd30" type="text"
+                            placeholder="Authority*" />
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-lg-12">
+                        <input value="<%=SingleLawUpdate.url  %>" name="url" class="brd-rd30" type="text"
+                            placeholder="Url of the concerned website*" />
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-lg-12">
+                        <textarea name="subject" row="10" class="brd-rd30" type="text"
+                            placeholder="Subject*"><%=SingleLawUpdate.subject  %></textarea>
+                    </div>
+
+                    <div class="col-md-12 col-sm-12 col-lg-12">
+                        <button value="<%= SingleLawUpdate.id %>" name="submit_button" class="green-bg brd-rd5"
+                            type="submit"><i class="fa fa-paper-plane"></i>
+                            Post</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <% } %>
         <div class="widget pad50-65">
             <div class="widget-title2">
                 <h4>Law Updates Form</h4>
