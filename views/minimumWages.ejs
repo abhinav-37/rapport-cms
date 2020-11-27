@@ -46,7 +46,11 @@
             <div class="page-header flex-middle">
                 <div class="container">
                     <div class="inner flex-middle">
-                        <h1 class="page-title">Minimum Wages</h1>
+                        <% if(wages.length>0){ %>
+                        <h1 class="page-title">Minimum Wages for <%= wages[0].state %> </h1>
+                        <% }else{ %>
+                        <h1 class="page-title">No data available </h1>
+                        <% } %>
                         <ul id="breadcrumbs" class="breadcrumbs none-style">
                             <li><a href="/">Home</a></li>
                             <li class="active">Minimum Wages</li>
@@ -55,6 +59,7 @@
                 </div>
             </div>
         </div>
+        <% if(wages.length >0){ %>
         <table class="table container">
             <thead class="thead-dark">
                 <tr class="table-head">
@@ -78,7 +83,7 @@
                 <% }) %>
             </tbody>
         </table>
-
+        <% }%>
 
 
 
@@ -86,15 +91,15 @@
     <%- include("partials/footer") %>
     <a id="back-to-top" href="#" class="show"><i class="flaticon-up-arrow"></i></a>
     <!-- jQuery -->
-    <script src="js/jquery.min.js"></script>
-    <script src="js/jquery.magnific-popup.min.js"></script>
-    <script src="js/jquery.isotope.min.js"></script>
-    <script src="js/owl.carousel.min.js"></script>
-    <script src="js/easypiechart.min.js"></script>
-    <script src="js/jquery.countdown.min.js"></script>
-    <script src="js/scripts.js"></script>
-    <script src="js/header-mobile.js"></script>
-    <script src="js/royal_preloader.min.js"></script>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/jquery.magnific-popup.min.js"></script>
+    <script src="/js/jquery.isotope.min.js"></script>
+    <script src="/js/owl.carousel.min.js"></script>
+    <script src="/js/easypiechart.min.js"></script>
+    <script src="/js/jquery.countdown.min.js"></script>
+    <script src="/js/scripts.js"></script>
+    <script src="/js/header-mobile.js"></script>
+    <script src="/js/royal_preloader.min.js"></script>
     <script>
         window.jQuery = window.$ = jQuery;
         (function ($) {

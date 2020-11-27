@@ -19,6 +19,7 @@ const CustomerResponse = require("./models/customerResponse");
 let multer = require('multer');
 const dailyWages = require("./models/dailyWages");
 const lawUpdates = require("./models/lawUpdates");
+const { text } = require("body-parser");
 
 
 app.use(express.static(path.join(__dirname, "public")));
@@ -108,9 +109,12 @@ app.get("/lawUpdates", async function (req, res) {
     let updates = await lawUpdates.find();
     res.render("lawUpdates", { user: req.user, updates });
 });
-app.get("/minimumWages", async function (req, res) {
-    let wages = await dailyWages.find();
+app.get("/minimumWages/:state", async function (req, res) {
+    let wages = await dailyWages.find({state:req.params.state});
     res.render("minimumWages", { user: req.user, wages });
+});
+app.get("/minimumWagesSelector", async function (req, res) {
+    res.render("minimumWagesSelector", { user: req.user });
 });
 
 // ========================= Authentication start =================== //
@@ -263,7 +267,7 @@ app.get("/logout", function (req, res) {
 });
 
 //========================== Admin panel ======================//
-//multer
+//====multer config=========//
 let nameOfImage = "";
 let count = 0;
 let storage = multer.diskStorage({
@@ -284,7 +288,7 @@ let storage = multer.diskStorage({
             nameOfImage = req.body.nameOfBlog + pathName + "." + format
         } else if (pathName === "admin/dailyWages") { 
             console.log(file);
-            cb(null, Date.now().toString().substring(Date.now().toString().length -1)+file.originalname.replace(/\s/g,''));
+            cb(null, Date.now().toString().substring(0,Date.now().toString().length -1)+file.originalname.replace(/\s/g,''));
         }
             
         else {
@@ -294,6 +298,7 @@ let storage = multer.diskStorage({
   }
 })
 let upload = multer({ storage })
+//=====multer config end ======//
 app.get("/adminPanel", (req, res) => {
     let auth = req.isAuthenticated();
     let passedMessage = req.query.message;
@@ -309,6 +314,7 @@ app.get("/adminPanel", (req, res) => {
     }
     
 });
+// service page 
 app.get("/admin/servicePage", (req, res) => {
     let auth = req.isAuthenticated()
     let singleService;
@@ -390,7 +396,7 @@ app.post("/websiteData", upload.array("image"),  async (req, res) => {
     
 
 });
-//blog form get request
+//blog
 app.get("/blogsGenerator", function (req, res) {
     let auth = req.isAuthenticated();
     if (auth) {
@@ -406,7 +412,6 @@ app.get("/blogsGenerator", function (req, res) {
 
     }
 })
-//blog post requests
 app.post("/blogsGenerator", upload.array("image"), async function (req, res) {
     let auth = req.isAuthenticated();
     if (auth && req.user.type === "admin") {
@@ -425,6 +430,7 @@ app.post("/blogsGenerator", upload.array("image"), async function (req, res) {
 
     }
 });
+
 //Task distributions
 app.get("/admin/taskDistribution", async function (req, res) {
     let auth = req.isAuthenticated();
@@ -524,9 +530,8 @@ app.post("/admin/dailyWages", upload.array("ratesPdf"), async function (req, res
     if (auth) {
         if (req.user.type === "admin" || req.user.type === "employee") {
             const {state_select, schedule, category, ratesPerMonth, ratesPerDay } = req.body
-            
-            const newdailyWage = new dailyWages({
-                state:state_select,
+            let dailyWageObject = {
+                 state:state_select.toLowerCase().replace(/\s/g , "-"),
                 user: req.user.id,
                 schedule,
                 category,
@@ -534,12 +539,15 @@ app.post("/admin/dailyWages", upload.array("ratesPdf"), async function (req, res
                     ratesPerDay,
                     ratesPerMonth
                 }, 
-                filename: req.files.length !==0 && Date.now().toString().substring(Date.now().toString().length -1) + req.files[0].originalname.replace(/\s/g,'')
-            });
+                filename: req.files.length !==0 && Date.now().toString().substring(0,Date.now().toString().length -1) + req.files[0].originalname.replace(/\s/g,'')
+            }
+            const newdailyWage = new dailyWages(dailyWageObject);
             let wage = await dailyWages.findById(req.body.submit_button);
             if (wage) {
                 if (req.files.length !== 0) {
-                    let test = await servicePage.findOneAndUpdate({ _id: wage.id }, { $set: newdailyWage }, { new: true });
+                   let test = await servicePage.findOneAndUpdate({_id: wage.id},  { $set: dailyWageObject },  {  new: true  })
+                    let message = encodeURIComponent('Done Updating The Wage !');
+                res.redirect("/admin/dailyWages?message="+message)
                 } else {
                     let test = await servicePage.findOneAndUpdate({ _id: wage.id }, { $set: { state:state_select,
                     user: req.user.id,
