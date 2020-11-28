@@ -368,8 +368,9 @@ app.get("/admin/singleServiceDelete/:id", async function (req, res) {
 // Post request to get all the service page info from the admin //
 app.post("/websiteData", upload.array("image"),  async (req, res) => {
    
-    const {submit_button_above, nameOfService, serviceurl, rapportStart, rapportSelect, rapportSuper, about_service, procedureName, procedureDescription, documents_required, eligibility,advantages , faqQuestion, faqAnswer,stepsName, stepsDescription } = req.body;
+    const {categoryOfService,submit_button_above, nameOfService, serviceurl, rapportStart, rapportSelect, rapportSuper, about_service, procedureName, procedureDescription, documents_required, eligibility,advantages , faqQuestion, faqAnswer,stepsName, stepsDescription } = req.body;
     const servicePageObject = {
+        category:categoryOfService,
         name: nameOfService,
         slug: serviceurl,
         pricingCards: { rapportStart, rapportSelect, rapportSuper },
@@ -383,10 +384,8 @@ app.post("/websiteData", upload.array("image"),  async (req, res) => {
     }
     let service = await servicePage.findById(submit_button_above );
    
-    if (service) {
-        
+    if (service) {   
         let test = await servicePage.findOneAndUpdate({_id: service.id},  { $set: servicePageObject },  {  new: true  })
-        
         let message = encodeURIComponent('Service Page updated Successfully!');
         res.redirect("/adminPanel?message="+message) 
     } else {

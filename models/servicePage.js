@@ -5,6 +5,9 @@ const serviceSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     },
+    category: {
+        type: String,  
+    },
     name: {
         required: true,
         type: String
