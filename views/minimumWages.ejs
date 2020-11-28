@@ -47,7 +47,8 @@
                 <div class="container">
                     <div class="inner flex-middle">
                         <% if(wages.length>0){ %>
-                        <h1 class="page-title">Minimum Wages for <%= wages[0].state %> </h1>
+                        <h1 class="page-title">Minimum Wages for <span style="font-weight: bolder;">
+                                <%= wages[0].state %></span> </h1>
                         <% }else{ %>
                         <h1 class="page-title">No data available </h1>
                         <% } %>

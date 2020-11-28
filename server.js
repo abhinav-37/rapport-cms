@@ -299,13 +299,16 @@ let storage = multer.diskStorage({
 })
 let upload = multer({ storage })
 //=====multer config end ======//
-app.get("/adminPanel", (req, res) => {
+app.get("/adminPanel",async (req, res) => {
     let auth = req.isAuthenticated();
     let passedMessage = req.query.message;
     req.session.returnTo = req.originalUrl
     if (auth) {
         if (req.user.type === "admin" || req.user.type === "employee") {
-            res.render("adminPanel/dashboard",{data:null, passedMessage, user:req.user})
+            let customers = await User.find({ type: "customer" });
+            let employees = await User.find({ type: "employee" });
+            let orders = await CustomerResponse.find();
+            res.render("adminPanel/dashboard",{data:null, passedMessage, user:req.user, customers, employees, orders})
         } else {
              res.redirect("/login/admin")
         }
