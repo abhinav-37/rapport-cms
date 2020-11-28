@@ -664,7 +664,17 @@ app.post("/admin/lawUpdatesForm", async function (req, res) {
         res.redirect("/login/admin")
     }
 })
+
+//404 routes
+app.get("/admin/*", function (req, res) {
+   res.render("adminPanel/404",{user:req.user}) 
+});
 // ================= admin panel finished ==================== //
+
+app.get("*", function (req,res) {
+    res.render("404")
+})
+
 app.listen(PORT, () => {
     console.log(`Server started on PORT ${PORT}`);
 });
