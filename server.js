@@ -79,42 +79,66 @@ passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 //============== end user Schema ====================== //
+const serviceSort = async() => {
+    let services = await servicePage.find();
+    let startAbusiness = [];
+    let licenses = [];
+    let labour = [];
+    let HR = [];
+    services.forEach(function (d) {
+        if (d.category.replace(/\s/g, '').toLowerCase() === "startabusiness") {
+            startAbusiness.push(d);
+        } else if (d.category.replace(/\s/g, '').toLowerCase() === "licenses/registration") {
+            licenses.push(d)
+        } else if (d.category.replace(/\s/g, '').toLowerCase() === "labourlawcompliances") {
+            labour.push(d)
+        } else {
+            HR.push(d)
+        };
+    });
+    return [startAbusiness, licenses, labour, HR];
+} 
 
-app.get("/", (req, res) => {
+app.get("/", async(req, res) => {
     req.session.returnTo = req.originalUrl
-    res.render("index")
+    let [startAbusiness, licenses, labour, HR] = await serviceSort();
+    res.render("index", { startAbusiness, licenses, labour, HR,user:req.user });
 });
 
 app.get("/blog", async (req, res) => {
     req.session.returnTo = req.originalUrl
     let allBlogs = await Blog.find();
-    res.render("blog-grid",{allBlogs});
+    let [startAbusiness, licenses, labour, HR] = await serviceSort();
+    res.render("blog-grid",{startAbusiness, licenses, labour, HR,allBlogs});
 });
 app.get("/blogSingle/:blogId", async(req, res) => {
     req.session.returnTo = req.originalUrl
-    let singleBlog = await Blog.findById(req.params.blogId)
-    res.render("post",{singleBlog})
+    let singleBlog = await Blog.findById(req.params.blogId);
+    let [startAbusiness, licenses, labour, HR] = await serviceSort();
+    res.render("post",{startAbusiness, licenses, labour, HR,singleBlog})
 });
 app.get("/services/:slug", async (req, res) => {
     req.session.returnTo = req.originalUrl
     let pageData = await servicePage.findOne({ slug: req.params.slug });
+    let [startAbusiness, licenses, labour, HR] = await serviceSort();
     if (pageData) {  
-        res.render("servicePage",{...pageData._doc});
-    } else {
-         res.render("pfReturn");
-    }
+        res.render("servicePage",{startAbusiness, licenses, labour, HR,...pageData._doc});
+    } 
    
 });
 app.get("/lawUpdates", async function (req, res) {
     let updates = await lawUpdates.find();
-    res.render("lawUpdates", { user: req.user, updates });
+    let [startAbusiness, licenses, labour, HR] = await serviceSort();
+    res.render("lawUpdates", {startAbusiness, licenses, labour, HR, user: req.user, updates });
 });
 app.get("/minimumWages/:state", async function (req, res) {
-    let wages = await dailyWages.find({state:req.params.state});
-    res.render("minimumWages", { user: req.user, wages });
+    let wages = await dailyWages.find({ state: req.params.state });
+    let [startAbusiness, licenses, labour, HR] = await serviceSort();
+    res.render("minimumWages", {startAbusiness, licenses, labour, HR, user: req.user, wages });
 });
 app.get("/minimumWagesSelector", async function (req, res) {
-    res.render("minimumWagesSelector", { user: req.user });
+    let [startAbusiness, licenses, labour, HR] = await serviceSort();
+    res.render("minimumWagesSelector", {startAbusiness, licenses, labour, HR, user: req.user });
 });
 
 // ========================= Authentication start =================== //

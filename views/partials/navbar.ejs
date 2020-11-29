@@ -48,58 +48,50 @@
 
                                     <li class="menu-item-has-children"><a>Services</a>
                                         <ul class="sub-menu">
+                                            <% if(startAbusiness.length>0){ %>
                                             <li class="menu-item-has-children"><a href="shop.html">Start a business</a>
                                                 <ul class="sub-menu">
-                                                    <li><a href="single-product.html">Private Limited</a></li>
-                                                    <li><a href="checkout-page.html">Limited Liability</a></li>
-                                                    <li><a href="cart-page.html">Sole Proprietorship Registration</a>
-                                                    </li>
-                                                    <li><a href="cart-page.html">Public Limited</a></li>
-                                                    <li><a href="cart-page.html">One Person (OPC) Company</a></li>
+                                                    <% startAbusiness.forEach(function(e){ %>
+                                                    <li><a href="/services/<%= e.slug  %> "><%= e.name %> </a></li>
+                                                    <% }) %>
                                                 </ul>
 
                                             </li>
+                                            <% } %>
+                                            <% if(licenses.length>0){ %>
                                             <li class="menu-item-has-children"><a href="shop.html">Licenses/
                                                     Registration</a>
                                                 <ul class="sub-menu">
-                                                    <li><a href="single-product.html">Provident Fund Registration</a>
-                                                    </li>
-                                                    <li><a href="checkout-page.html">ESIC Registration</a></li>
-                                                    <li><a href="cart-page.html">Shop & Establishment License</a>
-                                                    </li>
-                                                    <li><a href="cart-page.html">BOCW Registration</a></li>
-                                                    <li><a href="cart-page.html">Contract Labour Registration</a></li>
-                                                    <li><a href="cart-page.html">MSME | SSI Registration</a></li>
-                                                    <li><a href="cart-page.html">GST Registration</a></li>
-                                                    <li><a href="cart-page.html">Digital SIgnature (DSC)</a></li>
-                                                    <li><a href="cart-page.html">FSSAI | Food License</a></li>
-                                                    <li><a href="cart-page.html">Factory License</a></li>
-                                                    <li><a href="cart-page.html">Import Export Code Registration</a>
-                                                    </li>
+                                                    <% licenses.forEach(function(e){ %>
+                                                    <li><a href="/services/<%= e.slug  %> "><%= e.name %> </a></li>
+                                                    <% }) %>
                                                 </ul>
 
                                             </li>
+                                            <% } %>
+                                            <% if(labour.length>0){ %>
                                             <li class="menu-item-has-children"><a href="shop.html">Labour Law
                                                     Compliances</a>
                                                 <ul class="sub-menu">
-                                                    <li><a href="single-product.html">Provident Fund Compliance</a></li>
-                                                    <li><a href="checkout-page.html">ESIC Compliance</a></li>
-                                                    <li><a href="cart-page.html">Factory Compliance</a>
-                                                    </li>
-                                                    <li><a href="cart-page.html">Shop & Establishment Compliance</a>
-                                                    </li>
-                                                    <li><a href="cart-page.html">RERA Compliance</a></li>
+                                                    <% labour.forEach(function(e){ %>
+                                                    <li><a href="/services/<%= e.slug  %> "><%= e.name %> </a></li>
+                                                    <% }) %>
                                                 </ul>
 
                                             </li>
-                                            <li class="menu-item-has-children"><a href="shop.html">Payroll
-                                                    Outsourcing</a>
+                                            <% } %>
+                                            <% if(HR.length>0){ %>
+                                            <li class="menu-item-has-children"><a href="shop.html">Human Resources &
+                                                    Technology</a>
                                                 <ul class="sub-menu">
-                                                    <li><a href="single-product.html">Monthly Salary Processing</a></li>
+                                                    <% HR.forEach(function(e){ %>
+                                                    <li><a href="/services/<%= e.slug  %> "><%= e.name %> </a></li>
+                                                    <% }) %>
 
                                                 </ul>
 
                                             </li>
+                                            <% } %>
                                         </ul>
                                     </li>
                                     <li class="menu-item-has-children"><a href="#">Knowledge Center</a>
