@@ -10,7 +10,7 @@ const dailyWagesSchema = new mongoose.Schema({
         type: String
     },
     category: {
-        type: String,
+        type: Array,
         required: true
     },
     minimumRates: {

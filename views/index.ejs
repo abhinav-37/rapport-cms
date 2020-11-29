@@ -83,15 +83,13 @@
 
             <div id="rev_slider_one_wrapper" class="rev_slider_wrapper fullscreen-container" data-alias="mask-showcase"
                 data-source="gallery">
-
                 <!-- START REVOLUTION SLIDER 5.4.1 fullscreen mode -->
                 <div id="rev_slider_one" class="rev_slider fullscreenbanner" data-version="5.4.1">
                     <div class="search-div" style="position: relative; padding:30px 0 100px 0; z-index:99999">
                         <div class="customSearch">
-                            <input type="text" placeholder="Search any Service...">
+                            <input id="serviceSearch" type="text" placeholder="Search any Service...">
                             <div class="search"></div>
                         </div>
-
                     </div>
                     <ul>
 
@@ -117,11 +115,8 @@
 
 
                     </ul>
-
-
                 </div>
             </div>
-
             <section class="over-hidden">
                 <div class="container">
 
@@ -564,6 +559,29 @@
                 background: '#ffffff'
             });
         })(jQuery);
+    </script>
+    <script>
+        var options = {
+
+            url: `[
+  { "name": "Afghanistan", "code": "AF" },
+                { "name": "Aland Islands", "code": "AX" },
+                { "name": "Albania", "code": "AL" },
+                { "name": "Algeria", "code": "DZ" },
+                { "name": "American Samoa", "code": "AS" }
+ ]`,
+
+            getValue: "name",
+
+            list: {
+                match: {
+                    enabled: true
+                }
+            },
+
+            theme: "square"
+        };
+        $("#serviceSearch").easyAutocomplete(options);
     </script>
 </body>
 

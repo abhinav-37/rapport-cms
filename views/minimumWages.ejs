@@ -35,10 +35,22 @@
         tr th {
             text-align: center !important;
         }
+
+        .schedule,
+        .filename {
+            display: flex;
+            align-items: center;
+            background-color: #343A40;
+        }
+
+        .schedule h6,
+        .filename h6 {
+            color: white;
+        }
     </style>
 </head>
 
-<body class="royal_preloader">
+<body class="royal_preloader ">
     <div id="page" class="site">
         <%- include("partials/navbar") %>
 
@@ -46,9 +58,9 @@
             <div class="page-header flex-middle">
                 <div class="container">
                     <div class="inner flex-middle">
-                        <% if(wages.length>0){ %>
+                        <% if(wages){ %>
                         <h1 class="page-title">Minimum Wages for <span style="font-weight: bolder;">
-                                <%= wages[0].state %></span> </h1>
+                                <%= wages.state %></span> </h1>
                         <% }else{ %>
                         <h1 class="page-title">No data available </h1>
                         <% } %>
@@ -60,30 +72,43 @@
                 </div>
             </div>
         </div>
-        <% if(wages.length >0){ %>
-        <table class="table container">
-            <thead class="thead-dark">
-                <tr class="table-head">
-                    <th scope="col">Schedule of Employment</th>
-                    <th scope="col">Category of workmen/Employees</th>
-                    <th scope="col">Minimum rates of wages in Rupees <span class="rates-wages"><span>Per
-                                Month</span><span>Per
-                                Day</span></span></th>
-                    <th scope="col"> File </th>
-                </tr>
-            </thead>
-            <tbody>
-                <% wages.forEach(function(e){ %>
-                <tr>
-                    <td scope="row"><%= e.schedule %> </td>
-                    <td> <%= e.category %> </td>
-                    <td class="rates-wages"><span><%= e.minimumRates.ratesPerMonth %> </span>
-                        <span><%= e.minimumRates.ratesPerDay %> </span></td>
-                    <td><a target="_blank" href="/uploads/<%-e.filename%> "><i class="fas fa-file-pdf"></i></a></td>
-                </tr>
-                <% }) %>
-            </tbody>
-        </table>
+        <% if(wages){ %>
+        <div style="display: flex" class="container">
+            <div class="row">
+                <div class="col-lg-2 schedule">
+                    <h6 style="display: inline;"><%= wages.schedule %> </h6>
+                </div>
+                <div class="col-lg-8">
+                    <table class="table ">
+                        <thead class="thead-dark">
+                            <tr class="table-head">
+
+                                <th scope="col">Category of workmen/Employees</th>
+                                <th scope="col">Minimum rates of wages in Rupees <span class="rates-wages"><span>Per
+                                            Month</span><span>Per
+                                            Day</span></span></th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% for(let i=0; i<wages.category.length; i++){ %>
+                            <tr>
+
+                                <td> <%= wages.category[i] %> </td>
+                                <td class="rates-wages"><span><%= wages.minimumRates.ratesPerMonth[i] %> </span>
+                                    <span><%= wages.minimumRates.ratesPerDay[i] %> </span></td>
+
+                            </tr>
+                            <% } %>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-lg-2 filename">
+                    <h6>File <a target="_blank" href="/uploads/<%-wages.filename%> "><i class="fas fa-file-pdf"></i></a>
+                    </h6>
+                </div>
+            </div>
+        </div>
         <% }%>
 
 

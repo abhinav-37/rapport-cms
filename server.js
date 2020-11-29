@@ -132,7 +132,7 @@ app.get("/lawUpdates", async function (req, res) {
     res.render("lawUpdates", {startAbusiness, licenses, labour, HR, user: req.user, updates });
 });
 app.get("/minimumWages/:state", async function (req, res) {
-    let wages = await dailyWages.find({ state: req.params.state });
+    let wages = await dailyWages.findOne({ state: req.params.state });
     let [startAbusiness, licenses, labour, HR] = await serviceSort();
     res.render("minimumWages", {startAbusiness, licenses, labour, HR, user: req.user, wages });
 });
@@ -567,6 +567,7 @@ app.post("/admin/dailyWages", upload.array("ratesPdf"), async function (req, res
                 }, 
                 filename: req.files.length !==0 && Date.now().toString().substring(0,Date.now().toString().length -1) + req.files[0].originalname.replace(/\s/g,'')
             }
+            
             const newdailyWage = new dailyWages(dailyWageObject);
             let wage = await dailyWages.findById(req.body.submit_button);
             if (wage) {
@@ -694,8 +695,9 @@ app.get("/admin/*", function (req, res) {
 });
 // ================= admin panel finished ==================== //
 
-app.get("*", function (req,res) {
-    res.render("404")
+app.get("*", async function (req, res) {
+     let [startAbusiness, licenses, labour, HR] = await serviceSort();
+    res.render("404",{ startAbusiness, licenses, labour, HR})
 })
 
 app.listen(PORT, () => {
