@@ -28,10 +28,10 @@
     </div>
     <div class="octf-main-header">
         <div class="octf-area-wrap">
-            <div class="container octf-mainbar-container">
+            <div class="octf-mainbar-container">
                 <div class="octf-mainbar">
                     <div class="octf-mainbar-row octf-row">
-                        <div class="octf-col logo-col">
+                        <div>
                             <div id="site-logo" class="site-logo">
                                 <a href="/">
                                     <img src="/images/2d-pnd.png" alt="Rapport" class="">
@@ -41,59 +41,52 @@
                         <div class="octf-col menu-col">
                             <nav id="site-navigation" class="main-navigation">
                                 <ul class="menu">
-                                    <li class="  ">
-                                        <a href="/">Home</a>
 
-                                    </li>
 
-                                    <li class="menu-item-has-children"><a>Services</a>
+                                    <li class="menu-item-has-children"><a href="shop.html">Start a business</a>
                                         <ul class="sub-menu">
-                                            <% if(startAbusiness.length>0){ %>
-                                            <li class="menu-item-has-children"><a href="shop.html">Start a business</a>
-                                                <ul class="sub-menu">
-                                                    <% startAbusiness.forEach(function(e){ %>
-                                                    <li><a href="/services/<%= e.slug  %> "><%= e.name %> </a></li>
-                                                    <% }) %>
-                                                </ul>
-
-                                            </li>
-                                            <% } %>
-                                            <% if(licenses.length>0){ %>
-                                            <li class="menu-item-has-children"><a href="shop.html">Licenses/
-                                                    Registration</a>
-                                                <ul class="sub-menu">
-                                                    <% licenses.forEach(function(e){ %>
-                                                    <li><a href="/services/<%= e.slug  %> "><%= e.name %> </a></li>
-                                                    <% }) %>
-                                                </ul>
-
-                                            </li>
-                                            <% } %>
-                                            <% if(labour.length>0){ %>
-                                            <li class="menu-item-has-children"><a href="shop.html">Labour Law
-                                                    Compliances</a>
-                                                <ul class="sub-menu">
-                                                    <% labour.forEach(function(e){ %>
-                                                    <li><a href="/services/<%= e.slug  %> "><%= e.name %> </a></li>
-                                                    <% }) %>
-                                                </ul>
-
-                                            </li>
-                                            <% } %>
-                                            <% if(HR.length>0){ %>
-                                            <li class="menu-item-has-children"><a href="shop.html">Human Resources &
-                                                    Technology</a>
-                                                <ul class="sub-menu">
-                                                    <% HR.forEach(function(e){ %>
-                                                    <li><a href="/services/<%= e.slug  %> "><%= e.name %> </a></li>
-                                                    <% }) %>
-
-                                                </ul>
-
-                                            </li>
-                                            <% } %>
+                                            <% startAbusiness.forEach(function(e){ %>
+                                            <li><a href="/services/<%= e.slug  %> "><%= e.name %> </a></li>
+                                            <% }) %>
                                         </ul>
+
                                     </li>
+
+
+                                    <li class="menu-item-has-children"><a href="shop.html">Licenses/
+                                            Registration</a>
+                                        <ul class="sub-menu">
+                                            <% licenses.forEach(function(e){ %>
+                                            <li><a href="/services/<%= e.slug  %> "><%= e.name %> </a></li>
+                                            <% }) %>
+                                        </ul>
+
+                                    </li>
+
+
+                                    <li class="menu-item-has-children"><a href="shop.html">Labour Law
+                                            Compliances</a>
+                                        <ul class="sub-menu">
+                                            <% labour.forEach(function(e){ %>
+                                            <li><a href="/services/<%= e.slug  %> "><%= e.name %> </a></li>
+                                            <% }) %>
+                                        </ul>
+
+                                    </li>
+
+
+                                    <li class="menu-item-has-children"><a href="shop.html">Human Resources &
+                                            Technology</a>
+                                        <ul class="sub-menu">
+                                            <% HR.forEach(function(e){ %>
+                                            <li><a href="/services/<%= e.slug  %> "><%= e.name %> </a></li>
+                                            <% }) %>
+
+                                        </ul>
+
+                                    </li>
+
+
                                     <li class="menu-item-has-children"><a href="#">Knowledge Center</a>
                                         <ul class="sub-menu">
                                             <li><a href="/lawUpdates">Govt. Notifications/ Circulars</a></li>
@@ -101,45 +94,15 @@
                                             <li><a href="portfolio-carousel.html">Blogs</a></li>
                                         </ul>
                                     </li>
-                                    <li class="menu-item-has-children"><a href="blog.html">Login</a>
-                                        <ul class="sub-menu">
-                                            <li><a href="/login/customer">Client</a></li>
-                                            <li><a href="blog-grid.html">Team</a></li>
-                                            <li><a href="post.html">Admin</a></li>
-                                            <li><a href="post.html">Partner</a></li>
-                                        </ul>
+                                    <li><a href="/login/customer">Login</a>
+
                                     </li>
-                                    <li><a href="/blog">Blog</a></li>
-                                    <li><a href="contact.html">Contacts</a></li>
+
+
                                 </ul>
                             </nav>
                         </div>
-                        <div class="octf-col cta-col text-right">
-                            <!-- Call To Action -->
-                            <div class="octf-btn-cta">
 
-
-
-                                <div class="octf-header-module">
-                                    <div class="toggle_search octf-cta-icons">
-                                        <i class="flaticon-search"></i>
-                                    </div>
-                                    <!-- Form Search on Header -->
-                                    <div class="h-search-form-field collapse">
-                                        <div class="h-search-form-inner">
-                                            <form role="search" method="get" id="hsearch-form" class="search-form">
-                                                <label><span class="screen-reader-text">Search for:</span>
-                                                    <input type="search" class="search-field" placeholder="Search …"
-                                                        value="" name="s"></label>
-                                                <button type="submit" class="search-submit"><i
-                                                        class="flaticon-search"></i></button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -149,7 +112,7 @@
         <div class="container">
             <div class="mlogo_wrapper clearfix">
                 <div class="mobile_logo">
-                    <a href="index.html">
+                    <a href="/">
                         <img src="images/logo.svg" alt="Rapport">
                     </a>
                 </div>
@@ -160,84 +123,60 @@
             <div class="mmenu_wrapper">
                 <div class="mobile_nav collapse">
                     <ul id="menu-main-menu" class="mobile_mainmenu">
-                        <li class="current-menu-item current-menu-ancestor">
-                            <a href="index.html">Home</a>
-
-                        </li>
-                        <li class="menu-item-has-children"><a href="#">Services</a>
+                        <li class="menu-item-has-children"><a href="shop.html">Start a business</a>
                             <ul class="sub-menu">
-                                <li class="menu-item-has-children"><a href="shop.html">Start a business</a>
-                                    <ul class="sub-menu">
-                                        <li><a href="single-product.html">Private Limited</a></li>
-                                        <li><a href="checkout-page.html">Limited Liability</a></li>
-                                        <li><a href="cart-page.html">Sole Proprietorship Registration</a>
-                                        </li>
-                                        <li><a href="cart-page.html">Public Limited</a></li>
-                                        <li><a href="cart-page.html">One Person (OPC) Company</a></li>
-                                    </ul>
-
-                                </li>
-                                <li class="menu-item-has-children"><a href="shop.html">Licenses/
-                                        Registration</a>
-                                    <ul class="sub-menu">
-                                        <li><a href="single-product.html">Provident Fund Registration</a>
-                                        </li>
-                                        <li><a href="checkout-page.html">ESIC Registration</a></li>
-                                        <li><a href="cart-page.html">Shop & Establishment License</a>
-                                        </li>
-                                        <li><a href="cart-page.html">BOCW Registration</a></li>
-                                        <li><a href="cart-page.html">Contract Labour Registration</a></li>
-                                        <li><a href="cart-page.html">MSME | SSI Registration</a></li>
-                                        <li><a href="cart-page.html">GST Registration</a></li>
-                                        <li><a href="cart-page.html">Digital SIgnature (DSC)</a></li>
-                                        <li><a href="cart-page.html">FSSAI | Food License</a></li>
-                                        <li><a href="cart-page.html">Factory License</a></li>
-                                        <li><a href="cart-page.html">Import Export Code Registration</a>
-                                        </li>
-                                    </ul>
-
-                                </li>
-                                <li class="menu-item-has-children"><a href="shop.html">Labour Law
-                                        Compliances</a>
-                                    <ul class="sub-menu">
-                                        <li><a href="single-product.html">Provident Fund Compliance</a></li>
-                                        <li><a href="checkout-page.html">ESIC Compliance</a></li>
-                                        <li><a href="cart-page.html">Factory Compliance</a>
-                                        </li>
-                                        <li><a href="cart-page.html">Shop & Establishment Compliance</a>
-                                        </li>
-                                        <li><a href="cart-page.html">RERA Compliance</a></li>
-                                    </ul>
-
-                                </li>
-                                <li class="menu-item-has-children"><a href="shop.html">Payroll
-                                        Outsourcing</a>
-                                    <ul class="sub-menu">
-                                        <li><a href="single-product.html">Monthly Salary Processing</a></li>
-
-                                    </ul>
-
-                                </li>
+                                <% startAbusiness.forEach(function(e){ %>
+                                <li><a href="/services/<%= e.slug  %> "><%= e.name %> </a></li>
+                                <% }) %>
                             </ul>
+
                         </li>
+
+
+                        <li class="menu-item-has-children"><a href="shop.html">Licenses/
+                                Registration</a>
+                            <ul class="sub-menu">
+                                <% licenses.forEach(function(e){ %>
+                                <li><a href="/services/<%= e.slug  %> "><%= e.name %> </a></li>
+                                <% }) %>
+                            </ul>
+
+                        </li>
+
+
+                        <li class="menu-item-has-children"><a href="shop.html">Labour Law
+                                Compliances</a>
+                            <ul class="sub-menu">
+                                <% labour.forEach(function(e){ %>
+                                <li><a href="/services/<%= e.slug  %> "><%= e.name %> </a></li>
+                                <% }) %>
+                            </ul>
+
+                        </li>
+
+
+                        <li class="menu-item-has-children"><a href="shop.html">Human Resources &
+                                Technology</a>
+                            <ul class="sub-menu">
+                                <% HR.forEach(function(e){ %>
+                                <li><a href="/services/<%= e.slug  %> "><%= e.name %> </a></li>
+                                <% }) %>
+
+                            </ul>
+
+                        </li>
+
+
                         <li class="menu-item-has-children"><a href="#">Knowledge Center</a>
                             <ul class="sub-menu">
                                 <li><a href="/lawUpdates">Govt. Notifications/ Circulars</a></li>
-                                <li><a href="/minimumWages">Minimum Wages</a></li>
+                                <li><a href="/minimumWagesSelector">Minimum Wages</a></li>
                                 <li><a href="portfolio-carousel.html">Blogs</a></li>
                             </ul>
                         </li>
-                        <li class="menu-item-has-children"><a href="blog.html">Login</a>
-                            <ul class="sub-menu">
-                                <li><a href="blog.html">Client</a></li>
-                                <li><a href="blog-grid.html">Team</a></li>
-                                <li><a href="post.html">Admin</a></li>
-                                <li><a href="post.html">Partner</a></li>
-                            </ul>
-                        </li>
+                        <li><a href="/login/customer">Login</a>
 
-                        <li><a href="/blog">Blogs</a></li>
-                        <li><a href="contact.html">Contacts</a></li>
+                        </li>
                     </ul>
                 </div>
             </div>

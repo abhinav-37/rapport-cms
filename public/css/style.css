@@ -1285,13 +1285,14 @@ a:active {
 .octf-mainbar-container {
     display: flex;
     flex-flow: row wrap;
-    align-items: stretch;
+    align-items: center;
+    justify-content: center;
+    padding: 0 50px;
 }
 
 .octf-mainbar {
     display: flex;
-    flex-flow: column wrap;
-    flex: 1 auto;
+    justify-content: center;
 }
 
 .octf-main-header .octf-mainbar-row {
