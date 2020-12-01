@@ -21,6 +21,8 @@
     <!-- REVOLUTION NAVIGATION STYLE -->
     <link rel="stylesheet" type="text/css" href="plugins/revolution/revolution/css/navigation.css">
     <!-- styles for vertical tabs -->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <style>
         .nav-pills-custom .nav-link {
             color: #aaa;
@@ -72,10 +74,36 @@
         .customSearch input:focus {
             box-shadow: 0 0px 20px black;
         }
+
+        .favourate-button {
+            z-index: 999;
+            color: white !important;
+            padding: 10px 20px;
+            border-radius: 30px;
+            background-color: #3DBCD3;
+            border-color: #3DBCD3;
+            margin: 20px 20px;
+        }
+
+        .favourate-services {
+            text-align: center;
+            padding: 30px 0 30px;
+        }
+
+        @media (max-width:992px) {
+            .favourate-services {
+                display: none;
+            }
+        }
+
+        .search-button {
+            color: white;
+            font-size: 2rem;
+        }
     </style>
 </head>
 
-<body class="royal_preloader">
+<body onload='servicesSerach()' class="royal_preloader">
     <div id="page" class="site">
         <%- include("./partials/navbar") %>
 
@@ -86,11 +114,25 @@
                 <!-- START REVOLUTION SLIDER 5.4.1 fullscreen mode -->
                 <div id="rev_slider_one" class="rev_slider fullscreenbanner" data-version="5.4.1">
                     <div class="search-div" style="position: relative; padding:30px 0 100px 0; z-index:99999">
-                        <div class="customSearch">
-                            <input id="serviceSearch" type="text" placeholder="Search any Service...">
-                            <div class="search"></div>
+                        <form method="POST" action="/servicesSearch" class="customSearch">
+                            <input name="serviceSearch" id="serviceSearch" type="text"
+                                placeholder="Search any Service...">
+                            <button type="submit" class="btn search-button"><i class="fas fa-search"></i></button>
+
+                        </form>
+                        <div class="favourate-services container">
+                            <a href="#" class="btn btn-primary favourate-button">Test one Service long</a>
+                            <a href="#" class="btn btn-primary favourate-button">Test one Service long</a>
+                            <a href="#" class="btn btn-primary favourate-button">Test one Service long</a>
+                            <a href="#" class="btn btn-primary favourate-button">Test one Service long</a>
+                            <a href="#" class="btn btn-primary favourate-button">Test one Service long</a>
+                            <a href="#" class="btn btn-primary favourate-button">Test one Service long</a>
+                            <a href="#" class="btn btn-primary favourate-button">Test one Service long</a>
+                            <a href="#" class="btn btn-primary favourate-button">Test one Service long</a>
+                            <a href="#" class="btn btn-primary favourate-button">Test one Service long</a>
                         </div>
                     </div>
+
                     <ul>
 
                         <!-- SLIDE 1 -->
@@ -119,8 +161,6 @@
             </div>
             <section class="over-hidden">
                 <div class="container">
-
-
                     <div class="row">
                         <div class="col-lg-5 col-md-12 align-self-center">
                             <div class="ot-heading">
@@ -152,26 +192,20 @@
                         </div>
                         <div class="offset-lg-1 col-lg-6 col-md-12 align-self-center">
                             <div class="about-right">
-                                <div class="img-small">
-                                    <img class="img-small-1" src="https://via.placeholder.com/243x193.png" alt="">
-                                    <img class="img-small-2" src="https://via.placeholder.com/260x210.png" alt="">
-                                </div>
-                                <div class="home-about-video d-flex justify-content-center">
-                                    <div class="video-btn align-self-center">
-                                        <a href="https://vimeo.com/94686522" class="btn-play">
-                                            <i class="fas fa-play"></i>
-                                            <span class="circle-1"></span>
-                                            <span class="circle-2"></span>
-                                        </a>
+                                <form action="/customerMessage" method="post">
+                                    <div class="form-group">
+                                        <input type="text" name="name" class="form-control"
+                                            placeholder="Enter the name">
                                     </div>
-                                </div>
-                                <div class="home-about-btn">
-                                    <div class="ot-button">
-                                        <a href="about-us.html" class="btn-details"><i
-                                                class="flaticon-right-arrow-1"></i> LEANR MORE ABOUT US</a>
-                                        <div class="space-15"></div>
-                                    </div>
-                                </div>
+                                    <input type="text" name="comapnyName" class="form-control"
+                                        placeholder="Company Name">
+                                    <input type="email" name="email" class="form-control" placeholder="email">
+                                    <input type="number" name="customerNumber" class="form-control"
+                                        placeholder="Mobile">
+                                    <input type="text" name="enquiryFor" class="form-control"
+                                        placeholder="Enquiry For?">
+                                    <input type="submit" class="form-control" value="Submit">
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -560,29 +594,25 @@
             });
         })(jQuery);
     </script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
-        var options = {
+        function servicesSerach() {
+            $.post("/allServices", function (data) {
+                let searchArray = [];
+                let servicesObjects = JSON.parse(data)
+                servicesObjects.forEach(function (a) {
+                    searchArray.push(a.name);
+                });
+                $("#serviceSearch").autocomplete({
+                    source: searchArray
+                });
+            })
 
-            url: `[
-  { "name": "Afghanistan", "code": "AF" },
-                { "name": "Aland Islands", "code": "AX" },
-                { "name": "Albania", "code": "AL" },
-                { "name": "Algeria", "code": "DZ" },
-                { "name": "American Samoa", "code": "AS" }
- ]`,
+        }
 
-            getValue: "name",
-
-            list: {
-                match: {
-                    enabled: true
-                }
-            },
-
-            theme: "square"
-        };
-        $("#serviceSearch").easyAutocomplete(options);
     </script>
+
 </body>
 
 </html>

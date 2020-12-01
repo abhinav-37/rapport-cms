@@ -19,7 +19,7 @@ const CustomerResponse = require("./models/customerResponse");
 let multer = require('multer');
 const dailyWages = require("./models/dailyWages");
 const lawUpdates = require("./models/lawUpdates");
-const { text } = require("body-parser");
+const { text, json } = require("body-parser");
 
 
 app.use(express.static(path.join(__dirname, "public")));
@@ -99,10 +99,17 @@ const serviceSort = async() => {
     return [startAbusiness, licenses, labour, HR];
 } 
 
-app.get("/", async(req, res) => {
-    req.session.returnTo = req.originalUrl
-    let [startAbusiness, licenses, labour, HR] = await serviceSort();
-    res.render("index", { startAbusiness, licenses, labour, HR,user:req.user });
+app.get("/", async (req, res) => {
+    try {
+        req.session.returnTo = req.originalUrl
+        let [startAbusiness, licenses, labour, HR] = await serviceSort();
+       
+        res.render("index", { startAbusiness, licenses, labour, HR,user:req.user });
+    } catch (error) {
+        console.log(error);
+        res.redirect("/error")
+    }
+   
 });
 
 app.get("/blog", async (req, res) => {
@@ -140,27 +147,42 @@ app.get("/minimumWagesSelector", async function (req, res) {
     let [startAbusiness, licenses, labour, HR] = await serviceSort();
     res.render("minimumWagesSelector", {startAbusiness, licenses, labour, HR, user: req.user });
 });
-
+app.post("/servicesSearch", async function (req, res) {
+    try {
+        let searchedService = await servicePage.findOne({ name: req.body.serviceSearch });
+        res.redirect(`/services/${searchedService.slug}`)
+    } catch (error) {
+        res.redirect(`/notFound`)
+    }
+   
+});
+app.post("/allServices",async function (req, res) {
+    let allServices = await servicePage.find().select('name -_id');
+    let json = JSON.stringify(allServices)
+    res.end(json)
+})
 // ========================= Authentication start =================== //
 
 //GET requset for login
-app.get("/login/:type", function (req, res) {
+app.get("/login/:type",async function (req, res) {
     let type = req.params.type
     req.session.returnTo = req.originalUrl
     let passedMessage = req.query.message;
+    let [startAbusiness, licenses, labour, HR] = await serviceSort();
     if (type === "customer") {
-        res.render("login", { user: req.user, passedMessage });
+        res.render("login", {startAbusiness, licenses, labour, HR, user: req.user, passedMessage });
     } else if(type === "admin" || type === "employee") {
         res.render("adminPanel/authentication/login",{ passedMessage, user:req.user, type })
     }
 });
 
 //GET request for regsiter
-app.get("/register/:type", function (req, res) {
+app.get("/register/:type",async function (req, res) {
     req.session.returnTo = req.originalUrl
-     let passedMessage = req.query.message;
+    let passedMessage = req.query.message;
+     let [startAbusiness, licenses, labour, HR] = await serviceSort();
     if (req.params.type === "customer") {
-        res.render("register", { user: req.user,passedMessage })
+        res.render("register", {startAbusiness, licenses, labour, HR, user: req.user,passedMessage })
     } else {
         res.render("adminPanel/authentication/register", {passedMessage, type:req.params.type })
     }
@@ -689,6 +711,20 @@ app.post("/admin/lawUpdatesForm", async function (req, res) {
     }
 })
 
+//favourite services
+app.get("/admin/favouriteServices", async function (req, res) {
+    let auth = req.isAuthenticated();
+    if (auth) {
+        if (req.user.type === "admin" || req.user.type === "employee" ) {
+            res.render("adminPanel/favouriteServices")
+        } else {
+            res.redirect("/login/admin")
+        }
+    } else {
+        res.redirect("/login/admin")
+    }
+    
+})
 //404 routes
 app.get("/admin/*", function (req, res) {
    res.render("adminPanel/404",{user:req.user}) 
