@@ -100,6 +100,30 @@
             color: white;
             font-size: 2rem;
         }
+
+        .question-in-mind {
+            background-color: #A6E3EE;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .question-form {
+            background-color: #A6E3EE;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .question-submit {
+            padding: 10px 20px;
+            border-radius: 30px;
+        }
+
+        .ui-menu-item-wrapper,
+        .ui-menu-item,
+        .ui-menu {
+            border-radius: 30px;
+
+        }
     </style>
 </head>
 
@@ -192,19 +216,32 @@
                         </div>
                         <div class="offset-lg-1 col-lg-6 col-md-12 align-self-center">
                             <div class="about-right">
-                                <form action="/customerMessage" method="post">
+                                <form class="question-form" action="/customerMessage" method="post">
+                                    <div class="question-in-mind">
+                                        <h4>Question In Mind?</h4>
+                                    </div>
                                     <div class="form-group">
-                                        <input type="text" name="name" class="form-control"
+                                        <input required type="text" name="name" class="form-control"
                                             placeholder="Enter the name">
                                     </div>
-                                    <input type="text" name="comapnyName" class="form-control"
-                                        placeholder="Company Name">
-                                    <input type="email" name="email" class="form-control" placeholder="email">
-                                    <input type="number" name="customerNumber" class="form-control"
-                                        placeholder="Mobile">
-                                    <input type="text" name="enquiryFor" class="form-control"
-                                        placeholder="Enquiry For?">
-                                    <input type="submit" class="form-control" value="Submit">
+                                    <div class="form-group">
+                                        <input type="text" name="comapnyName" class="form-control"
+                                            placeholder="Company Name">
+                                    </div>
+                                    <div class="form-group">
+                                        <input required type="email" name="email" class="form-control"
+                                            placeholder="email">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="number" name="customerNumber" class="form-control"
+                                            placeholder="Mobile">
+                                    </div>
+                                    <div class="form-group">
+                                        <input required type="text" name="enquiryFor" class="form-control"
+                                            placeholder="Enquiry For?">
+                                    </div>
+
+                                    <button class="btn btn-success question-submit" type="submit">Submit</button>
                                 </form>
                             </div>
                         </div>

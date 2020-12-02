@@ -161,6 +161,15 @@ app.post("/allServices",async function (req, res) {
     let json = JSON.stringify(allServices)
     res.end(json)
 })
+app.get("/orderForm/:id/:type", async function (req, res) {
+    let serviceId = req.params.id;
+    let serviceType = req.params.type;
+    let [startAbusiness, licenses, labour, HR] = await serviceSort();
+    let allPricing = await servicePage.findById(serviceId).select({ "pricingCards": 1, "_id": 0,"name":1});
+    let pricing = allPricing.pricingCards[serviceType][0];
+    let passedMessage = req.query.message;
+    res.render("orderForm",{startAbusiness, licenses, labour, HR,user:req.user,pricing,passedMessage,nameOfService:allPricing.name })
+})
 // ========================= Authentication start =================== //
 
 //GET requset for login
@@ -732,8 +741,9 @@ app.get("/admin/*", function (req, res) {
 // ================= admin panel finished ==================== //
 
 app.get("*", async function (req, res) {
-     let [startAbusiness, licenses, labour, HR] = await serviceSort();
-    res.render("404",{ startAbusiness, licenses, labour, HR})
+    let [startAbusiness, licenses, labour, HR] = await serviceSort();
+    res.render("404", { startAbusiness, licenses, labour, HR });
+    
 })
 
 app.listen(PORT, () => {
