@@ -96,6 +96,7 @@
                     <th><span>Contact Info.</span></th>
                     <th><span>Email Id</span></th>
                     <th><span>Task</span></th>
+                    <th><span>Service Name</span></th>
                     <th><span>Assigned To</span></th>
                     <th><span>Assign To</span></th>
                     <th><span>Select</span></th>
@@ -108,15 +109,17 @@
                 <tr>
                     <td><span class="blue-bg indx"><%= count %> </span></td>
                     <td>
-                        <h4><a href="#" title=""><%= r.full_name %> </a></h4>
+                        <h4><a href="/admin/customerResponseInfo/<%= r.id %>" title=""><%= r.name %> </a></h4>
                     </td>
                     <td>
-                        <span><%= r.contact_info %></span>
+                        <span><%= r.contact_number %></span>
                     </td>
-                    <td><span><%= r.emailId %> </span></td>
-                    <td><span><%= r.task %> </span></td>
+                    <td><span><%= r.email %> </span></td>
+                    <td><span><%= r.primaryBusiness %> </span></td>
+                    <td><span><%= r.nameOfService %> </span></td>
                     <% if(r.employeeAssigned){ %>
-                    <td><span><%= r.employeeAssigned.first_name %> <%= r.employeeAssigned.last_name %> </span></td>
+                    <td><span id="assigned-to"><%= r.employeeAssigned.first_name %> <%= r.employeeAssigned.last_name %>
+                        </span></td>
                     <% }else{ %>
                     <td><span>Not Assigned. </span></td>
                     <% } %>
@@ -155,6 +158,7 @@
                     success: function (data) {
                         alert.removeClass("fade");
                         alert.addClass("show");
+                        $("#assigned-to").text($("#selectedEmployee option:selected").text())
 
                     }
                 });

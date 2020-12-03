@@ -71,18 +71,18 @@
 
         }
 
+        .question-input {
+            background-color: rgba(255, 255, 255, 0.548) !important;
+        }
+
         .customSearch input:focus {
             box-shadow: 0 0px 20px black;
         }
 
         .favourate-button {
             z-index: 999;
-            color: white !important;
-            padding: 10px 20px;
             border-radius: 30px;
-            background-color: #3DBCD3;
-            border-color: #3DBCD3;
-            margin: 20px 20px;
+            margin: 10px 2px;
         }
 
         .favourate-services {
@@ -102,13 +102,13 @@
         }
 
         .question-in-mind {
-            background-color: #A6E3EE;
+            background-color: #f05454;
             padding: 40px;
             text-align: center;
         }
 
         .question-form {
-            background-color: #A6E3EE;
+            background-color: #f05454;
             padding: 30px;
             text-align: center;
         }
@@ -145,15 +145,15 @@
 
                         </form>
                         <div class="favourate-services container">
-                            <a href="#" class="btn btn-primary favourate-button">Test one Service long</a>
-                            <a href="#" class="btn btn-primary favourate-button">Test one Service long</a>
-                            <a href="#" class="btn btn-primary favourate-button">Test one Service long</a>
-                            <a href="#" class="btn btn-primary favourate-button">Test one Service long</a>
-                            <a href="#" class="btn btn-primary favourate-button">Test one Service long</a>
-                            <a href="#" class="btn btn-primary favourate-button">Test one Service long</a>
-                            <a href="#" class="btn btn-primary favourate-button">Test one Service long</a>
-                            <a href="#" class="btn btn-primary favourate-button">Test one Service long</a>
-                            <a href="#" class="btn btn-primary favourate-button">Test one Service long</a>
+                            <a href="#" class="octf-btn octf-btn-primary favourate-button">Test one Service long</a>
+                            <a href="#" class="octf-btn octf-btn-primary favourate-button">Test one Service long</a>
+                            <a href="#" class="octf-btn octf-btn-primary favourate-button">Test one Service long</a>
+                            <a href="#" class="octf-btn octf-btn-primary favourate-button">Test one Service long</a>
+                            <a href="#" class="octf-btn octf-btn-primary favourate-button">Test one Service long</a>
+                            <a href="#" class="octf-btn octf-btn-primary favourate-button">Test one Service long</a>
+                            <a href="#" class="octf-btn octf-btn-primary favourate-button">Test one Service long</a>
+                            <a href="#" class="octf-btn octf-btn-primary favourate-button">Test one Service long</a>
+                            <a href="#" class="octf-btn octf-btn-primary favourate-button">Test one Service long</a>
                         </div>
                     </div>
 
@@ -216,32 +216,34 @@
                         </div>
                         <div class="offset-lg-1 col-lg-6 col-md-12 align-self-center">
                             <div class="about-right">
-                                <form class="question-form" action="/customerMessage" method="post">
-                                    <div class="question-in-mind">
-                                        <h4>Question In Mind?</h4>
-                                    </div>
-                                    <div class="form-group">
-                                        <input required type="text" name="name" class="form-control"
-                                            placeholder="Enter the name">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="text" name="comapnyName" class="form-control"
-                                            placeholder="Company Name">
-                                    </div>
-                                    <div class="form-group">
-                                        <input required type="email" name="email" class="form-control"
-                                            placeholder="email">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="number" name="customerNumber" class="form-control"
-                                            placeholder="Mobile">
-                                    </div>
-                                    <div class="form-group">
-                                        <input required type="text" name="enquiryFor" class="form-control"
-                                            placeholder="Enquiry For?">
-                                    </div>
 
-                                    <button class="btn btn-success question-submit" type="submit">Submit</button>
+                                <form action="/customerMessage" method="post" class="wpcf7">
+                                    <div class="main-form">
+
+                                        <h2>Question In Mind?</h2>
+                                        <p class="font14">Required fields are
+                                            marked *
+                                        </p>
+
+                                        <p>
+                                            <input required type="text" name="name" placeholder="Enter the name *">
+                                        </p>
+
+                                        <p>
+                                            <input type="text" name="comapnyName" placeholder="Company Name">
+                                        </p>
+                                        <p>
+                                            <input required type="email" name="email" placeholder="email *">
+                                        </p>
+                                        <p>
+                                            <input type="number" name="customerNumber" required placeholder="Mobile *">
+                                        </p>
+                                        <p>
+                                            <input required type="text" name="enquiryFor" placeholder="Enquiry For? *">
+                                        </p>
+
+                                        <button type="submit" class="octf-btn octf-btn-light">Submit</button>
+                                    </div>
                                 </form>
                             </div>
                         </div>

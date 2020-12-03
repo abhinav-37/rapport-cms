@@ -20,6 +20,8 @@ let multer = require('multer');
 const dailyWages = require("./models/dailyWages");
 const lawUpdates = require("./models/lawUpdates");
 const { text, json } = require("body-parser");
+const { Logger } = require("mongodb");
+const customerResponse = require("./models/customerResponse");
 
 
 app.use(express.static(path.join(__dirname, "public")));
@@ -100,8 +102,8 @@ const serviceSort = async() => {
 } 
 
 app.get("/", async (req, res) => {
+    req.session.returnTo = req.originalUrl
     try {
-        req.session.returnTo = req.originalUrl
         let [startAbusiness, licenses, labour, HR] = await serviceSort();
        
         res.render("index", { startAbusiness, licenses, labour, HR,user:req.user });
@@ -111,7 +113,12 @@ app.get("/", async (req, res) => {
     }
    
 });
-
+app.get("/customer/dashboard", async function (req, res) {
+    req.session.returnTo = req.originalUrl
+    let passedMessage = req.query.message;
+    let [startAbusiness, licenses, labour, HR] = await serviceSort();
+    res.render("dashboard.ejs",{startAbusiness, licenses, labour, HR, user:req.user,passedMessage})
+})
 app.get("/blog", async (req, res) => {
     req.session.returnTo = req.originalUrl
     let allBlogs = await Blog.find();
@@ -125,25 +132,29 @@ app.get("/blogSingle/:blogId", async(req, res) => {
     res.render("post",{startAbusiness, licenses, labour, HR,singleBlog})
 });
 app.get("/services/:slug", async (req, res) => {
+
     req.session.returnTo = req.originalUrl
     let pageData = await servicePage.findOne({ slug: req.params.slug });
     let [startAbusiness, licenses, labour, HR] = await serviceSort();
     if (pageData) {  
-        res.render("servicePage",{startAbusiness, licenses, labour, HR,...pageData._doc});
+        res.render("servicePage",{startAbusiness, licenses, labour, HR,...pageData._doc, user:req.user});
     } 
    
 });
 app.get("/lawUpdates", async function (req, res) {
+    req.session.returnTo = req.originalUrl
     let updates = await lawUpdates.find();
     let [startAbusiness, licenses, labour, HR] = await serviceSort();
     res.render("lawUpdates", {startAbusiness, licenses, labour, HR, user: req.user, updates });
 });
 app.get("/minimumWages/:state", async function (req, res) {
+    req.session.returnTo = req.originalUrl
     let wages = await dailyWages.findOne({ state: req.params.state });
     let [startAbusiness, licenses, labour, HR] = await serviceSort();
     res.render("minimumWages", {startAbusiness, licenses, labour, HR, user: req.user, wages });
 });
 app.get("/minimumWagesSelector", async function (req, res) {
+    req.session.returnTo = req.originalUrl
     let [startAbusiness, licenses, labour, HR] = await serviceSort();
     res.render("minimumWagesSelector", {startAbusiness, licenses, labour, HR, user: req.user });
 });
@@ -156,26 +167,52 @@ app.post("/servicesSearch", async function (req, res) {
     }
    
 });
-app.post("/allServices",async function (req, res) {
+app.post("/allServices", async function (req, res) {
+    
     let allServices = await servicePage.find().select('name -_id');
     let json = JSON.stringify(allServices)
     res.end(json)
 })
 app.get("/orderForm/:id/:type", async function (req, res) {
-    let serviceId = req.params.id;
+    req.session.returnTo = req.originalUrl
+    try {
+        let serviceId = req.params.id;
     let serviceType = req.params.type;
     let [startAbusiness, licenses, labour, HR] = await serviceSort();
     let allPricing = await servicePage.findById(serviceId).select({ "pricingCards": 1, "_id": 0,"name":1});
     let pricing = allPricing.pricingCards[serviceType][0];
     let passedMessage = req.query.message;
     res.render("orderForm",{startAbusiness, licenses, labour, HR,user:req.user,pricing,passedMessage,nameOfService:allPricing.name })
+    } catch (error) {
+        console.error(error);
+        res.redirect("/error")
+    }
+    
+})
+app.post("/orderForm", async function (req, res) {
+    let auth = req.isAuthenticated();
+    if (auth) {
+        try {
+
+            let newOrder = new CustomerResponse(req.body);
+            await newOrder.save();
+            let message = encodeURIComponent("Order placed Successfully")
+            res.redirect("/customer/dashboard?message=" + message);
+
+        } catch (error) {
+            console.log(error);
+            res.redirect("/error")
+        }
+    } else {
+        res.redirect("/login/customer")
+    }
 })
 // ========================= Authentication start =================== //
 
 //GET requset for login
 app.get("/login/:type",async function (req, res) {
     let type = req.params.type
-    req.session.returnTo = req.originalUrl
+    
     let passedMessage = req.query.message;
     let [startAbusiness, licenses, labour, HR] = await serviceSort();
     if (type === "customer") {
@@ -245,13 +282,12 @@ app.post("/register/:type", async function (req, res) {
             res.redirect("/register/customer?message="+message);
         } else {
             passport.authenticate("local")(req, res, async function () {
-                console.log(req.params.type);
                 user.type = req.params.type;
                 user.contact_number = contact_number,
                 user.first_name = first_name,
                 user.last_name = last_name
                 await user.save();
-                if(req.params.type === "admin" || req.params.type === "employee") res.redirect("/adminPanel")
+                if(req.params.type === "admin") res.redirect("/adminPanel")
                 res.redirect(req.session.returnTo || '/');
                 delete req.session.returnTo;
 
@@ -269,7 +305,7 @@ app.post("/register/:type", async function (req, res) {
 // POST for the login of the user
 app.post("/login/:type", async function (req, res) {
         let user = await User.findOne({ username: req.body.username });
-        if (user) {
+    if (user) {
             if (user.type === req.params.type) {
                 if (user.access) {
                     const user = new User({
@@ -312,7 +348,8 @@ app.post("/login/:type", async function (req, res) {
             }
         } else {
             let message = encodeURIComponent('Authentication error!!');
-            res.redirect('/login/'+req.params.type+'?message=' + message);
+            res.redirect('/login/' + req.params.type + '?message=' + message);
+            
         }
 })
 
@@ -517,7 +554,8 @@ app.get("/admin/customersAssigned", async function (req, res) {
     if (auth) {
         if (req.user.type === "admin" || req.user.type === "employee") {
             let customersAssigned = await CustomerResponse.find({ employeeAssigned: req.user.id });
-            res.render("adminPanel/customersAssigned", { customersAssigned, user: req.user });
+            let passedMessage = req.query.message
+            res.render("adminPanel/customersAssigned", { customersAssigned, user: req.user, passedMessage });
         } else {
             res.redirect("/login/admin")
         }
@@ -525,6 +563,35 @@ app.get("/admin/customersAssigned", async function (req, res) {
         res.redirect("/login/admin")
     }
 });
+app.get("/admin/customerResponseInfo/:id", async function (req, res) {
+    if (req.isAuthenticated()) {
+        if (req.user.type === "admin" || req.user.type === "employee") {
+            let response = await customerResponse.findById(req.params.id);
+            res.render("adminPanel/customerResponseInfo",{user:req.user, response,})
+        } else {
+            res.redirect("/login/employee")
+        }
+    } else {
+        res.redirect("/login/employee")
+    }
+})
+app.post("/admin/statusUpdate", async function (req, res) {
+  if (req.isAuthenticated()) {
+        if (req.user.type === "admin" || req.user.type === "employee") {
+            let existingResponse = await customerResponse.findById(req.body.submitButton);
+            console.log(existingResponse);
+            existingResponse.statusOfWork = req.body.statusOfWork;
+            existingResponse.save()
+            let message = encodeURIComponent("Status Updated Successfully!")
+            res.redirect("/admin/customersAssigned?message = " + message)
+            
+        } else {
+            res.redirect("/login/employee")
+        }
+    } else {
+        res.redirect("/login/employee")
+    }  
+})
 
 //Daily wages
 app.get("/admin/dailyWages", async function (req, res) {
@@ -720,6 +787,7 @@ app.post("/admin/lawUpdatesForm", async function (req, res) {
     }
 })
 
+
 //favourite services
 app.get("/admin/favouriteServices", async function (req, res) {
     let auth = req.isAuthenticated();
@@ -742,7 +810,7 @@ app.get("/admin/*", function (req, res) {
 
 app.get("*", async function (req, res) {
     let [startAbusiness, licenses, labour, HR] = await serviceSort();
-    res.render("404", { startAbusiness, licenses, labour, HR });
+    res.render("404", { startAbusiness, licenses, labour, HR, user:req.user });
     
 })
 

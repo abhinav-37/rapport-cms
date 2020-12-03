@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<%- include("partials/head.ejs") %>
+<script src="https://cdn.ckeditor.com/ckeditor5/23.1.0/classic/ckeditor.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<style>
+    .data-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 100px 0 0 80px;
+    }
+
+    @media (max-width:992px) {
+        .data-container {
+
+            margin: 80px 0 0 0;
+        }
+    }
+
+    .span-info {
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.616);
+    }
+
+    h4 {
+        color: white;
+
+    }
+
+    h2 {
+        color: white;
+    }
+</style>
+
+<body>
+    <!-- Including navbar and sidebar from the partials -->
+    <%- include("partials/navbar_sidebar.ejs") %>
+    <div class="row data-container">
+        <div class="col-md-12 grid-item col-sm-12 col-lg-12 ">
+            <div class="widget fb-usr pad50-40 fb-bg">
+                <div class="scl-msg-wrp">
+                    <h4><span class="span-info">Name Of Service: </span> <%= response.nameOfService %> </h4>
+                    <h4><span class="span-info">Full Name: </span><%= response.name %> </h4>
+                    <h4><span class="span-info">Company Name: </span><%= response.company_name %> </h4>
+                    <h4><span class="span-info">Email: </span><%= response.email%> </h4>
+                    <h4><span class="span-info">Contact Number: </span><%= response.contact_number%> </h4>
+                    <h4><span class="span-info">Primary Business: </span><%= response.primaryBusiness%> </h4>
+                    <h4><span class="span-info">Employee Count: </span><%= response.employeeCount%> </h4>
+                    <h4><span class="span-info">Billing Address: </span><%= response.billingAddress%> </h4>
+                    <h4><span class="span-info">city: </span><%= response.city%> </h4>
+                    <h4><span class="span-info">state: </span><%= response.state%> </h4>
+                    <h4><span class="span-info">urgency: </span><%= response.urgency%> </h4>
+                    <h4><span class="span-info">Reaching Time: </span><%= response.reaching_time%> </h4>
+                    <h2><span class="span-info">Payment Status:
+                        </span><%= response.pay_now === "on"? "Paid" : "Un Paid"  %> </h2>
+                    <h2><span class="span-info">Current Status:</span> <%= response.statusOfWork %> </h2>
+                    <form action="/admin/statusUpdate" method="post">
+
+                        <div class="form-group">
+                            <h2>Update Status:</h2>
+                            <input placeholder="Enter the status" class="form-control" type="text" name="statusOfWork"
+                                id="">
+                        </div>
+
+
+                        <Button value="<%= response.id %>" class="btn btn-primary" name="submitButton"
+                            id="submitButton">Submit</Button>
+
+                    </form>
+                    <i class="fas fa-user"></i>
+                    <div class="scl-msg-inf">
+                        <img class="brd-rd50" src="/adminPanel/images/resource/fb-dp.jpg" alt="">
+                        <div class="scl-msg-inr">
+                            <h2><a href="#" title="">John Smith</a></h2>
+                            <a href="#" title="">GraphicXspace</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%- include("partials/footerJs.ejs") %>
+
+</body>
+
+</html>

@@ -4,22 +4,46 @@ const customerResponseSchema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
-    },
-    full_name: {
+    }, 
+    nameOfService:{
         type: String,
         required:true
     },
-    contact_info: {
+    name: {
+        type: String,
+        required:true
+    },
+    company_name: {
         type: Number,
         required: true
     },
-    emailId: {
+    email: {
         type: String,
         required:true
     },
-    task: {
-        type: String,
+    contact_number: {
+        type: Number,
         required: true
+    },
+    primaryBusiness: {
+        type: String,
+        required:true
+    },
+    employeeCount: {
+        type: Number,
+        required:true
+    },
+    billingAddress: {
+        type: String,
+        required:true
+    },
+    city: { type: String, required: true },
+    state: { type: String, required: true },
+    urgency: { type: String, required: true },
+    reaching_time: { type: String, required: true },
+    pay_now: {
+        type: String,
+        
     },
     employeeAssigned: {
         type: mongoose.Schema.Types.ObjectId,

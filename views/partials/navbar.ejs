@@ -26,11 +26,11 @@
             </div>
         </div>
     </div>
-    <div class="octf-main-header">
+    <div class="octf-main-header  ">
         <div class="octf-area-wrap">
             <div class="octf-mainbar-container">
                 <div class="octf-mainbar">
-                    <div class="octf-mainbar-row octf-row">
+                    <div class="octf-mainbar-row octf-row ">
                         <div>
                             <div id="site-logo" class="site-logo">
                                 <a href="/">
@@ -41,7 +41,7 @@
                         <div class="octf-col menu-col">
                             <nav id="site-navigation" class="main-navigation">
                                 <ul class="menu">
-                                    <li class="menu-item-has-children"><a href="shop.html">Start a business</a>
+                                    <li class="menu-item-has-children"><a href="#">Start a business</a>
                                         <ul class="sub-menu">
                                             <% startAbusiness.forEach(function(e){ %>
                                             <li><a href="/services/<%= e.slug  %> "><%= e.name %> </a></li>
@@ -49,7 +49,7 @@
                                         </ul>
 
                                     </li>
-                                    <li class="menu-item-has-children"><a href="shop.html">Licenses/
+                                    <li class="menu-item-has-children"><a href="#">Licenses/
                                             Registration</a>
                                         <ul class="sub-menu">
                                             <% licenses.forEach(function(e){ %>
@@ -58,7 +58,7 @@
                                         </ul>
 
                                     </li>
-                                    <li class="menu-item-has-children"><a href="shop.html">Labour Law
+                                    <li class="menu-item-has-children"><a href="#">Labour Law
                                             Compliances</a>
                                         <ul class="sub-menu">
                                             <% labour.forEach(function(e){ %>
@@ -67,11 +67,15 @@
                                         </ul>
 
                                     </li>
-                                    <li class="menu-item-has-children"><a href="shop.html">Human Resources &
+                                    <li class="menu-item-has-children">
+                                        <a href="#">Human Resources &
                                             Technology</a>
                                         <ul class="sub-menu">
                                             <% HR.forEach(function(e){ %>
-                                            <li><a href="/services/<%= e.slug  %> "><%= e.name %> </a></li>
+                                            <li>
+                                                <a href="/services/<%= e.slug  %> "><%= e.name %>
+                                                </a>
+                                            </li>
                                             <% }) %>
 
                                         </ul>
@@ -84,7 +88,19 @@
                                             <li><a href="portfolio-carousel.html">Blogs</a></li>
                                         </ul>
                                     </li>
+                                    <% if(user){ %>
+                                    <li class="menu-item-has-children"><a href="/login/customer"><i
+                                                class="fas fa-user"></i></a>
+                                        <ul class="sub-menu">
+                                            <li><a href="/logout">Logout</a></li>
+
+                                        </ul>
+                                    </li>
+                                    <% }else{ %>
                                     <li><a href="/login/customer">Login</a></li>
+                                    <% } %>
+
+
                                 </ul>
                             </nav>
                         </div>
@@ -109,14 +125,14 @@
             <div class="mmenu_wrapper">
                 <div class="mobile_nav collapse">
                     <ul id="menu-main-menu" class="mobile_mainmenu">
-                        <li class="menu-item-has-children"><a href="shop.html">Start a business</a>
+                        <li class="menu-item-has-children"><a href="#">Start a business</a>
                             <ul class="sub-menu">
                                 <% startAbusiness.forEach(function(e){ %>
                                 <li><a href="/services/<%= e.slug  %> "><%= e.name %> </a></li>
                                 <% }) %>
                             </ul>
                         </li>
-                        <li class="menu-item-has-children"><a href="shop.html">Licenses/
+                        <li class="menu-item-has-children"><a href="#">Licenses/
                                 Registration</a>
                             <ul class="sub-menu">
                                 <% licenses.forEach(function(e){ %>
@@ -124,7 +140,7 @@
                                 <% }) %>
                             </ul>
                         </li>
-                        <li class="menu-item-has-children"><a href="shop.html">Labour Law
+                        <li class="menu-item-has-children"><a href="#">Labour Law
                                 Compliances</a>
                             <ul class="sub-menu">
                                 <% labour.forEach(function(e){ %>
@@ -132,7 +148,7 @@
                                 <% }) %>
                             </ul>
                         </li>
-                        <li class="menu-item-has-children"><a href="shop.html">Human Resources &
+                        <li class="menu-item-has-children"><a href="#">Human Resources &
                                 Technology</a>
                             <ul class="sub-menu">
                                 <% HR.forEach(function(e){ %>
@@ -147,7 +163,15 @@
                                 <li><a href="portfolio-carousel.html">Blogs</a></li>
                             </ul>
                         </li>
-                        <li><a href="/login/customer">Login</a>
+                        <li class="menu-item-has-children"><a href="/login/customer"><i class="fas fa-user"></i></a>
+                            <ul class="sub-menu">
+                                <li><a href="/lawUpdates">Govt. Notifications/ Circulars</a></li>
+                                <li><a href="/minimumWagesSelector">Minimum Wages</a></li>
+                                <li><a href="portfolio-carousel.html">Blogs</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="/login/customer">Login</a>
                         </li>
                     </ul>
                 </div>

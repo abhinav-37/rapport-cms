@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <title>Rapport </title>
+    <title>Order Form </title>
     <link rel="shortcut icon" type="image/x-icon" href="images/favicon.png" />
     <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css" />
@@ -24,6 +24,18 @@
     <link rel="stylesheet" type="text/css" href="plugins/revolution/revolution/css/navigation.css">
     <!-- styles for vertical tabs -->
     <style>
+        .pay-now {
+            width: 10% !important;
+            display: inline-block;
+
+        }
+
+        .form-check {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
         #content {
             padding-bottom: 100px;
         }
@@ -56,6 +68,32 @@
 
 
         }
+
+        .submit-button {
+            text-align: center;
+        }
+
+        .top {
+            text-align: center;
+        }
+
+        h4 {
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.808);
+        }
+
+        .question {
+            padding: 30px 0;
+        }
+
+        h5 {
+            color: whitesmoke;
+        }
+
+        .select {
+            background-color: rgba(255, 255, 255, 0.384);
+            border-color: rgba(255, 255, 255, 0.384);
+        }
     </style>
 </head>
 
@@ -69,9 +107,9 @@
 
                     <div class="row">
                         <div class="col-lg-9">
-                            <form action="/register/customer" method="post" class="wpcf7">
+                            <form action="/orderForm" method="post" class="wpcf7">
                                 <div class="main-form">
-                                    <div class="stepOne">
+                                    <div class="stepOne" id="stepOne">
                                         <% if(passedMessage){ %>
                                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
                                             <strong>Oops!</strong> <%= passedMessage %>
@@ -85,7 +123,7 @@
                                         <p class="font14">Your email address will not be published. Required fields are
                                             marked *
                                         </p>
-                                        <h4>Amount to be paid: INR. <span style="color: white;"><%= pricing %> </span>
+                                        <h4>Amount to be paid: ₹ <span style="color: white;"><%= pricing %> </span>
                                         </h4>
                                         <div class="row">
                                             <p class="col-lg-6 col-md-6 col-sm-12">
@@ -135,33 +173,62 @@
                                             </p>
                                         </div>
                                         <p>
-                                            <button class="octf-btn octf-btn-light">Next Step</button>
+                                            <button id="next-step-button" class="octf-btn octf-btn-light">Next
+                                                Step</button>
                                         </p>
                                     </div>
-                                    <div class="stepTwo">
-                                        <h4>Please Describe Your requirements more!</h4>
-                                        <p>Our experts will call you back in few minutes after submitting this form from
-                                            your side.
-                                        </p>
-                                        <h4>
-                                            Q1. How quickly would you like to start <span><%= nameOfService %></span> ?
-                                        </h4>
-                                        <h5>
-                                            <div class="form-group">
-                                                <span>ans:</span>
-                                                <select class="form-control" name="urgency">
-                                                    <option>Very Urgent!</option>
-                                                    <option>urgent.</option>
-                                                    <option>Not that urgent.</option>
-                                                </select>
-                                            </div>
-                                        </h5>
-                                        <h4>Q2. What is the best time to reach you?</h4>
-                                        <div class="form-group">
-                                            <h5>Ans: <input class="form-control" type="time" min="10:00" max="18:30">
+                                    <div style="display: none;" class="stepTwo" id="stepTwo">
+                                        <div class="question">
+                                            <h2 class="top">Please Describe Your requirements more!</h2>
+                                            <p class="top">Our experts will call you back in few minutes after
+                                                submitting
+                                                this form from
+                                                your side.
+                                            </p>
+                                        </div>
+                                        <div class="question">
+                                            <h4>
+                                                Q1. How quickly would you like to start
+                                                <span><%= nameOfService %></span> ?
+                                                <input name="nameOfService" type="text" style="display: none;"
+                                                    value="<%= nameOfService %>">
+                                            </h4>
+                                            <h5>
+                                                <div class="form-group">
+                                                    <span>ans:</span>
+                                                    <select class="select form-control" name="urgency">
+                                                        <option>Very Urgent!</option>
+                                                        <option>urgent.</option>
+                                                        <option>Not that urgent.</option>
+                                                    </select>
+                                                </div>
                                             </h5>
                                         </div>
+                                        <div class="question">
+                                            <h4>Q2. What is the best time to reach you?</h4>
+                                            <div class="form-group">
+                                                <h5>Ans: <input name="reaching_time" class="form-control" type="time"
+                                                        min="10:00" max="18:30">
+                                                </h5>
+                                            </div>
+                                        </div>
+                                        <div class="question">
+                                            <h4>Q3. Would you like to pay Online now?</h4>
+                                            <div class="form-check">
+                                                <input type="checkbox" id="pay-now" name="pay_now"
+                                                    class="form-control pay-now">
+                                                <h4 style="display: inline;">Pay Now ₹ <%= pricing %> </h4>
+                                            </div>
+                                        </div>
+                                        <div class="question">
 
+                                            <div class="submit-button">
+                                                <button class="octf-btn octf-btn-light" id="go-back-button"
+                                                    type="submit">Go back</button>
+                                                <button class="octf-btn octf-btn-dark" type="submit">Submit</button>
+
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </form>
@@ -244,6 +311,18 @@
                 background: '#ffffff'
             });
         })(jQuery);
+    </script>
+    <script>
+        $("#next-step-button").click(function (e) {
+            e.preventDefault();
+            $("#stepOne").hide();
+            $("#stepTwo").show()
+        })
+        $("#go-back-button").click(function (e) {
+            e.preventDefault();
+            $("#stepOne").show();
+            $("#stepTwo").hide()
+        })
     </script>
 </body>
 
