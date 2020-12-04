@@ -188,11 +188,11 @@
 
 
                     <div class="row justify-content-center">
-                        <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+                        <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
                             <div class="ot-pricing-table">
                                 <div class="icon-main"><span class="flaticon-tablet"></span></div>
                                 <div class="inner-table">
-                                    <h4 class="title-table">Rapport Start</h4>
+                                    <h4 class="title-table">Rapport START</h4>
                                     <h2>Rs. <%=pricingCards.rapportStart[0]  %> </h2>
                                     <span>Rs.<%=pricingCards.rapportStart[0]  %> + GST@18% </span>
                                     <div class="details ">
@@ -206,11 +206,11 @@
                                         </ul>
                                     </div>
                                     <a href="/orderForm/<%=_id%>/rapportStart" class="octf-btn">Choose
-                                        Plane</a>
+                                        Plan</a>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+                        <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
                             <div class="ot-pricing-table">
                                 <div class="icon-main"><span class="flaticon-report"></span></div>
                                 <div class="inner-table">
@@ -228,11 +228,11 @@
                                         </ul>
                                     </div>
                                     <a href="/orderForm/<%=_id%>/rapportSelect" class="octf-btn">Choose
-                                        Plane</a>
+                                        Plan</a>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-4 col-md-6">
+                        <div class="col-lg-3 col-md-6">
                             <div class="ot-pricing-table">
                                 <div class="icon-main"><span class="flaticon-ui"></span></div>
                                 <div class="inner-table">
@@ -251,9 +251,36 @@
                                         </ul>
                                     </div>
                                     <a href="/orderForm/<%=_id%>/rapportSuper" class="octf-btn">Choose
-                                        Plane</a>
+                                        Plan</a>
                                 </div>
                             </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <form action="/customerMessage" method="post" class="wpcf7">
+                                <div class="main-form">
+
+                                    <h2>Question In Mind?</h2>
+                                    <p class="font14">Required fields are
+                                        marked *
+                                    </p>
+                                    <p>
+                                        <input required type="text" name="name" placeholder="Enter the name *">
+                                    </p>
+                                    <p>
+                                        <input type="text" name="comapnyName" placeholder="Company Name">
+                                    </p>
+                                    <p>
+                                        <input required type="email" name="email" placeholder="email *">
+                                    </p>
+                                    <p>
+                                        <input type="number" name="customerNumber" required placeholder="Mobile *">
+                                    </p>
+                                    <p>
+                                        <input required type="text" name="enquiryFor" placeholder="Enquiry For? *">
+                                    </p>
+                                    <button type="submit" class="octf-btn octf-btn-light">Submit</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
 

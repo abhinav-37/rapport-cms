@@ -1019,13 +1019,14 @@ a:active {
 ## Top Bar
 --------------------------------------------------------------*/
 .header-topbar {
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0) 40%, #141d38 80%);
     padding: 7px 0px;
     border-bottom: 1px solid transparent;
-    background: #141d38;
     color: #b5b5b5;
     font-size: 14px;
     font-weight: 600;
 }
+
 .header-topbar a {
     color: #b5b5b5;
     transition: all 0.3s linear;
@@ -1242,16 +1243,20 @@ a:active {
 ## Logo
 --------------------------------------------------------------*/
 #site-logo {
-    min-width: 145px;
-    padding: 30px 0;
+    min-width: 245px;
+    padding: 0px 0;
     display: inline-flex;
     vertical-align: middle;
     align-items: center;
     justify-content: center;
     line-height: 1;
+    position: relative;
 }
 #site-logo img {
-    width: 195px;
+    width: 395px;
+    position: absolute;
+    bottom: -40%;
+    right: -15px;
 }
 #site-logo img.logo-static {
     display: block;
@@ -1432,7 +1437,7 @@ a:active {
 
 .main-navigation ul > li > a {
     display: inline-block;
-    padding: 32px 0px;
+    padding: 0px 0px;
     line-height: 35px;
     text-decoration: none;
     text-align: center;
@@ -2407,13 +2412,13 @@ a:active {
 .post-box .img-slider .slick-arrow {
     height: 65px;
     width: 50px;
-    background: #262051;
+    background: #f05454;
     color: #fff;
     left: 0;
 }
 .post-box .img-slider .slick-arrow:hover {
     background: #fff;
-    color: #262051;
+    color: #f05454;
 }
 .post-box .img-slider .next-nav {
     left: auto;
@@ -3567,7 +3572,7 @@ object {
 }
 /** Style 1 **/
 .icon-box-s1 .icon-main {
-    color: #7141b1;
+    color: #f05454;
 }
 .icon-box-s1 .icon-main i,
 .icon-box-s1 .icon-main span:before {
@@ -3596,7 +3601,7 @@ object {
     right: 0;
     top: 0;
     width: 0;
-    background: #7141b1;
+    background: #f05454;
     height: 100%;
     transition: all 0.3s linear;
     -webkit-transition: all 0.3s linear;
@@ -4035,7 +4040,7 @@ object {
     overflow: hidden;
     position: relative;
     padding: 43px 30px 65px;
-    background: #262051;
+    background: #f05454;
     color: #aeaacb;
     transition: all 0.3s linear;
     -webkit-transition: all 0.3s linear;
@@ -4268,7 +4273,7 @@ object {
     bottom: -50px;
     left: 50%;
     text-align: center;
-    background: #262051;
+    background: #f05454;
     padding: 26px 30px 18px;
     opacity: 0;
     -webkit-transform: translateX(-50%);
@@ -4877,7 +4882,7 @@ object {
     opacity: 1;
     text-align: center;
     padding: 20px 30px;
-    background: #262051;
+    background: #f05454;
     color: #aeaacb;
     -webkit-transform: rotateY(180deg);
     -ms-transform: rotateY(180deg);
@@ -5010,7 +5015,7 @@ object {
 }
 .team-wrap .team-social > div {
     padding: 3px 17px;
-    background: #262051;
+    background: #f05454;
     transform: translateX(100%);
     transition: all 0.3s linear;
     -webkit-transition: all 0.3s linear;
@@ -5165,10 +5170,10 @@ object {
 }
 .ot-pricing-table .octf-btn:hover {
     background: #fff;
-    color: #7141b1;
+    color: #f05454;
 }
 .ot-pricing-table:hover {
-    background: #262051;
+    background: #f05454;
     color: #fff;
 }
 .ot-pricing-table:hover .details {
@@ -5796,7 +5801,7 @@ object {
 
 .wpcf7 .main-form {
     padding: 60px 48px;
-    background-image: linear-gradient(90deg, #00deff 0%, #7141b1 100%);
+    background-image: linear-gradient(180deg, #00deff 60%, #7141b100 120%);
     color: #fff;
 }
 
@@ -6232,7 +6237,7 @@ div.tp-bullet:hover {
     padding: 20px 35px;
 }
 .icon-box-s2:hover .icon-main {
-    color: #43baff;
+    color: #f05454;
 }
 /* Home 2 */
 .home2-top {
@@ -6478,10 +6483,10 @@ div.tp-bullet:hover {
     padding: 140px 0 125px 0;
 }
 .icon-main.color-s1 {
-    background: #7141b1;
+    background: #f05454;
 }
 .icon-main.color-s3 {
-    background: #221d48;
+    background: #f05454;
 }
 .technology-v3 {
     background-color: #201c3d;
@@ -6560,7 +6565,7 @@ div.tp-bullet:hover {
 }
 .service-v4 {
     padding-top: 120px;
-    background-color: #262051;
+    background-color: #f05454;
 }
 .overlay-bg {
     background-color: transparent;
@@ -6575,7 +6580,7 @@ div.tp-bullet:hover {
     border-style: solid;
     border-width: 1px 1px 1px 1px;
     border-color: #46416b;
-    background-color: #262051;
+    background-color: #f05454;
 }
 .serv-box.v4:active,
 .serv-box.v4:focus,
@@ -6932,7 +6937,7 @@ div.tp-bullet:hover {
 }
 .testimonials-style-2 .layer1 {
     box-shadow: 3px 3px 13px 0 rgba(0, 0, 0, 0.1);
-    background: #262051;
+    background: #f05454;
 }
 .testimonials-style-2 .layer2 {
     background: #322b5d;
@@ -6976,14 +6981,14 @@ div.tp-bullet:hover {
 .post-box .owl-theme .owl-nav [class*="owl-"] {
     height: 65px;
     width: 50px;
-    background: #262051;
+    background: #f05454;
     color: #fff;
     margin: 0;
     left: 0;
 }
 .post-box .owl-theme .owl-nav [class*="owl-"]:hover {
     background-color: #fff;
-    color: #262051;
+    color: #f05454;
 }
 .post-box .owl-theme .owl-nav .owl-next {
     left: auto;
@@ -8242,4 +8247,14 @@ section {
 }
 .requirements-list ol li {
     padding-left: 5%;
+}
+.upper-nav {
+    display: flex;
+    align-items: center !important;
+    justify-content: center !important;
+}
+.top-div-links {
+    margin: 5px 15px 5px 0;
+}
+.topbar-icons-wrapper {
 }
