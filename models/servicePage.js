@@ -12,6 +12,10 @@ const serviceSchema = new mongoose.Schema({
         required: true,
         type: String
     },
+    descriptionOfService: {
+        required: true,
+        type:String
+    },
     slug: {
         required: true,
         type:String

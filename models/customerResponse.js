@@ -13,6 +13,14 @@ const customerResponseSchema = new mongoose.Schema({
         type: String,
         required:true
     },
+    idOfService: {
+        type: String,
+        required:true
+    },
+    serviceType: {
+        type: String,
+        required:true
+    },
     company_name: {
         type: Number,
         required: true

@@ -1,9 +1,13 @@
 const express = require("express");
 const PORT = 8000;
+const shortid = require('shortid');
+const request = require('request');
 const path = require("path");
 const ejs = require("ejs");
 const mongoose = require("mongoose");
 const nodemailer = require("nodemailer");
+const Razorpay = require("razorpay");
+const OrderData = require("./models/orderData");
 //auth
 const session = require("express-session");
 const bodyParser = require("body-parser");
@@ -21,7 +25,7 @@ const dailyWages = require("./models/dailyWages");
 const lawUpdates = require("./models/lawUpdates");
 const { text, json } = require("body-parser");
 const { Logger } = require("mongodb");
-const customerResponse = require("./models/customerResponse");
+
 
 
 app.use(express.static(path.join(__dirname, "public")));
@@ -81,6 +85,12 @@ passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 //============== end user Schema ====================== //
+//=================== razor pay integration ==========//
+let instance = new Razorpay({
+  key_id: 'rzp_test_W6LG94sImodYti',
+  key_secret: 'eLBJgE7IJkPCuiNEfboSDq8F'
+})
+//============ done =======================//
 const serviceSort = async() => {
     let services = await servicePage.find();
     let startAbusiness = [];
@@ -100,7 +110,6 @@ const serviceSort = async() => {
     });
     return [startAbusiness, licenses, labour, HR];
 } 
-
 app.get("/", async (req, res) => {
     req.session.returnTo = req.originalUrl
     try {
@@ -113,11 +122,51 @@ app.get("/", async (req, res) => {
     }
    
 });
+let newOrder = {};
 app.get("/customer/dashboard", async function (req, res) {
-    req.session.returnTo = req.originalUrl
-    let passedMessage = req.query.message;
-    let [startAbusiness, licenses, labour, HR] = await serviceSort();
-    res.render("dashboard.ejs",{startAbusiness, licenses, labour, HR, user:req.user,passedMessage})
+    let auth = req.isAuthenticated();
+    req.session.returnTo = req.originalUrl;
+    if (auth) {
+        let passedMessage = ""
+        let orders = await CustomerResponse.findById(req.user.id);
+        let [startAbusiness, licenses, labour, HR] = await serviceSort();
+        res.render("dashboard.ejs", { orders, passedMessage,startAbusiness, licenses, labour, HR });
+    } else {
+        res.redirect("/login/customer")
+    }
+})
+app.post("/customer/dashboard", async function (req, res) {
+    let auth = req.isAuthenticated();
+    if (auth) {
+        try {
+            request(`https://rzp_test_W6LG94sImodYti:eLBJgE7IJkPCuiNEfboSDq8F@api.razorpay.com/v1/payments/${req.body.razorpay_payment_id}`, async function (error, response, body) {
+                let newPayment = new OrderData({
+                    customer: req.user.id,
+                    orderData: body
+                });
+                await newPayment.save();
+                let newresponse = new CustomerResponse({
+                    user: req.user.id,
+                    ...newOrder
+                });
+                newOrder = {};
+                await newresponse.save();
+                let passedMessage = "Order Successfull";
+                let [startAbusiness, licenses, labour, HR] = await serviceSort();
+                res.render("dashboard.ejs", { startAbusiness, licenses, labour, HR, user: req.user, passedMessage });
+
+            }); 
+        } catch (error) {
+            res.redirect("/customer/dashboard")
+        }
+        
+    } else {
+        res.redirect("/login/customer")
+    }
+   
+    
+    
+    
 })
 app.get("/blog", async (req, res) => {
     req.session.returnTo = req.originalUrl
@@ -179,10 +228,10 @@ app.get("/orderForm/:id/:type", async function (req, res) {
         let serviceId = req.params.id;
     let serviceType = req.params.type;
     let [startAbusiness, licenses, labour, HR] = await serviceSort();
-    let allPricing = await servicePage.findById(serviceId).select({ "pricingCards": 1, "_id": 0,"name":1});
+    let allPricing = await servicePage.findById(serviceId).select({ "pricingCards": 1,"name":1});
     let pricing = allPricing.pricingCards[serviceType][0];
     let passedMessage = req.query.message;
-    res.render("orderForm",{startAbusiness, licenses, labour, HR,user:req.user,pricing,passedMessage,nameOfService:allPricing.name })
+    res.render("orderForm",{startAbusiness, licenses, labour, HR,user:req.user,pricing,passedMessage,nameOfService:allPricing.name, idOfService:allPricing.id, serviceType })
     } catch (error) {
         console.error(error);
         res.redirect("/error")
@@ -193,12 +242,24 @@ app.post("/orderForm", async function (req, res) {
     let auth = req.isAuthenticated();
     if (auth) {
         try {
-
-            let newOrder = new CustomerResponse(req.body);
-            await newOrder.save();
-            let message = encodeURIComponent("Order placed Successfully")
-            res.redirect("/customer/dashboard?message=" + message);
-
+                try {
+                    let allPricing = await servicePage.findById(req.body.idOfService).select({ "pricingCards": 1, "name": 1 });
+                    let pricing = allPricing.pricingCards[req.body.serviceType][0];
+                    const options = {
+                        amount: Number(pricing)*100,
+                        currency: 'INR',
+                        receipt: shortid.generate(), //any unique id
+                       
+                    };
+                    const response = await instance.orders.create(options);
+                    res.render("orderConfermation",{response, customer_data:req.body})
+                    newOrder = {};
+                    newOrder = req.body;
+                } catch (error) {
+                    console.log(error);
+                    res.redirect("/error")
+                }
+                
         } catch (error) {
             console.log(error);
             res.redirect("/error")
@@ -460,7 +521,7 @@ app.get("/admin/singleServiceDelete/:id", async function (req, res) {
 // Post request to get all the service page info from the admin //
 app.post("/websiteData", upload.array("image"),  async (req, res) => {
    
-    const {categoryOfService,submit_button_above, nameOfService, serviceurl, rapportStart, rapportSelect, rapportSuper, about_service, procedureName, procedureDescription, documents_required, eligibility,advantages , faqQuestion, faqAnswer,stepsName, stepsDescription } = req.body;
+    const {descriptionOfService,categoryOfService,submit_button_above, nameOfService, serviceurl, rapportStart, rapportSelect, rapportSuper, about_service, procedureName, procedureDescription, documents_required, eligibility,advantages , faqQuestion, faqAnswer,stepsName, stepsDescription } = req.body;
     const servicePageObject = {
         category:categoryOfService,
         name: nameOfService,
@@ -471,6 +532,7 @@ app.post("/websiteData", upload.array("image"),  async (req, res) => {
         documentsRequired: documents_required,
         eligibility,
         advantages,
+        descriptionOfService,
         steps:{stepsName, stepsDescription},
         faq:{ faqQuestion,faqAnswer }
     }

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="/js/jquery.min.js"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+
+<body>
+    <h1 style="text-align: center;">Order Confirmation</h1>
+    <div style="text-align: center;">
+        <label for="customer-name">Name: </label>
+        <input disabled type="text" id="customer-name" value="<%= customer_data.name %>">
+        <label for="customer-email">Given email: </label>
+        <input disabled type="email" name="" value="<%= customer_data.email %> " id="customer-email">
+        <label for="customer-contact">Given Contact Number: </label>
+        <input disabled type="text" name="" id="customer-contact" value="<%=customer_data.contact_number%>">
+        <p><strong>Payment Id:</strong></p>
+        <p id="payment_id"><%= response.id %> </p>
+        <p> <strong>Amount To Pay: </strong> </p>
+        <p id="to_be_paid"><%= response.amount.toString().substring(0,response.amount.toString().length-2) %> + 18% GST
+        </p>
+        <button id="rzp-button1">Pay</button>
+        <a href="/">Go Home</a>
+    </div>
+    <input id="amount_id" type="text" style="display: none;" value="<%= response.amount%>">
+
+    <script>
+
+        var options = {
+            "key": "rzp_test_W6LG94sImodYti", // Enter the Key ID generated from the Dashboard
+            "amount": Number($("#amount_id").val()), // Amount is in currency subunits
+            "currency": "INR",
+            "name": "Rapport HR Sollutions",
+            "description": "Transaction",
+            "image": "https://example.com/your_logo",
+            "order_id": $("#payment_id"), //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+            "callback_url": "http://localhost:8000/customer/dashboard",
+            "prefill": {
+                "name": $("#customer-name").val(),
+                "email": $("#customer-email").val(),
+                "contact": $("#customer-contact").val()
+            },
+            "notes": {
+                "address": "Razorpay Corporate Office"
+            },
+            "theme": {
+                "color": "#3399cc"
+            }
+        };
+        var rzp1 = new Razorpay(options);
+        document.getElementById('rzp-button1').onclick = function (e) {
+            console.log("reached")
+            rzp1.open();
+            e.preventDefault()
+
+        }
+
+    </script>
+
+</body>
+
+</html>

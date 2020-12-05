@@ -128,8 +128,8 @@
                                         <div class="row">
                                             <p class="col-lg-6 col-md-6 col-sm-12">
                                                 <input type="text" name="name" value="" size="40" class=""
-                                                    aria-required="true" aria-invalid="false" placeholder="Name *"
-                                                    required>
+                                                    id="customer-name" aria-required="true" aria-invalid="false"
+                                                    placeholder="Name *" required>
                                             </p>
                                             <p class="col-lg-6 col-md-6 col-sm-12">
                                                 <input type="text" name="company_name" value="" size="40" class=""
@@ -137,14 +137,14 @@
                                                     placeholder="Company Name *" required>
                                             </p>
                                             <p class="col-lg-6 col-md-6 col-sm-12">
-                                                <input type="email" name="email" value="" size="40" class=""
-                                                    aria-required="true" aria-invalid="false" placeholder="Your Email *"
-                                                    required>
+                                                <input type="email" name="email" value="" id="customer-email" size="40"
+                                                    class="" aria-required="true" aria-invalid="false"
+                                                    placeholder="Your Email *" required>
                                             </p>
                                             <p class="col-lg-6 col-md-6 col-sm-12">
-                                                <input type="number" name="contact_number" value="" size="40" class=""
-                                                    aria-required="true" aria-invalid="false"
-                                                    placeholder=" Contact Information ">
+                                                <input type="number" name="contact_number" value=""
+                                                    id="customer-contact" size="40" class="" aria-required="true"
+                                                    aria-invalid="false" placeholder=" Contact Information ">
                                             </p>
                                             <p class="col-lg-6 col-md-6 col-sm-12">
                                                 <input type="text" name="primaryBusiness" value="" size="40" class=""
@@ -215,9 +215,9 @@
                                         <div class="question">
                                             <h4>Q3. Would you like to pay Online now?</h4>
                                             <div class="form-check">
-                                                <input type="checkbox" id="pay-now" name="pay_now"
-                                                    class="form-control pay-now">
-                                                <h4 style="display: inline;">Pay Now ₹ <%= pricing %> </h4>
+
+                                                <h4 style="display: inline;">Pay Now ₹ <%= pricing %> + 18% GST </h4>
+
                                             </div>
                                         </div>
                                         <div class="question">
@@ -225,7 +225,10 @@
                                             <div class="submit-button">
                                                 <button class="octf-btn octf-btn-light" id="go-back-button"
                                                     type="submit">Go back</button>
-                                                <button class="octf-btn octf-btn-dark" type="submit">Submit</button>
+                                                <input type="text" style="display: none;" value="<%= serviceType %>"
+                                                    name="serviceType">
+                                                <button id="rzp-button1" value="<%=idOfService %>" name="idOfService"
+                                                    class="octf-btn octf-btn-dark" type="submit">Submit</button>
 
                                             </div>
                                         </div>
@@ -312,6 +315,7 @@
             });
         })(jQuery);
     </script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <script>
         $("#next-step-button").click(function (e) {
             e.preventDefault();
@@ -322,7 +326,7 @@
             e.preventDefault();
             $("#stepOne").show();
             $("#stepTwo").hide()
-        })
+        });
     </script>
 </body>
 
