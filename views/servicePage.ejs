@@ -153,6 +153,27 @@
         .callback-input {
             margin: 10px 10px;
         }
+
+        .ot-pricing-table {
+            height: 100%;
+        }
+
+        .octf-btn {
+            position: absolute;
+            bottom: 10px;
+        }
+
+        .title-table {
+            font-size: 1.1rem !important;
+        }
+
+        .inner-table h2 {
+            font-size: 2.3rem !important;
+        }
+
+        .inner h6 {
+            font-weight: 500;
+        }
     </style>
 </head>
 
@@ -163,7 +184,7 @@
         <div id="content" class="site-content">
             <div class="page-header flex-middle">
                 <div class="container">
-                    <div class="inner flex-middle">
+                    <div class="inner">
                         <h1 class="page-title"> <%= name %> </h1>
                         <h6 style="color:white"> <%= descriptionOfService %> </h6>
                     </div>
@@ -185,8 +206,6 @@
                             <div class="space-20"></div>
                         </div>
                     </div>
-
-
                     <div class="row justify-content-center">
                         <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
                             <div class="ot-pricing-table">
@@ -255,11 +274,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="button-to-send">
-                            <a href="/#" class="octf-btn" style="margin-top: 30px;">Contact Us</a>
-                        </div>
                     </div>
-
                 </div>
             </section>
             <% } %>
@@ -279,7 +294,7 @@
                             <div class="tab-video container">
                                 <div class="ot-heading">
                                     <span>// Procedure</span>
-                                    <h2 class="main-heading">Procedure for PF payments & PF returns</h2>
+                                    <h2 class="main-heading">Procedure for <%= name %> </h2>
                                     <hr class="seperator-hr">
                                 </div>
                                 <div class="space-15"></div>
