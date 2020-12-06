@@ -475,6 +475,31 @@
             });
         })(jQuery);
     </script>
+    <script src="/js/jquery.min.js"></script>
+    <script>
+        $("#callbackButton").click(function (e) {
+            e.preventDefault();
+            let data = { full_name: $("#callbackFull_name").val(), email: $("#callbackEmail").val(), mobile: $("#callbackMobile").val() };
+            $.ajax({
+                type: "POST",
+                url: "/callback",
+                data: data,
+                success: function (data) {
+                    console.log(data)
+                    if (data === "Unsuccessfull, please fill all the fields!") {
+                        window.alert(data);
+                    } else {
+                        window.alert(data);
+                        $("#callbackFull_name").val("");
+                        $("#callbackEmail").val("");
+                        $("#callbackMobile").val("");
+                    }
+
+                }
+            })
+        })
+
+    </script>
 </body>
 
 </html>

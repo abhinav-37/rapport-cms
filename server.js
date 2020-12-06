@@ -8,6 +8,7 @@ const mongoose = require("mongoose");
 const nodemailer = require("nodemailer");
 const Razorpay = require("razorpay");
 const OrderData = require("./models/orderData");
+const Callback = require("./models/callback");
 //auth
 const session = require("express-session");
 const bodyParser = require("body-parser");
@@ -25,8 +26,6 @@ const dailyWages = require("./models/dailyWages");
 const lawUpdates = require("./models/lawUpdates");
 const { text, json } = require("body-parser");
 const { Logger } = require("mongodb");
-
-
 
 app.use(express.static(path.join(__dirname, "public")));
 app.set("view engine", "ejs");
@@ -277,6 +276,17 @@ app.post("/orderForm", async function (req, res) {
         res.redirect("/login/customer")
     }
 })
+app.post("/callback", async function (req, res) {
+    try {
+        let data = req.body;
+        let newCall = new Callback(data);
+        await newCall.save();
+        res.end("Callback Request SuccessFull")
+    } catch (error) {
+        res.end("Unsuccessfull, please fill all the fields!")
+    }
+    
+})
 // ========================= Authentication start =================== //
 
 //GET requset for login
@@ -444,19 +454,14 @@ let storage = multer.diskStorage({
         console.log(pathName);
         count += 1;
         if (pathName === "blogsGenerator") { 
-            console.log(req.body.nameOfBlog);
             cb(null, req.body.nameOfBlog + pathName + "." + format);
-            
             nameOfImage = req.body.nameOfBlog + pathName + "." + format
         } else if (pathName === "admin/dailyWages") { 
-            console.log(file);
             cb(null, Date.now().toString().substring(0,Date.now().toString().length -1)+file.originalname.replace(/\s/g,''));
         }
-            
         else {
             cb(null, req.body.serviceurl + pathName + count.toString()+"."+ format);
-        }
-        
+        } 
   }
 })
 let upload = multer({ storage })
@@ -859,7 +864,37 @@ app.post("/admin/lawUpdatesForm", async function (req, res) {
     }
 })
 
-
+//callback
+app.get("/admin/callback", async function (req, res) {
+    let auth = req.isAuthenticated();
+    if (auth) {
+        if (req.user.type === "admin" || req.user.type === "employee") {
+            let passedMessage = req.query.message;
+            let callData = await Callback.find();
+            res.render("adminPanel/callback", {user: req.user, passedMessage, callData});
+        } else {
+            res.redirect("/login/admin")
+        }
+    } else {
+        res.redirect("/login/admin")
+    }
+});
+app.post("/admin/callback", async function (req, res) {
+    let auth = req.isAuthenticated();
+    if (auth) {
+        if (req.user.type === "admin" || req.user.type === "employee") {
+            let foundCall = await Callback.findById(req.body.CallDoneButton);
+            foundCall.status = "Done";
+            foundCall.save();
+            let message = encodeURIComponent("Call update done!")
+            res.redirect("/admin/callback?message=" + message);
+        } else {
+            res.redirect("/login/admin")
+        }
+    } else {
+        res.redirect("/login/admin")
+    }
+})
 //favourite services
 app.get("/admin/favouriteServices", async function (req, res) {
     let auth = req.isAuthenticated();

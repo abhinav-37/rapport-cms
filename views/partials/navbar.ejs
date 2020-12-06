@@ -114,12 +114,15 @@
             <div class="octf-mainbar-container">
                 <div class="octf-mainbar">
                     <div class="octf-mainbar-row octf-row ">
-                        <form class="wpcf7" action="/callback" method="post">
+                        <form id="callbackForm" class="wpcf7">
                             <span>Request a call back:</span>
-                            <input class="callback-input" type="text" placeholder="Enter full name">
-                            <input class="callback-input" type="text" placeholder="Enter email id">
-                            <input class="callback-input" type="text" placeholder="Enter mobile number">
-                            <button type="submit" class="octf-btn octf-btn-dark"> Submit </button>
+                            <input required class="callback-input" type="text" id="callbackFull_name"
+                                placeholder=" * Enter full name">
+                            <input required class="callback-input" type="email" id="callbackEmail"
+                                placeholder=" * Enter email id">
+                            <input required class="callback-input" type="text" id="callbackMobile"
+                                placeholder=" * Enter mobile number">
+                            <button id="callbackButton" class="octf-btn octf-btn-dark"> Submit </button>
                         </form>
                     </div>
                 </div>
