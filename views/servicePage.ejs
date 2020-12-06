@@ -149,12 +149,16 @@
         .procedure-icon {
             width: 20%;
         }
+
+        .callback-input {
+            margin: 10px 10px;
+        }
     </style>
 </head>
 
 <body class="royal_preloader">
     <div id="page" class="site">
-        <%- include("partials/navbar")  %>
+        <%- include("partials/navbar",{service:"active"})  %>
 
         <div id="content" class="site-content">
             <div class="page-header flex-middle">
@@ -267,7 +271,7 @@
                 </div>
             </section>
             <% } %>
-            <% if(procedure){ %>
+            <% if(procedure.procedureName != ""){ %>
             <section class="service-web-video">
                 <div class="container-fluid">
                     <div class="row">
@@ -362,7 +366,7 @@
                 </div>
             </section>
             <% } %>
-            <% if(steps){ %>
+            <% if(steps.stepsName != ""){ %>
             <section class="steps">
                 <div class="container">
                     <div class="row">
@@ -396,7 +400,7 @@
                 </div>
             </section>
             <% } %>
-            <% if(faq){ %>
+            <% if(faq.faqQuestion != ""){ %>
             <section class="faq">
                 <div class="container">
                     <div class="row">

@@ -13,6 +13,10 @@ const dailyWagesSchema = new mongoose.Schema({
         type: Array,
         required: true
     },
+    effectiveDate: {
+        type: String,
+        required:true
+    },
     minimumRates: {
         type: Object,
         required:true

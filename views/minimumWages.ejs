@@ -73,7 +73,10 @@
             </div>
         </div>
         <% if(wages){ %>
-        <div style="display: flex" class="container">
+        <div style="text-align: center;padding:30px">
+            <h6>Effective Date: <%= wages.effectiveDate %> </h6>
+        </div>
+        <div class="container">
             <div class="row">
                 <div class="col-lg-2 schedule">
                     <h6 style="display: inline;"><%= wages.schedule %> </h6>

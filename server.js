@@ -128,9 +128,9 @@ app.get("/customer/dashboard", async function (req, res) {
     req.session.returnTo = req.originalUrl;
     if (auth) {
         let passedMessage = ""
-        let orders = await CustomerResponse.findById(req.user.id);
+        let orders = await CustomerResponse.find({ user:req.user.id });
         let [startAbusiness, licenses, labour, HR] = await serviceSort();
-        res.render("dashboard.ejs", { orders, passedMessage,startAbusiness, licenses, labour, HR });
+        res.render("dashboard", { orders, passedMessage,startAbusiness, licenses, labour, HR, user:req.user });
     } else {
         res.redirect("/login/customer")
     }
@@ -153,7 +153,8 @@ app.post("/customer/dashboard", async function (req, res) {
                 await newresponse.save();
                 let passedMessage = "Order Successfull";
                 let [startAbusiness, licenses, labour, HR] = await serviceSort();
-                res.render("dashboard.ejs", { startAbusiness, licenses, labour, HR, user: req.user, passedMessage });
+                let orders = await CustomerResponse.find({ user:req.user.id });
+                res.render("dashboard", { startAbusiness, licenses, labour, HR, user: req.user, passedMessage, orders });
 
             }); 
         } catch (error) {
@@ -181,13 +182,15 @@ app.get("/blogSingle/:blogId", async(req, res) => {
     res.render("post",{startAbusiness, licenses, labour, HR,singleBlog})
 });
 app.get("/services/:slug", async (req, res) => {
-
+    console.log(req.params.slug);
     req.session.returnTo = req.originalUrl
     let pageData = await servicePage.findOne({ slug: req.params.slug });
     let [startAbusiness, licenses, labour, HR] = await serviceSort();
     if (pageData) {  
         res.render("servicePage",{startAbusiness, licenses, labour, HR,...pageData._doc, user:req.user});
-    } 
+    } else {
+        res.redirect("/error")
+    }
    
 });
 app.get("/lawUpdates", async function (req, res) {
@@ -224,18 +227,24 @@ app.post("/allServices", async function (req, res) {
 })
 app.get("/orderForm/:id/:type", async function (req, res) {
     req.session.returnTo = req.originalUrl
-    try {
-        let serviceId = req.params.id;
-    let serviceType = req.params.type;
-    let [startAbusiness, licenses, labour, HR] = await serviceSort();
-    let allPricing = await servicePage.findById(serviceId).select({ "pricingCards": 1,"name":1});
-    let pricing = allPricing.pricingCards[serviceType][0];
-    let passedMessage = req.query.message;
-    res.render("orderForm",{startAbusiness, licenses, labour, HR,user:req.user,pricing,passedMessage,nameOfService:allPricing.name, idOfService:allPricing.id, serviceType })
-    } catch (error) {
-        console.error(error);
-        res.redirect("/error")
+    let auth = req.isAuthenticated();
+    if (auth) {
+        try {
+            let serviceId = req.params.id;
+            let serviceType = req.params.type;
+            let [startAbusiness, licenses, labour, HR] = await serviceSort();
+            let allPricing = await servicePage.findById(serviceId).select({ "pricingCards": 1, "name": 1 });
+            let pricing = allPricing.pricingCards[serviceType][0];
+            let passedMessage = req.query.message;
+            res.render("orderForm", { startAbusiness, licenses, labour, HR, user: req.user, pricing, passedMessage, nameOfService: allPricing.name, idOfService: allPricing.id, serviceType });
+        } catch (error) {
+            console.error(error);
+            res.redirect("/error");
+        };
+    } else {
+        res.redirect("/login/customer")
     }
+    
     
 })
 app.post("/orderForm", async function (req, res) {
@@ -525,7 +534,7 @@ app.post("/websiteData", upload.array("image"),  async (req, res) => {
     const servicePageObject = {
         category:categoryOfService,
         name: nameOfService,
-        slug: serviceurl,
+        slug: serviceurl.replace(/\s/g,''),
         pricingCards: { rapportStart, rapportSelect, rapportSuper },
         aboutService: about_service,
         procedure: { procedureName, procedureDescription },
@@ -715,12 +724,13 @@ app.post("/admin/dailyWages", upload.array("ratesPdf"), async function (req, res
     let auth = req.isAuthenticated();
     if (auth) {
         if (req.user.type === "admin" || req.user.type === "employee") {
-            const {state_select, schedule, category, ratesPerMonth, ratesPerDay } = req.body
+            const {effectiveDate,state_select, schedule, category, ratesPerMonth, ratesPerDay } = req.body
             let dailyWageObject = {
                  state:state_select.toLowerCase().replace(/\s/g , "-"),
                 user: req.user.id,
                 schedule,
                 category,
+                effectiveDate,
                 minimumRates: {
                     ratesPerDay,
                     ratesPerMonth

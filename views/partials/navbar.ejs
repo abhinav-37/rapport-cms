@@ -91,7 +91,7 @@
                                                 class="fas fa-user"></i></a>
                                         <ul class="sub-menu">
                                             <li><a href="/logout">Logout</a></li>
-
+                                            <li><a href="/customer/dashboard"> Dashboard </a></li>
                                         </ul>
                                     </li>
                                     <% }else{ %>
@@ -108,6 +108,25 @@
             </div>
         </div>
     </div>
+    <% if(typeof service !== 'undefined'){ %>
+    <div class="octf-main-header  ">
+        <div class="octf-area-wrap">
+            <div class="octf-mainbar-container">
+                <div class="octf-mainbar">
+                    <div class="octf-mainbar-row octf-row ">
+                        <form class="wpcf7" action="/callback" method="post">
+                            <span>Request a call back:</span>
+                            <input class="callback-input" type="text" placeholder="Enter full name">
+                            <input class="callback-input" type="text" placeholder="Enter email id">
+                            <input class="callback-input" type="text" placeholder="Enter mobile number">
+                            <button type="submit" class="octf-btn octf-btn-dark"> Submit </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <% } %>
     <div class="header_mobile">
         <div class="container">
             <div class="mlogo_wrapper clearfix">
