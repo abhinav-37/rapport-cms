@@ -108,41 +108,28 @@
         </div>
         <% } %>
     </div>
-
-
-
     <div class="table-wrap">
         <table class="table style2 style3">
             <thead class="table-inverse">
                 <tr>
+                    <th><span>State</span></th>
 
-                    <th><span>Schedule</span></th>
-                    <th><span>Category of Workmen</span></th>
                     <th>
                         <span>Edit</span>
                     </th>
                     <th>Remove</th>
-
                 </tr>
             </thead>
             <tbody>
                 <form action="/admin/dailyWages" enctype="multipart/form-data" method="post">
                     <div class="form-group">
                         <% wages.forEach(function(d){ %>
-
                         <tr>
-                            <td><%= d.schedule %> </td>
-                            <td>
-                                <%= d.category %>
-                            </td>
-
+                            <td><%= d.state %> </td>
                             <td>
                                 <a class="btn btn-primary" href="/admin/singWageEditor/<%= d.id %> ">Update</a>
                             </td>
-
                             <td><a class="btn btn-danger" href="/admin/singleWageDelete/<%= d.id %>"> Delete</a></td>
-
-
                         </tr>
                         <% }) %>
                     </div>

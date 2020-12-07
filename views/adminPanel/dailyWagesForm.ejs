@@ -108,7 +108,6 @@
     <% if(singleWage){ %>
 
     <div class="table-wrap">
-        <p>*Please upload the file again before submitting the file if you are not going to update the file.</p>
         <table class="table style2 style3">
             <thead class="table-inverse">
                 <tr>
@@ -120,6 +119,7 @@
                                 Day</span></span>
                     </th>
                     <th><span>Add pdf</span></th>
+                    <th><span>Effective Date</span></th>
                     <th></th>
                 </tr>
             </thead>
@@ -130,7 +130,7 @@
                             <td>
                                 <div class="form-group">
                                     <select name="state_select" class="custom-select" id="selectedEmployee">
-                                        <option selected value="#">Select a State...</option>
+                                        <option value="#">Select a State...</option>
                                         <option value="Andhra Pradesh">Andhra Pradesh</option>
                                         <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
                                         <option value="Arunachal Pradesh">Arunachal Pradesh</option>
@@ -170,34 +170,114 @@
                                     </select>
                                 </div>
                             </td>
-                            <td><span> <input value="<%= singleWage.schedule %> " class="form-control" type="text"
+                            <td><span> <input value="<%= singleWage.schedule %>" class="form-control" type="text"
                                         name="schedule"> </span></td>
                             <td>
-                                <input value="<%= singleWage.category %>" class="form-control" type="text"
+                                <input value="<%= singleWage.category[0] %>" class="form-control" type="text"
                                     name="category">
                             </td>
 
                             <td>
-                                <span class="rates-form"><input
-                                        value=<%= Number(singleWage.minimumRates.ratesPerMonth) %> class="form-control "
-                                        type="number" name="ratesPerMonth">
-                                    <input value=<%= Number(singleWage.minimumRates.ratesPerDay) %>
-                                        class="form-control " type="number" name="ratesPerDay" id=""></span>
+                                <span class="rates-form"><input value="<%= singleWage.minimumRates.ratesPerMonth[0] %>"
+                                        class="form-control " type="number" name="ratesPerMonth">
+                                    <input value="<%= singleWage.minimumRates.ratesPerDay[0] %>" class="form-control "
+                                        type="number" name="ratesPerDay" id=""></span>
                             </td>
 
-                            <td><span><input required class="form-control" type="file" name="ratesPdf" id=""></span>
-                            </td>
-                            <td><Button value="<%= singleWage.id %>" type="submit" name="submit_button"
-                                    id="submitButton"><span class="badge badge-success brd-rd5">Sumbit</span></Button>
+                            <td><span><input class="form-control" type="file" name="ratesPdf" id=""></span></td>
+                            <th><span><input value="<%= singleWage.effectiveDate %>" type="text" name="effectiveDate"
+                                        class="form-control"></span></th>
+                            <td><Button type="submit" id="submitButton"><span
+                                        class="badge badge-success brd-rd5">Sumbit</span></Button>
                             </td>
 
                         </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <input value="<%= singleWage.category[1] %>" class="form-control" type="text"
+                                    name="category">
+                            </td>
+                            <td>
+                                <span class="rates-form"><input value="<%= singleWage.minimumRates.ratesPerMonth[1] %>"
+                                        class="form-control " type="number" name="ratesPerMonth">
+                                    <input value="<%= singleWage.minimumRates.ratesPerDay[1] %>" class="form-control "
+                                        type="number" name="ratesPerDay" id=""></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <input value="<%= singleWage.category[2] %>" class="form-control" type="text"
+                                    name="category">
+                            </td>
+                            <td>
+                                <span class="rates-form"><input value="<%= singleWage.minimumRates.ratesPerMonth[2] %>"
+                                        class="form-control " type="number" name="ratesPerMonth">
+                                    <input value="<%= singleWage.minimumRates.ratesPerDay[2] %>" class="form-control "
+                                        type="number" name="ratesPerDay" id=""></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <input value="<%= singleWage.category[3] %>" class="form-control" type="text"
+                                    name="category">
+                            </td>
+                            <td>
+                                <span class="rates-form"><input value="<%= singleWage.minimumRates.ratesPerMonth[3] %>"
+                                        class="form-control " type="number" name="ratesPerMonth">
+                                    <input value="<%= singleWage.minimumRates.ratesPerDay[3] %>" class="form-control "
+                                        type="number" name="ratesPerDay" id=""></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <input value="<%= singleWage.category[4] %>" class="form-control" type="text"
+                                    name="category">
+                            </td>
+                            <td>
+                                <span class="rates-form"><input value="<%= singleWage.minimumRates.ratesPerMonth[4] %>"
+                                        class="form-control " type="number" name="ratesPerMonth">
+                                    <input value="<%= singleWage.minimumRates.ratesPerDay[4] %>" class="form-control "
+                                        type="number" name="ratesPerDay" id=""></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <input value="<%= singleWage.category[5] %>" class="form-control" type="text"
+                                    name="category">
+                            </td>
+                            <td>
+                                <span class="rates-form"><input value="<%= singleWage.minimumRates.ratesPerMonth[5] %>"
+                                        class="form-control " type="number" name="ratesPerMonth">
+                                    <input value="<%= singleWage.minimumRates.ratesPerDay[5] %>" class="form-control "
+                                        type="number" name="ratesPerDay" id=""></span>
+                            </td>
+                        </tr>
                     </div>
                 </form>
-
+                <input id="state-select" type="text" style="display: none;" value="<%= singleWage.state %>">
             </tbody>
         </table>
     </div>
+    <script>
+        let state = $("#state-select").val();
+
+        $("option").each(function (i, ele) {
+
+            if ($(this).val().replace(/\s/g, '-').toLowerCase() == state.toLowerCase()) {
+                $(this).attr("selected", "selected")
+            }
+        })
+    </script>
     <% }else{ %>
     <div class="table-wrap">
         <table class="table style2 style3">
@@ -362,6 +442,7 @@
             alert.removeClass("show")
         })
     </script>
+
     <%- include("partials/footerJs.ejs") %>
 </body>
 
