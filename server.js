@@ -181,7 +181,6 @@ app.get("/blogSingle/:blogId", async(req, res) => {
     res.render("post",{startAbusiness, licenses, labour, HR,singleBlog})
 });
 app.get("/services/:slug", async (req, res) => {
-    console.log(req.params.slug);
     req.session.returnTo = req.originalUrl
     let pageData = await servicePage.findOne({ slug: req.params.slug });
     let [startAbusiness, licenses, labour, HR] = await serviceSort();
@@ -451,13 +450,12 @@ let storage = multer.diskStorage({
         let parts = file.originalname.split(".");
         let format = parts[parts.length-1]
         let pathName = req.route.path.substring(1,);
-        console.log(pathName);
         count += 1;
         if (pathName === "blogsGenerator") { 
             cb(null, req.body.nameOfBlog + pathName + "." + format);
             nameOfImage = req.body.nameOfBlog + pathName + "." + format
         } else if (pathName === "admin/dailyWages") { 
-            cb(null, Date.now().toString().substring(0,Date.now().toString().length -1)+file.originalname.replace(/\s/g,''));
+            cb(null,file.originalname.replace(/\s/g,''));
         }
         else {
             cb(null, req.body.serviceurl + pathName + count.toString()+"."+ format);
@@ -548,7 +546,7 @@ app.post("/websiteData", upload.array("image"),  async (req, res) => {
         advantages,
         descriptionOfService,
         steps:{stepsName, stepsDescription},
-        faq:{ faqQuestion,faqAnswer }
+        faq:{ faqQuestion,faqAnswer },
     }
     let service = await servicePage.findById(submit_button_above );
    
@@ -717,7 +715,7 @@ app.get("/admin/singleWageDelete/:id", async function (req, res) {
         if (req.user.type === "admin" || req.user.type === "employee") {
              await dailyWages.deleteOne({ _id: req.params.id });
             let message = encodeURIComponent('Wage Deleted Successfully!');
-        res.redirect("/adminPanel?message="+message)
+        res.redirect("/admin/dailyWagesUpdate?message="+message)
         } else {
             res.redirect("/login/admin")
         }
@@ -731,7 +729,7 @@ app.post("/admin/dailyWages", upload.array("ratesPdf"), async function (req, res
         if (req.user.type === "admin" || req.user.type === "employee") {
             const {effectiveDate,state_select, schedule, category, ratesPerMonth, ratesPerDay } = req.body
             let dailyWageObject = {
-                 state:state_select.toLowerCase().replace(/\s/g , "-"),
+                state: state_select.toLowerCase().replace(/\s/g, "-"),
                 user: req.user.id,
                 schedule,
                 category,
@@ -739,33 +737,37 @@ app.post("/admin/dailyWages", upload.array("ratesPdf"), async function (req, res
                 minimumRates: {
                     ratesPerDay,
                     ratesPerMonth
-                }, 
-                filename: req.files.length !==0 && Date.now().toString().substring(0,Date.now().toString().length -1) + req.files[0].originalname.replace(/\s/g,'')
-            }
+                },
+                filename: req.files.length !== 0 && req.files[0].originalname.replace(/\s/g, '')
+            };
             
             const newdailyWage = new dailyWages(dailyWageObject);
             let wage = await dailyWages.findById(req.body.submit_button);
             if (wage) {
+                
                 if (req.files.length !== 0) {
-                   let test = await servicePage.findOneAndUpdate({_id: wage.id},  { $set: dailyWageObject },  {  new: true  })
+                   let test = await dailyWages.findOneAndUpdate({_id:req.body.submit_button},  { $set: dailyWageObject }, {  new: true  })
                     let message = encodeURIComponent('Done Updating The Wage !');
-                res.redirect("/admin/dailyWages?message="+message)
+                    res.redirect("/admin/dailyWages?message=" + message);
                 } else {
-                    let test = await servicePage.findOneAndUpdate({ _id: wage.id }, { $set: { state:state_select,
-                    user: req.user.id,
-                    schedule,
-                    category,
-                    minimumRates: {
-                        ratesPerDay,
-                        ratesPerMonth
-                }, } }, { new: true });
+                    let test = await dailyWages.findOneAndUpdate({ _id: req.body.submit_button }, {
+                        state: state_select.toLowerCase().replace(/\s/g, "-"),
+                        schedule,
+                        category,
+                        effectiveDate,
+                        minimumRates: {
+                            ratesPerDay,
+                            ratesPerMonth
+                        },
+                    }, { new: true });
+                    
                 }
                  let message = encodeURIComponent('Done Editing The Wage !');
-                res.redirect("/admin/dailyWages?message="+message)
+                res.redirect("/admin/dailyWagesUpdate?message="+message)
             } else {
                 await newdailyWage.save();
                 let message = encodeURIComponent('Done Adding new Wage !');
-                res.redirect("/admin/dailyWages?message="+message)
+                res.redirect("/admin/dailyWagesUpdate?message="+message)
             }
             
         } else {

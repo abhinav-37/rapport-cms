@@ -392,7 +392,6 @@ h6 {
     font-family: "Montserrat", sans-serif;
     font-weight: 600;
     line-height: 1.2;
-    margin: 0 0 20px;
     color: #1b1d21;
 }
 
@@ -820,7 +819,7 @@ td {
     -ms-transition: all 0.3s linear;
     font-family: "Nunito Sans", sans-serif;
     font-size: 14px;
-    padding: 14px 30px 14px 30px;
+    padding: 8px 15px;
     line-height: 1.42857143;
     display: inline-block;
     margin-bottom: 0;
@@ -928,7 +927,7 @@ textarea {
     color: #b5b5b5;
     border: none;
     background: #f6f6f6;
-    padding: 10px 20px;
+    padding: 1px 10px;
     box-sizing: border-box;
     outline: none;
 }
@@ -1474,7 +1473,6 @@ a:active {
     color: #1a1b1e;
     text-align: left;
     display: block;
-    padding: 5px 0px 5px 0px;
     position: relative;
     text-decoration: none;
     outline: none;
@@ -1484,24 +1482,6 @@ a:active {
     -moz-transition: all 0.3s linear;
     -o-transition: all 0.3s linear;
     -ms-transition: all 0.3s linear;
-}
-
-.main-navigation ul li li a:before {
-    position: absolute;
-    content: "//";
-    top: 50%;
-    left: 0;
-    color: #43baff;
-    -webkit-transform: translateY(-50%);
-    -moz-transform: translateY(-50%);
-    transform: translateY(-50%);
-    transition: all 0.3s linear;
-    -webkit-transition: all 0.3s linear;
-    -moz-transition: all 0.3s linear;
-    -o-transition: all 0.3s linear;
-    -ms-transition: all 0.3s linear;
-    visibility: hidden;
-    opacity: 0;
 }
 
 .main-navigation ul li li a:hover:before,
@@ -1538,7 +1518,7 @@ a:active {
 .main-navigation ul li ul {
     width: 380px;
     white-space: nowrap;
-    padding: 25px 0px;
+    padding: 15px 0px;
     position: absolute;
     top: calc(100% + 1px);
     left: -40px;
@@ -5066,7 +5046,7 @@ object {
 .ot-pricing-table {
     position: relative;
     overflow: hidden;
-    padding: 45px 48px 48px;
+    padding: 25px 48px 48px;
     border: 1px solid #e7e7e7;
     transition: all 0.3s linear;
     -webkit-transition: all 0.3s linear;
@@ -5136,7 +5116,6 @@ object {
 .ot-pricing-table .inner-table > span {
     color: #ababab;
     font-weight: 600;
-    margin-bottom: 30px;
     display: block;
 }
 .ot-pricing-table .inner-table .details {
@@ -5150,7 +5129,6 @@ object {
     list-style: none;
     margin-bottom: 0;
     padding: 0;
-    line-height: 42px;
 }
 .ot-pricing-table .inner-table .details ul li:before {
     content: "";
@@ -7401,8 +7379,8 @@ svg:not(:root) {
     padding-bottom: 120px;
 }
 .service-web-pricing {
-    padding-top: 120px;
-    padding-bottom: 100px;
+    padding-top: 20px;
+    padding-bottom: 10px;
 }
 .service-partner {
     padding-top: 0;

@@ -49,6 +49,10 @@ const serviceSchema = new mongoose.Schema({
         type: Object,
         default:null
     },
+    filename: {
+        type: String,
+        default: null
+    },
     faq: {
         type: Object,
         default:null
