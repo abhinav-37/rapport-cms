@@ -538,20 +538,21 @@ app.post("/websiteData", upload.array("image"),  async (req, res) => {
         category:categoryOfService,
         name: nameOfService,
         slug: serviceurl.replace(/\s/g,''),
+        descriptionOfService,
         pricingCards: { rapportStart, rapportSelect, rapportSuper },
         aboutService: about_service,
         procedure: { procedureName, procedureDescription },
         documentsRequired: documents_required,
         eligibility,
         advantages,
-        descriptionOfService,
         steps:{stepsName, stepsDescription},
         faq:{ faqQuestion,faqAnswer },
     }
-    let service = await servicePage.findById(submit_button_above );
-   
-    if (service) {   
-        let test = await servicePage.findOneAndUpdate({_id: service.id},  { $set: servicePageObject },  {  new: true  })
+   let service = await servicePage.findById(submit_button_above );
+    if (service) {  
+        let toPush = { ...servicePageObject }
+        delete toPush.steps
+        await servicePage.findOneAndUpdate({_id: service.id},  { $set: toPush },  {  new: true  })
         let message = encodeURIComponent('Service Page updated Successfully!');
         res.redirect("/adminPanel?message="+message) 
     } else {

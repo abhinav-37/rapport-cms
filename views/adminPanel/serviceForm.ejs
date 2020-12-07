@@ -72,6 +72,12 @@
                     <input value="<%= singleService.name %> " name="nameOfService" required type="text"
                         class="form-control" id="nameOfService" placeholder="Name">
                 </div>
+                <div class="form-group service_name">
+                    <h4>Description</h4>
+                    <label for="descriptionOfService">Enter the name of the service</label>
+                    <input value="<%= singleService.descriptionOfService %>" name="descriptionOfService" required
+                        type="text" class="form-control" id="descriptionOfService" placeholder="Description">
+                </div>
                 <div class="form-group service_url">
 
                     <h4>URL</h4>
@@ -82,6 +88,7 @@
                     <input value="<%= singleService.slug %> " name="serviceurl" required type="text"
                         class="form-control" id="serviceurl" placeholder="eg. service_name">
                 </div>
+                <% let num = 0 %>
                 <div class="pricing_area">
                     <h4>Pricing info</h4>
                     <div class="form-group rapport-start">
@@ -94,17 +101,27 @@
                         <div class="table-responsive">
                             <table class="table table-bordered" id="dynamic_field">
                                 <tr>
-                                    <td><input type="text" name="rapportStart" placeholder="Enter a feature"
+                                    <td><input value="<%= singleService.pricingCards.rapportStart[1] %>" type="text"
+                                            name="rapportStart" placeholder="Enter a feature"
                                             class="form-control name_list" />
                                     </td>
 
                                     <td><button type="button" name="add" id="add" class="btn btn-success">Add
                                             More</button></td>
                                 </tr>
+                                <% for(let i = 2; i<singleService.pricingCards.rapportStart.length; i++){ %>
+                                <% num+=1 %>
+                                <tr id="row<%= num %>">
+                                    <td><input value="<%= singleService.pricingCards.rapportStart[i] %>" type="text"
+                                            name="rapportStart" placeholder="Enter a feature"
+                                            class="form-control name_list" /></td>
+                                    <td><button type="button" name="remove" id="<%= num %>"
+                                            class="btn btn-danger btn_remove">X</button></td>
+                                </tr>
+
+                                <% } %>
                             </table>
-
                         </div>
-
                     </div>
                     <div class="form-group rapport-select">
 
@@ -116,13 +133,25 @@
                         <div class="table-responsive">
                             <table class="table table-bordered" id="dynamic_field2">
                                 <tr>
-                                    <td><input type="text" name="rapportSelect" placeholder="Enter a feature"
+                                    <td><input value="<%= singleService.pricingCards.rapportSelect[1] %>" type="text"
+                                            name="rapportSelect" placeholder="Enter a feature"
                                             class="form-control name_list" />
                                     </td>
 
                                     <td><button type="button" name="add" id="add2" class="btn btn-success">Add
                                             More</button></td>
                                 </tr>
+                                <% for(let i = 2; i<singleService.pricingCards.rapportSelect.length; i++){ %>
+                                <% num+=1 %>
+                                <tr id="row<%= num %>">
+                                    <td><input value="<%= singleService.pricingCards.rapportSelect[i] %>" type="text"
+                                            name="rapportStart" placeholder="Enter a feature"
+                                            class="form-control name_list" /></td>
+                                    <td><button type="button" name="remove" id="<%= num %>"
+                                            class="btn btn-danger btn_remove">X</button></td>
+                                </tr>
+
+                                <% } %>
                             </table>
 
                         </div>
@@ -138,13 +167,24 @@
                         <div class="table-responsive">
                             <table class="table table-bordered" id="dynamic_field3">
                                 <tr>
-                                    <td><input type="text" name="rapportSuper" placeholder="Enter a feature"
+                                    <td><input value="<%= singleService.pricingCards.rapportSuper[1] %>" type="text"
+                                            name="rapportSuper" placeholder="Enter a feature"
                                             class="form-control name_list" />
                                     </td>
 
                                     <td><button type="button" name="add" id="add3" class="btn btn-success">Add
                                             More</button></td>
                                 </tr>
+                                <% for(let i = 2; i<singleService.pricingCards.rapportSuper.length; i++){ %>
+                                <% num+=1 %>
+                                <tr id="row<%= num %>">
+                                    <td><input value="<%= singleService.pricingCards.rapportSuper[i] %>" type="text"
+                                            name="rapportStart" placeholder="Enter a feature"
+                                            class="form-control name_list" /></td>
+                                    <td><button type="button" name="remove" id="<%= num %>"
+                                            class="btn btn-danger btn_remove">X</button></td>
+                                </tr>
+                                <% } %>
                             </table>
 
                         </div>
@@ -166,10 +206,12 @@
                             <tr>
                                 <td>
                                     <input type="text" name="procedureName"
+                                        value="<%= singleService.procedure.procedureName[0] %>"
                                         placeholder="Enter The name of the procedure" class="form-control name_list" />
                                 </td>
                                 <td>
-                                    <input type="text" name="procedureDescription" placeholder="Enter The description"
+                                    <input value="<%= singleService.procedure.procedureDescription[0] %>" type="text"
+                                        name="procedureDescription" placeholder="Enter The description"
                                         class="form-control name_list" />
                                 </td>
                                 <td>
@@ -179,6 +221,21 @@
                                 <td><button type="button" name="add" id="addDescription" class="btn btn-success">Add
                                         More</button></td>
                             </tr>
+                            <% for(let n = 1; n< singleService.procedure.procedureName.length; n++){ %>
+                            <% num+=1 %>
+                            <tr id="row<%= num %>">
+                                <td><input value="<%= singleService.procedure.procedureName[n] %>" type="text"
+                                        name="procedureName" placeholder="Enter The name of the procedure"
+                                        class="form-control name_list" />
+                                </td>
+                                <td> <input value="<%= singleService.procedure.procedureDescription[n] %>" type="text"
+                                        name="procedureDescription" placeholder="Enter The description"
+                                        class="form-control name_list" /></td>
+                                <td><input type="file" name="image" id="image"></td>
+                                <td><button type="button" name="remove" id="<%= num %>"
+                                        class="btn btn-danger btn_remove">X</button></td>
+                            </tr>
+                            <% } %>
                         </table>
 
                     </div>
@@ -207,11 +264,12 @@
                         <table class="table table-bordered" id="dynamic_field_steps">
                             <tr>
                                 <td>
-                                    <input type="text" name="stepsName" placeholder="Enter The Name of the step"
-                                        class="form-control name_list" />
+                                    <input value="<%= singleService.steps.stepsName[0] %>" type="text" name="stepsName"
+                                        placeholder="Enter The Name of the step" class="form-control name_list" />
                                 </td>
                                 <td>
-                                    <input type="text" name="stepsDescription" placeholder="Enter The Description"
+                                    <input value="<%= singleService.steps.stepsDescription[0] %>" type="text"
+                                        name="stepsDescription" placeholder="Enter The Description"
                                         class="form-control name_list" />
                                 </td>
 
@@ -221,6 +279,8 @@
                         </table>
 
                     </div>
+
+
                 </div>
                 <div class="form-group faq_area">
                     <h4>F.A.Q</h4>
@@ -228,17 +288,31 @@
                         <table class="table table-bordered" id="dynamic_field_faq">
                             <tr>
                                 <td>
-                                    <input type="text" name="faqQuestion" placeholder="Enter The Question"
+                                    <input value="<%= singleService.faq.faqQuestion[0] %>" type="text"
+                                        name="faqQuestion" placeholder="Enter The Question"
                                         class="form-control name_list" />
                                 </td>
                                 <td>
-                                    <input type="text" name="faqAnswer" placeholder="Enter The answer"
-                                        class="form-control name_list" />
+                                    <input value="<%= singleService.faq.faqAnswer[0] %>" type="text" name="faqAnswer"
+                                        placeholder="Enter The answer" class="form-control name_list" />
                                 </td>
 
                                 <td><button type="button" name="add" id="addfaq" class="btn btn-success">Add
                                         More</button></td>
                             </tr>
+                            <% for(let j = 1; j<singleService.faq.faqQuestion.length; j++){ %>
+                            <% num+=1 %>
+                            <tr id="row<%= num %>">
+                                <td><input value="<%= singleService.faq.faqQuestion[j] %>" type="text"
+                                        name="faqQuestion" placeholder="Enter The Question"
+                                        class="form-control name_list" /></td>
+                                <td> <input value="<%= singleService.faq.faqAnswer[j] %>" type="text" name="faqAnswer"
+                                        placeholder="Enter The answer" class="form-control name_list" /></td>
+                                <td><button type="button" name="remove" id="<%= num %>"
+                                        class="btn btn-danger btn_remove">X</button></td>
+                            </tr>
+                            <% } %>
+
                         </table>
 
                     </div>
@@ -247,8 +321,18 @@
             <button value="<%= singleService.id %>" class="btn btn-primary" name="submit_button_above"
                 type="submit">Submit</button>
         </form>
-
+        <input type="text" style="display: none;" value="<%= singleService.category %>" id="category-select">
     </div>
+    <script>
+        let state = $("#category-select").val();
+
+        $("option").each(function (i, ele) {
+
+            if ($(this).val().replace(/\s/g, '').toLowerCase() == state.replace(/\s/g, '').toLowerCase()) {
+                $(this).attr("selected", "selected")
+            }
+        })
+    </script>
     <% }else{ %>
     <div class="container form-main">
         <h3>Service Page creator</h3>
