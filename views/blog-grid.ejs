@@ -16,6 +16,12 @@
 
     <link rel="stylesheet" href="/css/style.css" />
     <link rel="stylesheet" href="/css/royal-preload.css" />
+    <style>
+        .disclaimer {
+            background-color: #201d3c7a;
+            padding: 10px 10px;
+        }
+    </style>
 </head>
 
 <body class="royal_preloader">
@@ -77,7 +83,27 @@
 
             </div>
         </div>
-
+        <div class="disclaimer container-fluid">
+            <p style="margin-bottom: 0;color:white; line-height:1.2rem"><strong>Disclaimer: </strong> The information
+                contained in this
+                website is for
+                general information
+                purposes only. The information is
+                provided by
+                <a href="www.rapporthr.in">www.rapporthr.in</a> , a property of Rapport HR Solutions. While we endeavor
+                to keep the information up to
+                date, we make no
+                representations or warranties of any kind, express or implied, about the completeness, accuracy,
+                reliability,
+                suitability or availability with respect to the website or the information, products, services, or
+                related graphics
+                contained on the website for any purpose. Any reliance you place on such information is therefore
+                strictly at your own
+                risk.
+                For any suggestions or feedback write to us at <a
+                    href=" mailto:support@rapporthr.in ">support@rapporthr.in</a>
+            </p>
+        </div>
         <%- include("partials/footer") %>
     </div><!-- #page -->
     <a id="back-to-top" href="#" class="show"><i class="flaticon-up-arrow"></i></a>
@@ -95,7 +121,7 @@
         window.jQuery = window.$ = jQuery;
         (function ($) {
             "use strict";
-            //Preloader
+            //Preloader 
             Royal_Preloader.config({
                 mode: 'logo',
                 logo: '/images/2d-pnd.png',
