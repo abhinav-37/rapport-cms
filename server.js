@@ -175,13 +175,13 @@ app.get("/blog", async (req, res) => {
     req.session.returnTo = req.originalUrl
     let allBlogs = await Blog.find();
     let [startAbusiness, licenses, labour, HR] = await serviceSort();
-    res.render("blog-grid",{startAbusiness, licenses, labour, HR,allBlogs});
+    res.render("blog-grid",{startAbusiness,user:req.user, licenses, labour, HR,allBlogs});
 });
 app.get("/blogSingle/:blogId", async(req, res) => {
     req.session.returnTo = req.originalUrl
     let singleBlog = await Blog.findById(req.params.blogId);
     let [startAbusiness, licenses, labour, HR] = await serviceSort();
-    res.render("post",{startAbusiness, licenses, labour, HR,singleBlog})
+    res.render("post",{startAbusiness,user:req.user, licenses, labour, HR,singleBlog})
 });
 app.get("/services/:slug", async (req, res) => {
     req.session.returnTo = req.originalUrl
@@ -453,7 +453,7 @@ app.get("/logout", function (req, res) {
 
 //========================== Admin panel ======================//
 //====multer config=========//
-let nameOfImage = "";
+
 let count = 0;
 let storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -466,8 +466,8 @@ let storage = multer.diskStorage({
         let pathName = req.route.path.substring(1,);
         count += 1;
         if (pathName === "blogsGenerator") { 
-            cb(null, req.body.nameOfBlog + pathName + "." + format);
-            nameOfImage = req.body.nameOfBlog + pathName + "." + format
+            cb(null, file.originalname.replace(/\s/g, ''));
+            
         } else if (pathName === "admin/dailyWages") { 
             cb(null,file.originalname.replace(/\s/g,''));
         }
@@ -602,10 +602,9 @@ app.post("/blogsGenerator", upload.array("image"), async function (req, res) {
             user: req.user.id,
             title: req.body.nameOfBlog,
             description: req.body.blog_description,
-            nameOfImage
+            filename: req.files.length !== 0 && req.files[0].originalname.replace(/\s/g, '')
         });
         await newBlog.save();
-        nameOfImage = "";
         let message = encodeURIComponent('Blog Successfully created!');
         res.redirect("/blogsGenerator?message=" + message)
     } else {
