@@ -9,6 +9,7 @@ const nodemailer = require("nodemailer");
 const Razorpay = require("razorpay");
 const OrderData = require("./models/orderData");
 const Callback = require("./models/callback");
+const FavourateServices = require("./models/favouriteServices");
 //auth
 const session = require("express-session");
 const bodyParser = require("body-parser");
@@ -19,6 +20,7 @@ const Blog = require("./models/blog");
 const app = express();
 const servicePage = require("./models/servicePage");
 const CustomerResponse = require("./models/customerResponse");
+const QuestionInMind = require("./models/questionInMind");
 //middlewares
 //file uploads
 let multer = require('multer');
@@ -113,8 +115,9 @@ app.get("/", async (req, res) => {
     req.session.returnTo = req.originalUrl
     try {
         let [startAbusiness, licenses, labour, HR] = await serviceSort();
-       
-        res.render("index", { startAbusiness, licenses, labour, HR,user:req.user });
+        let allFavourate = await FavourateServices.find();
+        let latestFavourat = allFavourate[allFavourate.length - 1];
+        res.render("index", { startAbusiness, licenses, labour, HR,user:req.user, latestFavourat });
     } catch (error) {
         console.log(error);
         res.redirect("/error")
@@ -262,6 +265,7 @@ app.post("/orderForm", async function (req, res) {
                     res.render("orderConfermation",{response, customer_data:req.body})
                     newOrder = {};
                     newOrder = req.body;
+                    
                 } catch (error) {
                     console.log(error);
                     res.redirect("/error")
@@ -285,6 +289,16 @@ app.post("/callback", async function (req, res) {
         res.end("Unsuccessfull, please fill all the fields!")
     }
     
+})
+app.post("/questionForm", async function (req, res) {
+    try {
+        let newQues = new QuestionInMind(req.body);
+        await newQues.save();
+        res.end("Done Sending the request!")
+    } catch (error) {
+        res.end(error);
+    }
+   
 })
 // ========================= Authentication start =================== //
 
@@ -898,12 +912,31 @@ app.post("/admin/callback", async function (req, res) {
         res.redirect("/login/admin")
     }
 })
+
+//have a question form
+app.get("/admin/haveAquestion", async function (req, res) {
+    let auth = req.isAuthenticated();
+    if (auth) {
+        if (req.user.type === "admin" || req.user.type === "employee") {
+            let question = await QuestionInMind.find();
+            res.render("admin/questionInMindForm", {user:req.user, question});
+
+        } else {
+            res.redirect("/login/admin")
+        }
+    } else {
+        res.redirect("/login/admin")
+    }
+});
+
 //favourite services
 app.get("/admin/favouriteServices", async function (req, res) {
     let auth = req.isAuthenticated();
     if (auth) {
-        if (req.user.type === "admin" || req.user.type === "employee" ) {
-            res.render("adminPanel/favouriteServices")
+        let passedMessage = req.query.message
+        if (req.user.type === "admin" || req.user.type === "employee") {
+            let favourates = await FavourateServices.find();
+            res.render("adminPanel/favouriteServices",{user:req.user, passedMessage, favourate: favourates[favourates.length-1]})
         } else {
             res.redirect("/login/admin")
         }
@@ -912,6 +945,26 @@ app.get("/admin/favouriteServices", async function (req, res) {
     }
     
 })
+app.post("/admin/favouriteServices", async function (req, res) {
+    let auth = req.isAuthenticated();
+    if (auth) {
+        let passedMessage = req.query.message
+        if (req.user.type === "admin" || req.user.type === "employee" ) {
+            let newFavourate = new FavourateServices({
+                user: req.user,
+                favourates: req.body
+            });
+            await newFavourate.save();
+            let message = decodeURIComponent("Updated Successfully!")
+            res.redirect("/admin/favouriteServices?message=" + message);
+        } else {
+            res.redirect("/login/admin")
+        }
+    } else {
+        res.redirect("/login/admin")
+    }
+})
+
 //404 routes
 app.get("/admin/*", function (req, res) {
    res.render("adminPanel/404",{user:req.user}) 

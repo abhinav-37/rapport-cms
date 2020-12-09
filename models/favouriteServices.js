@@ -5,22 +5,8 @@ const favouriteServicesSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     },
-    department: {
-        required: true,
-        type: String
-    },
-    authority: {
-        type: String,
-        required: true
-    },
-    url: {
-        type: String,
-        required: true,
-        default:"#"
-    },
-    subject: {
-        type: String,
-        required: true,
+    favourates: {
+        type:Object,
     },
     timeStamp: {
         type: Date,

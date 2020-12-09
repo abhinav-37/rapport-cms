@@ -134,6 +134,14 @@
             background-image: linear-gradient(180deg, #3dbcd3, transparent);
             height: 60vh !important;
         }
+
+        h2 {
+            font-size: 22px;
+        }
+
+        .ot-heading h2 {
+            line-height: 28px;
+        }
     </style>
 </head>
 
@@ -156,15 +164,25 @@
                         </form>
                         <div class="favourate-services container">
                             <h4 style="color: white;">Popular services:</h4>
-                            <a href="#" class="octf-btn octf-btn-primary favourate-button">Test one Service long</a>
-                            <a href="#" class="octf-btn octf-btn-primary favourate-button">Test one Service long</a>
-                            <a href="#" class="octf-btn octf-btn-primary favourate-button">Test one Service long</a>
-                            <a href="#" class="octf-btn octf-btn-primary favourate-button">Test one Service long</a>
-                            <a href="#" class="octf-btn octf-btn-primary favourate-button">Test one Service long</a>
-                            <a href="#" class="octf-btn octf-btn-primary favourate-button">Test one Service long</a>
-                            <a href="#" class="octf-btn octf-btn-primary favourate-button">Test one Service long</a>
-                            <a href="#" class="octf-btn octf-btn-primary favourate-button">Test one Service long</a>
-                            <a href="#" class="octf-btn octf-btn-primary favourate-button">Test one Service long</a>
+
+                            <a href="<%= latestFavourat.favourates.slug_service[0] %>"
+                                class="octf-btn octf-btn-primary favourate-button"><%= latestFavourat.favourates.nameOfService[0] %></a>
+                            <a href="<%= latestFavourat.favourates.slug_service[1] %>"
+                                class="octf-btn octf-btn-primary favourate-button"><%= latestFavourat.favourates.nameOfService[1] %></a>
+                            <a href="<%= latestFavourat.favourates.slug_service[2] %>"
+                                class="octf-btn octf-btn-primary favourate-button"><%= latestFavourat.favourates.nameOfService[2] %></a>
+                            <a href="<%= latestFavourat.favourates.slug_service[3] %>"
+                                class="octf-btn octf-btn-primary favourate-button"><%= latestFavourat.favourates.nameOfService[3] %></a>
+                            <a href="<%= latestFavourat.favourates.slug_service[4] %>"
+                                class="octf-btn octf-btn-primary favourate-button"><%= latestFavourat.favourates.nameOfService[4] %></a>
+                            <a href="<%= latestFavourat.favourates.slug_service[5] %>"
+                                class="octf-btn octf-btn-primary favourate-button"><%= latestFavourat.favourates.nameOfService[5] %></a>
+                            <a href="<%= latestFavourat.favourates.slug_service[6] %>"
+                                class="octf-btn octf-btn-primary favourate-button"><%= latestFavourat.favourates.nameOfService[6] %></a>
+                            <a href="<%= latestFavourat.favourates.slug_service[7] %>"
+                                class="octf-btn octf-btn-primary favourate-button"><%= latestFavourat.favourates.nameOfService[7] %></a>
+                            <a href="<%= latestFavourat.favourates.slug_service[8] %>"
+                                class="octf-btn octf-btn-primary favourate-button"><%= latestFavourat.favourates.nameOfService[8] %></a>
                         </div>
                     </div>
 
@@ -204,7 +222,8 @@
                                         <div class="icon-main"><span class="flaticon-medal"></span></div>
                                         <h5>Experience</h5>
                                         <div class="line-box"></div>
-                                        <p>Our great team of more than 1400 software experts.</p>
+                                        <p>Managed by a team of professionals with over 10 years of practical experience
+                                        </p>
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-sm-6">
@@ -212,7 +231,7 @@
                                         <div class="icon-main"><span class="flaticon-gear"></span></div>
                                         <h5>Quick Support</h5>
                                         <div class="line-box"></div>
-                                        <p>We’ll help you test bold new ideas while sharing your.</p>
+                                        <p>24/7 Customer Support to Assist You Pan India</p>
                                     </div>
                                 </div>
                                 <div class="space-15"></div>
@@ -229,21 +248,26 @@
                                             marked *
                                         </p>
                                         <p>
-                                            <input required type="text" name="name" placeholder="Enter the name *">
+                                            <input required type="text" id="question_name" name="name"
+                                                placeholder="Enter the name *">
                                         </p>
                                         <p>
-                                            <input type="text" name="comapnyName" placeholder="Company Name">
+                                            <input type="text" id="question_comapny" name="comapnyName"
+                                                placeholder="Company Name">
                                         </p>
                                         <p>
-                                            <input required type="email" name="email" placeholder="email *">
+                                            <input required id="question_email" type="email" name="email"
+                                                placeholder="email *">
                                         </p>
                                         <p>
-                                            <input type="number" name="customerNumber" required placeholder="Mobile *">
+                                            <input type="number" id="question_mobile" name="customerNumber" required
+                                                placeholder="Mobile *">
                                         </p>
                                         <p>
-                                            <input required type="text" name="enquiryFor" placeholder="Enquiry For? *">
+                                            <input required id="question_enquiry" type="text" name="enquiryFor"
+                                                placeholder="Enquiry For? *">
                                         </p>
-                                        <button type="submit" class="octf-btn octf-btn-light">Submit</button>
+                                        <button id="question-submit" class="octf-btn octf-btn-light">Submit</button>
                                     </div>
                                 </form>
                             </div>
@@ -257,7 +281,9 @@
                         <div class="col-md-12 text-center">
                             <div class="ot-heading">
                                 <span class="text-primary-light">// why choose us</span>
-                                <h2 class="main-heading text-white">Design the Concept <br> of Your Business Idea Now
+                                <h2 class="main-heading text-white">The pursuit of exceptional personnel and utmost
+                                    Customer Satisfaction is a strength we treasure and a tradition that we
+                                    strive to nurture and maintain.
                                 </h2>
                             </div>
                             <div class="space-20"></div>
@@ -269,11 +295,11 @@
                                 <span class="big-number">01</span>
                                 <div class="icon-main"><span class="flaticon-tablet"></span></div>
                                 <div class="content-box">
-                                    <h5>Product Design</h5>
-                                    <div>Our product design service lets you prototype, test and validate your ideas.
+                                    <h5>Huge Client Base</h5>
+                                    <div>Served over 4000+ clients and still counting, with the highest percentage of
+                                        repeat and regular clients.
                                     </div>
-                                    <a href="it-services.html" class="btn-details"><i
-                                            class="flaticon-right-arrow-1"></i> LEARN MORE</a>
+
                                 </div>
                             </div>
                         </div>
@@ -282,11 +308,10 @@
                                 <span class="big-number">02</span>
                                 <div class="icon-main"> <span class="flaticon-ui"></span></div>
                                 <div class="content-box">
-                                    <h5>Development</h5>
-                                    <div>Our product design service lets you prototype, test and validate your ideas.
+                                    <h5>Best Practices</h5>
+                                    <div>You have outsourced your work to us, we don’t outsource it further!
                                     </div>
-                                    <a href="web-development.html" class="btn-details"><i
-                                            class="flaticon-right-arrow-1"></i> LEARN MORE</a>
+
                                 </div>
                             </div>
                         </div>
@@ -295,11 +320,10 @@
                                 <span class="big-number">03</span>
                                 <div class="icon-main"><span class="flaticon-report"></span></div>
                                 <div class="content-box">
-                                    <h5>Data Analytics</h5>
-                                    <div>Our product design service lets you prototype, test and validate your ideas.
+                                    <h5>Mony Back guarantee</h5>
+                                    <div>100% Money back guarantee if not satisfied.
                                     </div>
-                                    <a href="it-services.html" class="btn-details"><i
-                                            class="flaticon-right-arrow-1"></i> LEARN MORE</a>
+
                                 </div>
                             </div>
                         </div>
@@ -308,11 +332,10 @@
                                 <span class="big-number">04</span>
                                 <div class="icon-main"><span class="flaticon-shield"></span></div>
                                 <div class="content-box">
-                                    <h5>Cyber Security</h5>
-                                    <div>Our product design service lets you prototype, test and validate your ideas.
+                                    <h5>Real Time Updates</h5>
+                                    <div>Get Real Time Updates of your service request with our Cloud Solution.
                                     </div>
-                                    <a href="it-services.html" class="btn-details"><i
-                                            class="flaticon-right-arrow-1"></i> LEARN MORE</a>
+
                                 </div>
                             </div>
                         </div>
@@ -326,26 +349,25 @@
                             <div class="misc-box text-white misc-box-bg1">
                                 <div class="ot-counter">
                                     <div>
-                                        <span class="num" data-to="15" data-time="2000">0</span>
-                                        <span>+</span>
+                                        <span class="num" data-to="100" data-time="2000">0</span>
+                                        <span>%</span>
                                     </div>
                                 </div>
-                                <h5>Countries Worldwide</h5>
-                                <p>To succeed, every software solution must be deeply integrated into the existing tech
-                                    environment..</p>
+                                <h5>Money back guarantee</h5>
+                                <p>100% Money back guarantee if not satisfied.</p>
                             </div>
                         </div>
                         <div class="col-md-6 col-sm-12">
                             <div class="misc-box misc-box-bg2">
                                 <div class="ot-counter">
                                     <div>
-                                        <span class="num" data-to="23" data-time="2000">0</span>
-                                        <span>k</span>
+                                        <span class="num" data-to="4" data-time="2000">0</span>
+                                        <span>k+</span>
                                     </div>
                                 </div>
                                 <h5>Happy Customers</h5>
-                                <p>To succeed, every software solution must be deeply integrated into the existing tech
-                                    environment..</p>
+                                <p>Served over 4000+ clients and still counting, with the highest percentage of repeat
+                                    and regular clients.</p>
                             </div>
                         </div>
                     </div>
@@ -652,7 +674,32 @@
         }
 
     </script>
+    <script>
+        $("#question-submit").click(function (e) {
+            e.preventDefault();
+            let data = { name: $("#question_name").val(), comapnyName: $("#question_comapny").val(), email: $("#question_email").val(), customerNumber: $("#question_mobile").val(), enquiryFor: $("#question_enquiry").val() };
+            $.ajax({
+                type: "POST",
+                url: "/questionForm",
+                data: data,
+                success: function (data) {
+                    console.log(data)
+                    if (data === "Unsuccessfull, please fill all the fields!") {
+                        window.alert(data);
+                    } else {
+                        window.alert(data);
+                        $("#question_name").val("");
+                        $("#question_comapny").val("");
+                        $("#question_email").val("");
+                        $("#question_mobile").val("");
+                        $("#question_enquiry").val("")
+                    }
 
+                }
+            })
+        })
+
+    </script>
 </body>
 
 </html>
