@@ -24,10 +24,6 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <style>
-        .fa-star {
-            color: yellow;
-        }
-
         .nav-pills-custom .nav-link {
             color: #aaa;
             background: #fff;
@@ -145,6 +141,10 @@
 
         .ot-heading h2 {
             line-height: 28px;
+        }
+
+        .checked {
+            color: orange !important;
         }
     </style>
 </head>
@@ -395,12 +395,7 @@
                                 <h2 class="main-heading">We Offer a Wide <br>Variety of Services</h2>
                             </div>
                         </div>
-                        <div class="col-md-4 col-sm-4 text-sm-right align-self-end">
-                            <div class="ot-button">
-                                <a href="it-services.html" class="octf-btn octf-btn-primary">all sevices</a>
-                            </div>
-                            <div class="space-10"></div>
-                        </div>
+
                     </div>
                     <div class="space-55"></div>
                     <div class="row">
@@ -408,26 +403,26 @@
                             <!-- Tabs nav -->
                             <div class="nav flex-column nav-pills nav-pills-custom" id="v-pills-tab" role="tablist"
                                 aria-orientation="vertical">
-                                <a class="nav-link mb-3 p-3 shadow active" id="v-pills-home-tab" data-toggle="pill"
+                                <a class="nav-link mb-3  shadow active" id="v-pills-home-tab" data-toggle="pill"
                                     href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">
 
                                     <span class="font-weight-bold small text-uppercase">Start a Business</span></a>
 
-                                <a class="nav-link mb-3 p-3 shadow" id="v-pills-profile-tab" data-toggle="pill"
+                                <a class="nav-link mb-3  shadow" id="v-pills-profile-tab" data-toggle="pill"
                                     href="#v-pills-profile" role="tab" aria-controls="v-pills-profile"
                                     aria-selected="false">
 
                                     <span class="font-weight-bold small text-uppercase">Licenses/
                                         Registration:</span></a>
 
-                                <a class="nav-link mb-3 p-3 shadow" id="v-pills-messages-tab" data-toggle="pill"
+                                <a class="nav-link mb-3  shadow" id="v-pills-messages-tab" data-toggle="pill"
                                     href="#v-pills-messages" role="tab" aria-controls="v-pills-messages"
                                     aria-selected="false">
 
                                     <span class="font-weight-bold small text-uppercase">Labour Law
                                         Compliances</span></a>
 
-                                <a class="nav-link mb-3 p-3 shadow" id="v-pills-settings-tab" data-toggle="pill"
+                                <a class="nav-link mb-3  shadow" id="v-pills-settings-tab" data-toggle="pill"
                                     href="#v-pills-settings" role="tab" aria-controls="v-pills-settings"
                                     aria-selected="false">
 
@@ -440,91 +435,56 @@
                                 <div class="tab-pane fade shadow rounded bg-white show active p-5" id="v-pills-home"
                                     role="tabpanel" aria-labelledby="v-pills-home-tab">
                                     <h4 class="font-italic mb-4">Start a Business</h4>
-                                    <a class="nav-link mb-3 p-3 shadow active" href="#v-pills-home" role="tab">
+                                    <% startAbusiness.forEach(function(e){ %>
+                                    <a class="nav-link mb-3  shadow active" href="/services/<%= e.slug  %> " role="tab">
                                         <i class="fa fa-user-circle-o mr-2"></i>
-                                        <span class="font-weight-bold small text-uppercase">Private Limited</span>
+                                        <span class="font-weight-bold small text-uppercase"><%= e.name %></span>
                                     </a>
-                                    <a class="nav-link mb-3 p-3 shadow active" href="#v-pills-home" role="tab">
-                                        <i class="fa fa-user-circle-o mr-2"></i>
-                                        <span class="font-weight-bold small text-uppercase">Limited Liability</span>
-                                    </a>
-                                    <a class="nav-link mb-3 p-3 shadow active" href="#v-pills-home" role="tab">
-                                        <i class="fa fa-user-circle-o mr-2"></i>
-                                        <span class="font-weight-bold small text-uppercase">Sole Proprietorship
-                                            Registration</span>
-                                    </a>
-                                    <a class="nav-link mb-3 p-3 shadow active" href="#v-pills-home" role="tab">
-                                        <i class="fa fa-user-circle-o mr-2"></i>
-                                        <span class="font-weight-bold small text-uppercase">Public Limited</span>
-                                    </a>
-                                    <a class="nav-link mb-3 p-3 shadow active" href="#v-pills-home" role="tab">
-                                        <i class="fa fa-user-circle-o mr-2"></i>
-                                        <span class="font-weight-bold small text-uppercase">One Person (OPC)
-                                            Company</span>
-                                    </a>
+                                    <% }) %>
 
                                 </div>
 
                                 <div class="tab-pane fade shadow rounded bg-white p-5" id="v-pills-profile"
                                     role="tabpanel" aria-labelledby="v-pills-profile-tab">
                                     <h4 class="font-italic mb-4">Licenses/ Registration:</h4>
-                                    <a class="nav-link mb-3 p-3 shadow active" href="#v-pills-home" role="tab">
+                                    <% licenses.forEach(function(e){ %>
+
+                                    <a class="nav-link mb-3  shadow active" href="/services/<%= e.slug  %> " role="tab">
                                         <i class="fa fa-user-circle-o mr-2"></i>
-                                        <span class="font-weight-bold small text-uppercase">Provident Fund
-                                            Registration</span>
+                                        <span class="font-weight-bold small text-uppercase"><%= e.name %></span>
                                     </a>
-                                    <a class="nav-link mb-3 p-3 shadow active" href="#v-pills-home" role="tab">
-                                        <i class="fa fa-user-circle-o mr-2"></i>
-                                        <span class="font-weight-bold small text-uppercase">ESIC Registration</span>
-                                    </a>
-                                    <a class="nav-link mb-3 p-3 shadow active" href="#v-pills-home" role="tab">
-                                        <i class="fa fa-user-circle-o mr-2"></i>
-                                        <span class="font-weight-bold small text-uppercase">Shop & Establishment
-                                            License</span>
-                                    </a>
-                                    <a class="nav-link mb-3 p-3 shadow active" href="#v-pills-home" role="tab">
-                                        <i class="fa fa-user-circle-o mr-2"></i>
-                                        <span class="font-weight-bold small text-uppercase">BOCW Registration</span>
-                                    </a>
-                                    <a class="nav-link mb-3 p-3 shadow active" href="#v-pills-home" role="tab">
-                                        <i class="fa fa-user-circle-o mr-2"></i>
-                                        <span class="font-weight-bold small text-uppercase">Contract Labour
-                                            Registration</span>
-                                    </a>
+                                    <% }) %>
+
+
                                 </div>
 
                                 <div class="tab-pane fade shadow rounded bg-white p-5" id="v-pills-messages"
                                     role="tabpanel" aria-labelledby="v-pills-messages-tab">
                                     <h4 class="font-italic mb-4">Labour Law
                                         Compliances</h4>
-                                    <a class="nav-link mb-3 p-3 shadow active" href="#v-pills-home" role="tab">
+                                    <% labour.forEach(function(e){ %>
+
+                                    <a class="nav-link mb-3  shadow active" href="/services/<%= e.slug  %> " role="tab">
                                         <i class="fa fa-user-circle-o mr-2"></i>
-                                        <span class="font-weight-bold small text-uppercase">Provident Fund
-                                            Compliance</span>
+                                        <span class="font-weight-bold small text-uppercase"><%= e.name %></span>
                                     </a>
-                                    <a class="nav-link mb-3 p-3 shadow active" href="#v-pills-home" role="tab">
-                                        <i class="fa fa-user-circle-o mr-2"></i>
-                                        <span class="font-weight-bold small text-uppercase">ESIC Compliance</span>
-                                    </a>
-                                    <a class="nav-link mb-3 p-3 shadow active" href="#v-pills-home" role="tab">
-                                        <i class="fa fa-user-circle-o mr-2"></i>
-                                        <span class="font-weight-bold small text-uppercase">Factory Compliance</span>
-                                    </a>
-                                    <a class="nav-link mb-3 p-3 shadow active" href="#v-pills-home" role="tab">
-                                        <i class="fa fa-user-circle-o mr-2"></i>
-                                        <span class="font-weight-bold small text-uppercase">Shop & Establishment
-                                            Compliance</span>
-                                    </a>
+                                    <% }) %>
+
+
                                 </div>
 
                                 <div class="tab-pane fade shadow rounded bg-white p-5" id="v-pills-settings"
                                     role="tabpanel" aria-labelledby="v-pills-settings-tab">
-                                    <h4 class="font-italic mb-4">Payroll Outsourcing</h4>
-                                    <a class="nav-link mb-3 p-3 shadow active" href="#v-pills-home" role="tab">
+                                    <h4 class="font-italic mb-4">Human Resources &
+                                        Technology</h4>
+                                    <% HR.forEach(function(e){ %>
+
+                                    <a class="nav-link mb-3  shadow active" href="/services/<%= e.slug  %> " role="tab">
                                         <i class="fa fa-user-circle-o mr-2"></i>
-                                        <span class="font-weight-bold small text-uppercase">Monthly Salary
-                                            Processing</span>
+                                        <span class="font-weight-bold small text-uppercase"><%= e.name %></span>
                                     </a>
+                                    <% }) %>
+
                                 </div>
                             </div>
                         </div>
@@ -538,7 +498,7 @@
                         <div class="col-md-12">
                             <div class="ot-heading text-center">
                                 <span>// our clients</span>
-                                <h2 class="main-heading">We are Trusted <br>15+ Countries Worldwide</h2>
+                                <h2 class="main-heading">We are Trusted </h2>
                             </div>
                         </div>
                     </div>
@@ -547,82 +507,43 @@
                         <div class="col-md-12">
                             <div class="ot-testimonials">
                                 <div class="owl-carousel owl-theme testimonial-inner ot-testimonials-slider">
+                                    <% clientRating.forEach(function(e){ %>
                                     <div class="testi-item">
                                         <div class="layer1"></div>
                                         <div class="layer2">
+                                            <div class="rating">
+                                                <img style="width:38px; display:inline; padding:5px 5px;"
+                                                    src="images/googleLogo.png" alt="app rating">
+                                                <span
+                                                    class="fa fa-star <%= 1 <=  Number(e.rating) && "checked" %>  "></span>
+                                                <span
+                                                    class="fa fa-star <%= 2 <=  Number(e.rating) && "checked" %>"></span>
+                                                <span
+                                                    class="fa fa-star <%= 3 <=  Number(e.rating) && "checked" %>"></span>
+                                                <span
+                                                    class="fa fa-star <%= 4 <=  Number(e.rating) && "checked" %>"></span>
+                                                <span
+                                                    class="fa fa-star <%= 5 <=  Number(e.rating) && "checked" %>"></span>
+
+                                            </div>
                                             <div class="t-head flex-middle">
-                                                <img src="https://via.placeholder.com/90x90.png" alt="Emilia Clarke"
-                                                    class="lazyloaded" data-ll-status="loaded">
-                                                <div class="tinfo">
-                                                    <h6>SoftTech,</h6>
-                                                    <span>Manager of Company</span>
+
+
+                                                <div style="margin-top: 10px;" class="tinfo">
+                                                    <h6><%= e.clientName %> </h6>
+
                                                 </div>
                                             </div>
-                                            <div class="ttext">
-                                                "Patience. Infinite patience. No shortcuts. Very well thought out and
-                                                articulate communication. Clear milestones, deadlines and fast work.
-                                                Even if the client is being careless. The best part...always solving
-                                                problems with great original ideas!."
+                                            <div style="margin-bottom: 10px;" class="ttext">
+                                                <%= e.description %>
+                                            </div>
+                                            <div class="link-a">
+                                                <a href="<%= e.link%> "> Link to the review </a>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="testi-item">
-                                        <div class="layer1"></div>
-                                        <div class="layer2">
-                                            <div class="t-head flex-middle">
-                                                <img src="https://via.placeholder.com/90x90.png" alt="Emilia Clarke"
-                                                    class="lazyloaded" data-ll-status="loaded">
-                                                <div class="tinfo">
-                                                    <h6>Moonkle LTD,</h6>
-                                                    <span>Client of Company</span>
-                                                </div>
-                                            </div>
-                                            <div class="ttext">
-                                                "Very well thought out and articulate communication. Clear milestones,
-                                                deadlines and fast work. Patience. Infinite patience. No shortcuts. Even
-                                                if the client is being careless. The best part...always solving problems
-                                                with great original ideas!."
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="testi-item">
-                                        <div class="layer1"></div>
-                                        <div class="layer2">
-                                            <div class="t-head flex-middle">
-                                                <img src="https://via.placeholder.com/90x90.png" alt="Emilia Clarke"
-                                                    class="lazyloaded" data-ll-status="loaded">
-                                                <div class="tinfo">
-                                                    <h6>SoftTech,</h6>
-                                                    <span>Manager of Company</span>
-                                                </div>
-                                            </div>
-                                            <div class="ttext">
-                                                "Patience. Infinite patience. No shortcuts. Very well thought out and
-                                                articulate communication. Clear milestones, deadlines and fast work.
-                                                Even if the client is being careless. The best part...always solving
-                                                problems with great original ideas!."
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="testi-item">
-                                        <div class="layer1"></div>
-                                        <div class="layer2">
-                                            <div class="t-head flex-middle">
-                                                <img src="https://via.placeholder.com/90x90.png" alt="Emilia Clarke"
-                                                    class="lazyloaded" data-ll-status="loaded">
-                                                <div class="tinfo">
-                                                    <h6>Moonkle LTD,</h6>
-                                                    <span>Client of Company</span>
-                                                </div>
-                                            </div>
-                                            <div class="ttext">
-                                                "Very well thought out and articulate communication. Clear milestones,
-                                                deadlines and fast work. Patience. Infinite patience. No shortcuts. Even
-                                                if the client is being careless. The best part...always solving problems
-                                                with great original ideas!."
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <% }) %>
+
                                 </div>
                             </div>
                         </div>

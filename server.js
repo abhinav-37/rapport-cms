@@ -121,8 +121,10 @@ app.get("/", async (req, res) => {
     try {
         let [startAbusiness, licenses, labour, HR] = await serviceSort();
         let allFavourate = await FavourateServices.find();
+        let clientRating = await ClientReviews.find();
         let latestFavourat = allFavourate[allFavourate.length - 1];
         res.render("index", {
+            clientRating,
             startAbusiness,
             licenses,
             labour,
