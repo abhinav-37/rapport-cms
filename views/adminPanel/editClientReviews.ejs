@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<%- include("partials/head.ejs") %>
+<script src="https://cdn.ckeditor.com/ckeditor5/23.1.0/classic/ckeditor.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<style>
+    .rapport-start,
+    .rapport-super,
+    .rapport-select {
+        box-shadow: 0px 0px 5px black;
+        padding: 20px;
+    }
+
+    .pricing_area {
+        box-shadow: 0px 0px 5px black;
+        padding: 20px;
+    }
+
+    .procedure_area,
+    .about_service,
+    .documents_required,
+    .eligibility,
+    .faq_area,
+    .service_name,
+    .service_url,
+    .advantages,
+    .stepsArea {
+        box-shadow: 0px 0px 5px black;
+        padding: 20px;
+        margin-top: 30px;
+    }
+
+    .form-control,
+    .btn {
+        border-radius: 0;
+    }
+
+    .form-main {
+        margin-top: 150px;
+        margin-bottom: 50px;
+        padding-bottom: 30px;
+    }
+
+    .table-wrap {
+        padding: 0 100px 100px 100px;
+    }
+
+    th {
+        text-align: center;
+    }
+
+    td {
+        text-align: center;
+    }
+
+    .alert-container {
+        padding-top: 100px;
+        display: flex;
+        justify-content: center;
+
+
+    }
+
+    .alert {
+        width: 400px;
+        display: flex;
+        justify-content: space-around;
+        border-radius: 0;
+    }
+
+    .month-day {
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .rates-form {
+        display: flex;
+        justify-content: center;
+
+    }
+
+    .btn {
+        color: white !important;
+    }
+</style>
+
+
+
+<body>
+    <!-- Including navbar and sidebar from the partials -->
+    <%- include("partials/navbar_sidebar.ejs") %>
+    <!-- alert to show the message -->
+    <div class="container alert-container">
+        <div class="alert alert-danger alert-dismissible fade " role="alert">
+            <strong>PLease Upload a pdf file!</strong>
+            <button type="button" id="remove-alert">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <% if(passedMessage){ %>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <%= passedMessage %>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <% } %>
+    </div>
+    <div class="table-wrap">
+        <table class="table style2 style3">
+            <thead class="table-inverse">
+                <tr>
+                    <th><span>clientName</span></th>
+
+                    <th>
+                        <span>rating</span>
+                    </th>
+                    <th>Remove</th>
+                </tr>
+            </thead>
+            <tbody>
+                <form action="/admin/editClientReviews" method="post">
+                    <div class="form-group">
+                        <% allReviews.forEach(function(d){ %>
+                        <tr>
+                            <td><%= d.clientName %> </td>
+                            <td><%= d.rating %> </td>
+                            <td><a class="btn btn-danger" href="/admin/editClientReviews/<%= d.id %>"> Delete</a></td>
+                        </tr>
+                        <% }) %>
+                    </div>
+                </form>
+
+            </tbody>
+        </table>
+    </div>
+
+
+    <%- include("partials/footerJs.ejs") %>
+</body>
+
+</html>

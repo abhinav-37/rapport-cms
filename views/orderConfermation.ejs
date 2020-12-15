@@ -119,7 +119,7 @@
             "name": "Rapport HR Sollutions",
             "description": "Transaction",
             "image": "https://example.com/your_logo",
-            "order_id": $("#payment_id"), //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+            "order_id": $("#payment_id").val(), //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
             "callback_url": "http://localhost:8000/customer/dashboard",
             "prefill": {
                 "name": $("#customer-name").val(),

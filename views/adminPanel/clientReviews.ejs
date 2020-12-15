@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include("partials/head.ejs") %>
+    <script src="https://cdn.ckeditor.com/ckeditor5/23.1.0/classic/ckeditor.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <style>
+        .rapport-start,
+        .rapport-super,
+        .rapport-select {
+            box-shadow: 0px 0px 5px black;
+            padding: 20px;
+        }
+
+        .pricing_area {
+            box-shadow: 0px 0px 5px black;
+            padding: 20px;
+        }
+
+        .procedure_area,
+        .about_service,
+        .documents_required,
+        .eligibility,
+        .faq_area,
+        .service_name,
+        .service_url,
+        .advantages,
+        .stepsArea {
+            box-shadow: 0px 0px 5px black;
+            padding: 20px;
+            margin-top: 30px;
+        }
+
+        .form-control,
+        .btn {
+            border-radius: 0;
+        }
+
+        .form-main {
+            margin-top: 150px;
+            margin-bottom: 50px;
+            padding-bottom: 30px;
+        }
+    </style>
+</head>
+<style>
+    .blog_description {
+        margin: 20px 0;
+    }
+
+    .alert {
+        height: 50px;
+        position: absolute;
+        z-index: 99;
+        top: -20px;
+        border-radius: 0;
+    }
+
+    .panel-content {
+        position: relative;
+        padding-bottom: 40px;
+    }
+</style>
+
+<body class="panel-data">
+    <!-- Including navbar and sidebar from the partials -->
+    <%- include("partials/navbar_sidebar.ejs") %>
+
+    <div class="panel-content">
+        <% if(passedMessage){ %>
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+            <%= passedMessage %>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <% } %>
+        <div class="widget pad50-65">
+            <div class="widget-title2">
+                <h4>Client Reviews</h4>
+                <span>Please fill out the form below Form elements.</span>
+            </div>
+            <form action="/admin/clientReviews" method="post" class="form-wrp">
+                <div class="row mrg20">
+                    <div class="col-md-6 col-sm-6 col-lg-12">
+                        <label for="clientName">Emter the name of the Client</label>
+                        <input name="clientName" required type="text" id="clientName" class="brd-rd30"
+                            placeholder="Enter the Name of the Client*" />
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-lg-12">
+                        <label for="description">Emter the description</label>
+                        <textarea name="description" required rows="10" type="text" id="description" class="brd-rd30"
+                            placeholder="Enter the description*"></textarea>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-lg-12 blog_description">
+                        <label for="rating">rating</label>
+                        <input required name="rating" id="rating" max="5" min="1" class="brd-rd30" type="number"
+                            placeholder="Rating*">
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-lg-12 blog_description">
+                        <label for="link">Link to the google reviews</label>
+                        <input required name="link" id="link" class="brd-rd30" type="text" placeholder="Link*">
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-lg-12">
+                        <button class="green-bg brd-rd5" type="submit"><i class="fa fa-paper-plane"></i>Add</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div><!-- Panel Content -->
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#blog_description'), {
+                height: 500
+            }); 
+    </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <%- include("partials/footerJs.ejs") %>
+</body>
+
+</html>

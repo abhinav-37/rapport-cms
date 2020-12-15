@@ -24,6 +24,10 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <style>
+        .fa-star {
+            color: yellow;
+        }
+
         .nav-pills-custom .nav-link {
             color: #aaa;
             background: #fff;
@@ -155,7 +159,7 @@
                 data-source="gallery">
                 <!-- START REVOLUTION SLIDER 5.4.1 fullscreen mode -->
                 <div id="rev_slider_one" class="rev_slider fullscreenbanner" data-version="5.4.1">
-                    <div class="search-div" style="position: relative; padding:30px 0 100px 0; z-index:99999">
+                    <div class="search-div" style="position: relative; padding:30px 0 30px 0; z-index:99999">
                         <form method="POST" action="/servicesSearch" class="customSearch">
                             <input name="serviceSearch" id="serviceSearch" type="text"
                                 placeholder="Search any Service...">
@@ -203,6 +207,18 @@
                             <!-- LAYER 1  right image overlay dark-->
                         </li>
                     </ul>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div style="text-align: center;">
+                                <div class="google-rating"> <img style="width:50px" src="images/googleLogo.png"
+                                        alt="app rating"><span class="ml-2"><small>4.5
+                                            of 5</small></span><span class="ml-2"><i class="fa fa-star"></i><i
+                                            class="fa fa-star"></i><i class="fa fa-star"></i><i
+                                            class="fa fa-star"></i><i class="fa fa-star"></i></span> </div>
+
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <section class="over-hidden">
