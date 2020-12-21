@@ -94,7 +94,14 @@
             background-color: rgba(255, 255, 255, 0.384);
             border-color: rgba(255, 255, 255, 0.384);
         }
+
+        select {
+            background: rgba(255, 255, 255, 0.3);
+            width: 100%;
+            color: #333333c7;
+        }
     </style>
+
 </head>
 
 <body class="royal_preloader">
@@ -123,7 +130,8 @@
                                         <p class="font14">Your email address will not be published. Required fields are
                                             marked *
                                         </p>
-                                        <h4>Amount to be paid: ₹ <span style="color: white;"><%= pricing %> </span>
+                                        <h4>Amount to be paid: ₹ <span style="color: white;"><%= pricing %> + 18% GST
+                                            </span>
                                         </h4>
                                         <div class="row">
                                             <p class="col-lg-6 col-md-6 col-sm-12">
@@ -161,78 +169,31 @@
                                                     aria-required="true" aria-invalid="false"
                                                     placeholder="Complete Billing address *" required></textarea>
                                             </p>
+                                            <input type="hidden" name="country" id="countryId" value="IN" />
+
                                             <p class="col-lg-6 col-md-6 col-sm-12">
-                                                <input type="text" name="city" value="" size="40" class=""
-                                                    aria-required="true" aria-invalid="false" placeholder="Enter City *"
-                                                    required>
+                                                <select name="state" class="states order-alpha" id="stateId">
+                                                    <option value="">Select State</option>
+                                                </select>
                                             </p>
                                             <p class="col-lg-6 col-md-6 col-sm-12">
-                                                <input type="text" name="state" value="" size="40" class=""
-                                                    aria-required="true" aria-invalid="false"
-                                                    placeholder="Enter State *" required>
+                                                <select name="city" class="cities order-alpha" id="cityId">
+                                                    <option value="">Select City</option>
+                                                </select>
                                             </p>
                                         </div>
                                         <p>
-                                            <button id="next-step-button" class="octf-btn octf-btn-light">Next
-                                                Step</button>
+                                        <div class="submit-button">
+
+                                            <input type="text" style="display: none;" value="<%= serviceType %>"
+                                                name="serviceType">
+                                            <button id="rzp-button1" value="<%=idOfService %>" name="idOfService"
+                                                class="octf-btn octf-btn-light" type="submit">Go to payment</button>
+
+                                        </div>
                                         </p>
                                     </div>
-                                    <div style="display: none;" class="stepTwo" id="stepTwo">
-                                        <div class="question">
-                                            <h2 class="top">Please Describe Your requirements more!</h2>
-                                            <p class="top">Our experts will call you back in few minutes after
-                                                submitting
-                                                this form from
-                                                your side.
-                                            </p>
-                                        </div>
-                                        <div class="question">
-                                            <h4>
-                                                Q1. How quickly would you like to start
-                                                <span><%= nameOfService %></span> ?
-                                                <input name="nameOfService" type="text" style="display: none;"
-                                                    value="<%= nameOfService %>">
-                                            </h4>
-                                            <h5>
-                                                <div class="form-group">
-                                                    <span>ans:</span>
-                                                    <select class="select form-control" name="urgency">
-                                                        <option>Very Urgent!</option>
-                                                        <option>urgent.</option>
-                                                        <option>Not that urgent.</option>
-                                                    </select>
-                                                </div>
-                                            </h5>
-                                        </div>
-                                        <div class="question">
-                                            <h4>Q2. What is the best time to reach you?</h4>
-                                            <div class="form-group">
-                                                <h5>Ans: <input name="reaching_time" class="form-control" type="time"
-                                                        min="10:00" max="18:30">
-                                                </h5>
-                                            </div>
-                                        </div>
-                                        <div class="question">
-                                            <h4>Q3. Would you like to pay Online now?</h4>
-                                            <div class="form-check">
 
-                                                <h4 style="display: inline;">Pay Now ₹ <%= pricing %> + 18% GST </h4>
-
-                                            </div>
-                                        </div>
-                                        <div class="question">
-
-                                            <div class="submit-button">
-                                                <button class="octf-btn octf-btn-light" id="go-back-button"
-                                                    type="submit">Go back</button>
-                                                <input type="text" style="display: none;" value="<%= serviceType %>"
-                                                    name="serviceType">
-                                                <button id="rzp-button1" value="<%=idOfService %>" name="idOfService"
-                                                    class="octf-btn octf-btn-dark" type="submit">Submit</button>
-
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                             </form>
                         </div>
@@ -328,6 +289,8 @@
             $("#stepTwo").hide()
         });
     </script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="//geodata.solutions/includes/statecity.js"></script>
 </body>
 
 </html>

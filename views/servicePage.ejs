@@ -175,7 +175,32 @@
         .inner h6 {
             font-weight: 500;
         }
+
+        .top-image img {
+            width: 150px;
+        }
+
+        .top-image {
+            text-align: center;
+        }
+
+        .service-box .content-box {
+            padding: 20px 0 0;
+            text-align: center;
+        }
+
+        .service-box {
+            border: 0;
+            padding: 20px 0 0;
+        }
+
+
+        li {
+            line-height: 20px;
+            display: flex;
+        }
     </style>
+
 </head>
 
 <body class="royal_preloader">
@@ -197,13 +222,9 @@
                     <div class="row">
                         <div class="col-md-12 text-center">
                             <div class="ot-heading">
-                                <span>// choose your plan</span>
+                                <span> choose your plan</span>
                                 <h2 class="main-heading">Flexible Pricing Plans</h2>
                             </div>
-                            <div class="space-5"></div>
-                            <p>We help businesses elevate their value through custom software development, product
-                                design,
-                                QA and consultancy services.</p>
 
                         </div>
                     </div>
@@ -288,57 +309,44 @@
             </section>
             <% } %>
             <% if(procedure.procedureName != ""){ %>
-            <section class="service-web-video">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-xl-12 col-lg-12">
-                            <div class="tab-video container">
-                                <div class="ot-heading">
-                                    <span>// Procedure</span>
-                                    <h2 class="main-heading">Procedure for <%= name %> </h2>
-                                    <hr class="seperator-hr">
+            <section class="service">
+                <div class="ot-heading">
+                    <span>Procedure</span>
+                    <h2 class="main-heading">Procedure for <%= name %> </h2>
+                    <hr class="seperator-hr">
+                </div>
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <% for(let j=0; j<procedure.procedureName.length; j++){ %>
+                        <div class="col-lg col-md mb-4 mb-lg-0">
+                            <div class="service-box s-box">
+                                <span class="big-number">0<%= j+1 %> </span>
+                                <div class="top-image"><img src="/uploads/<%= slug %>websiteData<%= j+1 %>.png" alt="">
                                 </div>
-                                <div class="space-15"></div>
-                                <div class="ot-tabs" style="text-align:center">
-                                    <ul class="tabs-heading unstyle" style="display:flex; justify-content:center">
-                                        <% let j=0 %>
-                                        <% procedure.procedureName.forEach(function(data){ %>
-                                        <li class='tab-link octf-btn <%= j==0 && "current" %>' data-tab="id<%= j %>">
-                                            <%= data %></li>
-                                        <% j++ %>
-                                        <% }) %>
-                                    </ul>
-                                    <% let k=0 %>
-                                    <% procedure.procedureDescription.forEach(function(data){ %>
-
-                                    <div id="id<%= k %>" class="tab-content <%= k==0 && "current" %> ">
-                                        <img class="procedure-icon"
-                                            src="/uploads/<%= slug %>websiteData<%= k+1 %>.png  " alt="">
-                                        <p><%= data %>
-                                        </p>
-
-                                    </div>
-                                    <% k++ %>
-                                    <% }) %>
-
+                                <div class="content-box">
+                                    <h5><%= procedure.procedureName[j] %> </h5>
+                                    <p><%= procedure.procedureDescription[j] %></p>
                                 </div>
                             </div>
                         </div>
+                        <% } %>
+
 
                     </div>
                 </div>
             </section>
             <% } %>
+
             <% if(documentsRequired){ %>
             <section class="documents-required">
                 <div class="container">
                     <div class="service-process">
                         <div class="ot-heading">
-                            <span>// Documents required</span>
+                            <span> Documents required</span>
                             <h3 class="main-heading">Documents Required </h3>
                             <hr class="seperator-hr">
                         </div>
-                        <div class="requirements-list">
+                        <div id="requirements-list" class="requirements-list">
                             <%- documentsRequired %>
 
                         </div>
@@ -351,7 +359,7 @@
                 <div class="container">
                     <div class="service-process">
                         <div class="ot-heading">
-                            <span>//Advatages</span>
+                            <span>Advatages</span>
                             <h3 class="main-heading">Advantages of <%= name %> </h3>
                             <hr class="seperator-hr">
                         </div>
@@ -369,7 +377,7 @@
                 <div class="container">
                     <div class="service-process">
                         <div class="ot-heading">
-                            <span>//Eligibility</span>
+                            <span>Eligibility</span>
                             <h3 class="main-heading">Eligibility of <%= name %> </h3>
                             <hr class="seperator-hr">
                         </div>
@@ -388,7 +396,7 @@
                     <div class="row">
                         <div class="col-lg-12 ">
                             <div class="ot-heading">
-                                <span>// Steps</span>
+                                <span> Steps</span>
                                 <h3 class="main-heading">Steps for <br> <%= name %> </h3>
                                 <hr class="seperator-hr">
                             </div>
@@ -422,7 +430,7 @@
                     <div class="row">
                         <div class="col-lg-12 ">
                             <div class="ot-heading">
-                                <span>// FAQ</span>
+                                <span> FAQ</span>
                                 <h3 class="main-heading">Read Most <br>Frequent Questions</h3>
                                 <hr class="seperator-hr">
                             </div>
@@ -514,6 +522,7 @@
                 }
             })
         })
+        $("#requirements-list").find("*").attr("target", "_blank")
 
     </script>
 </body>

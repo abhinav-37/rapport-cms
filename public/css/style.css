@@ -2091,7 +2091,7 @@ a:active {
 --------------------------------------------------------------*/
 .page-header {
     width: 100%;
-    min-height: 350px;
+    min-height: 200px;
     color: #43baff;
     font-weight: 500;
     background-color: #7f53ac;
@@ -5135,7 +5135,7 @@ object {
     font-family: "Flaticon";
     font-size: 15px;
     font-weight: 400;
-    margin-right: 20px;
+    margin-right: 10px;
 }
 .ot-pricing-table .inner-table .details ul li.active {
     color: #1b1d21;
@@ -5779,7 +5779,7 @@ object {
 
 .wpcf7 .main-form {
     padding: 60px 48px;
-    background-image: linear-gradient(180deg, #00deff 60%, #7141b100 120%);
+    background-image: linear-gradient(180deg, #227582 60%, #3c939c5e 120%);
     color: #fff;
 }
 
@@ -6033,9 +6033,7 @@ div.tp-bullet:hover {
     margin: 0;
 }
 .partners-slide img {
-    -webkit-filter: contrast(0%);
-    filter: contrast(0%);
-    opacity: 0.7;
+    opacity: 1;
     transition: all 0.3s linear;
     -webkit-transition: all 0.3s linear;
     -moz-transition: all 0.3s linear;

@@ -42,12 +42,32 @@
             border-radius: 0 !important;
 
         }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .main-top {
+            margin-top: 40px;
+            box-shadow: 0 0 3px black;
+            padding: 40px;
+            background: rgb(255, 255, 255);
+        }
+
+        a {
+            text-decoration: none;
+            color: rgb(37, 34, 34);
+        }
+
+        .anchor {
+            text-align: center;
+        }
     </style>
 </head>
 
 <body style="background-color: whitesmoke;" class="container">
 
-    <div style="text-align: center;padding-top:30px">
+    <div style="text-align: center;padding-top:30px; display:none">
         <h1 style="padding-bottom:30px;">Order Confirmation</h1>
         <label for="customer-name">Name: </label>
         <input disabled type="text" id="customer-name" value="<%= customer_data.name %>">
@@ -59,7 +79,7 @@
         <p id="payment_id"><%= response.id %> </p>
 
     </div>
-    <div class="container">
+    <div class="container" style="display: none;">
         <div class="row main-wrapper">
             <div class="col-lg-12">
                 <h2>Payment Details</h2>
@@ -100,50 +120,160 @@
                 <h6>Total Pay Now (Fees + 18% IGST)</h6>
             </div>
             <div class="col-lg-6">
-                <h6 id="Total-amount">Rs. </h6>
+                <h6>Rs. </h6>
             </div>
             <% } %>
 
             <div class="col-lg-12">
-                <button class="btn btn-info" id="rzp-button1">Proceed To Checkout</button> <br>
+                <button class="btn btn-info">Proceed To Checkout</button> <br>
                 <a style="color: pink;" href="/">Go Home</a>
             </div>
         </div>
     </div>
     <input id="amount_id" type="text" style="display: none;" value="<%= response.amount%>">
-    <script>
-        var options = {
-            "key": "rzp_test_W6LG94sImodYti", // Enter the Key ID generated from the Dashboard
-            "amount": Number($("#amount_id").val()) * 0.18 + Number($("#amount_id").val()), // Amount is in currency subunits
-            "currency": "INR",
-            "name": "Rapport HR Sollutions",
-            "description": "Transaction",
-            "image": "https://example.com/your_logo",
-            "order_id": $("#payment_id").val(), //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-            "callback_url": "http://localhost:8000/customer/dashboard",
-            "prefill": {
-                "name": $("#customer-name").val(),
-                "email": $("#customer-email").val(),
-                "contact": $("#customer-contact").val()
-            },
-            "notes": {
-                "address": "Razorpay Corporate Office"
-            },
-            "theme": {
-                "color": "#3399cc"
-            }
-        };
-        var rzp1 = new Razorpay(options);
-        document.getElementById('rzp-button1').onclick = function (e) {
-            console.log("reached")
-            rzp1.open();
-            e.preventDefault()
 
-        }
-        let amount = Number($("#amount_id").val()) / 100;
-        let totalAmount = amount + (amount * 0.18);
-        $("#Total-amount").append(totalAmount)
-    </script>
+    <!-- ============ new template ================== -->
+
+    <div class="container main-top">
+
+
+        <div class="row" style="text-align: center;">
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <address>
+                    <strong>Rapport HR Solutions</strong>
+                    <br>
+                    S-214, Pandav Nagar <br>
+                    New Delhi – 110092
+                    <br>
+                    <abbr title="Phone">P:</abbr>9599553911
+                </address>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+
+                <p>
+                    <em> <strong>Order Id:</strong> <%= response.id %></em>
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="text-center">
+                <h1>Receipt</h1>
+            </div>
+            </span>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Fees</th>
+                        <th class="text-center">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="col-md-9"><em>Initial</em></h4>
+                        </td>
+                        <td class="col-md-1" style="text-align: center">₹
+                            <%= response.amount.toString().substring(0,response.amount.toString().length-2) %> </td>
+                    </tr>
+                    <% if(customer_data.state.toLowerCase().replace(/\s/g,'') === "delhi" ){ %>
+                    <tr>
+                        <td class="col-md-9"><em>CGST @ 9% of Fees</em></h4>
+                        </td>
+
+                        <td class="col-md-1 text-center" id="id_cgst">₹ </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-9"><em>SGST @ 9% of Fees</em></h4>
+                        </td>
+
+                        <td class="col-md-1 text-center" id="id_sgst">₹ </td>
+                    </tr>
+                    <tr>
+
+                        <td class="text-right">
+                            <p>
+                                <strong>Total Pay Now (Fees + 9% CGST + 9% SGST) </strong>
+                            </p>
+
+                        </td>
+                        <td class="text-center">
+                            <p>
+                                <strong id="Total-amount-delhi">₹ </strong>
+                            </p>
+
+                        </td>
+                    </tr>
+                    <% }else{ %>
+                    <tr>
+                        <td class="col-md-9"><em>IGST @ 18%</em></h4>
+                        </td>
+
+                        <td class="col-md-1 text-center" id="id_igst">₹ </td>
+                    </tr>
+                    <tr>
+                        <td class="text-right">
+                            <p>
+                                <strong>Total Pay Now (Fees + 18% IGST) </strong>
+                            </p>
+                        </td>
+                        <td class="text-center">
+                            <p>
+                                <strong id="Total-amount">₹ </strong>
+                            </p>
+
+                        </td>
+                    </tr>
+                    <% } %>
+                </tbody>
+            </table>
+            <button id="rzp-button1" type="button" class="btn btn-success btn-lg btn-block">
+                Pay Now   <span class="glyphicon glyphicon-chevron-right"></span>
+            </button></td>
+            <div class="anchor">
+                <a href="/">Cancel</a>
+            </div>
+
+        </div>
+
+
+        <script>
+            var options = {
+                "key": "rzp_test_W6LG94sImodYti", // Enter the Key ID generated from the Dashboard
+                "amount": Number($("#amount_id").val()) * 0.18 + Number($("#amount_id").val()), // Amount is in currency subunits
+                "currency": "INR",
+                "name": "Rapport HR Sollutions",
+                "description": "Transaction",
+                "image": "https://example.com/your_logo",
+                "order_id": $("#payment_id").val(), //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+                "callback_url": "http://localhost:8000/customer/dashboard",
+                "prefill": {
+                    "name": $("#customer-name").val(),
+                    "email": $("#customer-email").val(),
+                    "contact": $("#customer-contact").val()
+                },
+                "notes": {
+                    "address": "Razorpay Corporate Office"
+                },
+                "theme": {
+                    "color": "#3399cc"
+                }
+            };
+            var rzp1 = new Razorpay(options);
+            document.getElementById('rzp-button1').onclick = function (e) {
+                console.log("reached")
+                rzp1.open();
+                e.preventDefault()
+
+            }
+            let amount = Number($("#amount_id").val()) / 100;
+            let totalAmount = amount + (amount * 0.18);
+            let cgstAmount = amount * 0.09;
+            let igstAmount = amount * 0.18;
+            $("#Total-amount-delhi").append(totalAmount)
+            $("#Total-amount").append(totalAmount)
+            $("#id_cgst").append(cgstAmount);
+            $("#id_sgst").append(cgstAmount);
+            $("#id_igst").append(igstAmount)
+        </script>
 </body>
 
 </html>

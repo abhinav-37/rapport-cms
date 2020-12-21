@@ -11,6 +11,7 @@ const OrderData = require("./models/orderData");
 const Callback = require("./models/callback");
 const FavourateServices = require("./models/favouriteServices");
 const ClientReviews = require("./models/clientReviews");
+const ClietnIcons = require("./models/clientIcons");
 //auth
 const session = require("express-session");
 const bodyParser = require("body-parser");
@@ -122,6 +123,7 @@ app.get("/", async (req, res) => {
         let [startAbusiness, licenses, labour, HR] = await serviceSort();
         let allFavourate = await FavourateServices.find();
         let clientRating = await ClientReviews.find();
+        let clientIcons = await ClietnIcons.find();
         let latestFavourat = allFavourate[allFavourate.length - 1];
         res.render("index", {
             clientRating,
@@ -129,6 +131,7 @@ app.get("/", async (req, res) => {
             licenses,
             labour,
             HR,
+            clientIcons,
             user: req.user,
             latestFavourat,
         });
@@ -517,9 +520,9 @@ app.post("/register/:type", async function (req, res) {
                             res,
                             async function () {
                                 user.type = req.params.type;
-                                (user.contact_number = contact_number),
-                                    (user.first_name = first_name),
-                                    (user.last_name = last_name);
+                                user.contact_number = contact_number;
+                                user.first_name = first_name;
+                                user.last_name = last_name;
                                 await user.save();
                                 if (req.params.type === "admin")
                                     res.redirect("/adminPanel");
@@ -618,6 +621,8 @@ let storage = multer.diskStorage({
             cb(null, file.originalname.replace(/\s/g, ""));
         } else if (pathName === "admin/dailyWages") {
             cb(null, file.originalname.replace(/\s/g, ""));
+        } else if (pathName === "admin/clientIcons") {
+            cb(null, file.originalname.replace(/\s/g, ""));
         } else {
             cb(
                 null,
@@ -626,6 +631,7 @@ let storage = multer.diskStorage({
         }
     },
 });
+
 let upload = multer({ storage });
 //=====multer config end ======//
 app.get("/adminPanel", async (req, res) => {
@@ -1300,6 +1306,49 @@ app.get("/admin/editClientReviews/:id", async function (req, res) {
         res.redirect("/login/admin");
     }
 });
+
+//clientIcons
+app.get("/admin/clientIcons", async function (req, res) {
+    let auth = req.isAuthenticated();
+    if (auth) {
+        let passedMessage = req.query.message;
+        if (req.user.type === "admin" || req.user.type === "employee") {
+            res.render("adminPanel/clientIconsForm", {
+                passedMessage,
+                user: req.user,
+            });
+        } else {
+            res.redirect("/login/admin");
+        }
+    } else {
+        res.redirect("/login/admin");
+    }
+});
+app.post(
+    "/admin/clientIcons",
+    upload.array("clientImage"),
+    async function (req, res) {
+        let auth = req.isAuthenticated();
+        if (auth) {
+            if (req.user.type === "admin" || req.user.type === "employee") {
+                let clientImageObject = new ClietnIcons({
+                    user: req.user.id,
+                    filename: req.files[0].originalname.replace(/\s/g, ""),
+                });
+                await clientImageObject.save();
+                let message = encodeURIComponent(
+                    "successfully uploaded the image!"
+                );
+                res.redirect("/admin/clientIcons?message=" + message);
+            } else {
+                res.redirect("/login/admin");
+            }
+        } else {
+            res.redirect("/login/admin");
+        }
+    }
+);
+
 //404 routes
 app.get("/admin/*", function (req, res) {
     res.render("adminPanel/404", { user: req.user });

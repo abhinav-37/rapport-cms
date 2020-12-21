@@ -3,70 +3,67 @@ const mongoose = require("mongoose");
 const customerResponseSchema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User"
-    }, 
-    nameOfService:{
+        ref: "User",
+    },
+    nameOfService: {
         type: String,
-        required:true
+        required: true,
     },
     name: {
         type: String,
-        required:true
+        required: true,
     },
     idOfService: {
         type: String,
-        required:true
+        required: true,
     },
     serviceType: {
         type: String,
-        required:true
+        required: true,
     },
     company_name: {
         type: Number,
-        required: true
+        required: true,
     },
     email: {
         type: String,
-        required:true
+        required: true,
     },
     contact_number: {
         type: Number,
-        required: true
+        required: true,
     },
     primaryBusiness: {
         type: String,
-        required:true
+        required: true,
     },
     employeeCount: {
         type: Number,
-        required:true
+        required: true,
     },
     billingAddress: {
         type: String,
-        required:true
+        required: true,
     },
     city: { type: String, required: true },
     state: { type: String, required: true },
-    urgency: { type: String, required: true },
-    reaching_time: { type: String, required: true },
-    pay_now: {
-        type: String,
-        
-    },
     employeeAssigned: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
-        default:null
+        default: null,
     },
     statusOfWork: {
         type: String,
-        default:"started"
+        default: "started",
     },
     timeStamp: {
         type: Date,
-        default: Date.now()
+        default: Date.now(),
     },
-    nameOfImage:String
+    nameOfImage: String,
 });
 
-module.exports = CustomerResponse = mongoose.model("customerResponse", customerResponseSchema);
+module.exports = CustomerResponse = mongoose.model(
+    "customerResponse",
+    customerResponseSchema
+);

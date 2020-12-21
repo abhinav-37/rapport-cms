@@ -212,9 +212,10 @@
                             <div style="text-align: center;">
                                 <div class="google-rating"> <img style="width:50px" src="images/googleLogo.png"
                                         alt="app rating"><span class="ml-2"><small>4.5
-                                            of 5</small></span><span class="ml-2"><i class="fa fa-star"></i><i
-                                            class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                            class="fa fa-star"></i><i class="fa fa-star"></i></span> </div>
+                                            of 5</small></span><span class="ml-2"><i class="fa fa-star checked"></i><i
+                                            class="fa fa-star checked"></i><i class="fa fa-star checked"></i><i
+                                            class="fa fa-star checked"></i><i class="fa fa-star checked"></i></span>
+                                </div>
 
                             </div>
                         </div>
@@ -226,7 +227,7 @@
                     <div class="row">
                         <div class="col-lg-5 col-md-12 align-self-center">
                             <div class="ot-heading">
-                                <span>// about company</span>
+                                <span>about company</span>
                                 <h2 class="main-heading">Your Partner for <br> Software Innovation</h2>
                             </div>
                             <p class="mb-15">Rapport is the partner of choice for many of the world’s leading
@@ -296,7 +297,7 @@
                     <div class="row">
                         <div class="col-md-12 text-center">
                             <div class="ot-heading">
-                                <span class="text-primary-light">// why choose us</span>
+                                <span class="text-primary-light">why choose us</span>
                                 <h2 class="main-heading text-white">The pursuit of exceptional personnel and utmost
                                     Customer Satisfaction is a strength we treasure and a tradition that we
                                     strive to nurture and maintain.
@@ -391,7 +392,7 @@
                     <div class="row">
                         <div class="col-md-8 col-sm-8 mb-4 mb-sm-0">
                             <div class="ot-heading mb-0">
-                                <span>// our service</span>
+                                <span>our service</span>
                                 <h2 class="main-heading">We Offer a Wide <br>Variety of Services</h2>
                             </div>
                         </div>
@@ -492,12 +493,52 @@
 
                 </div>
             </section>
+            <section class="elements-clients">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h2>Partners</h2>
+                            <div class="space-20"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="partners">
+                                <div class="owl-carousel owl-theme home-client-carousel owl-loaded owl-drag">
+                                    <div class="owl-stage-outer">
+                                        <div class="owl-stage"
+                                            style="transform: translate3d(-1249px, 0px, 0px); transition: all 0s ease 0s; width: 5000px;">
+                                            <% clientIcons.forEach(function(e){ %>
+                                            <div class="owl-item cloned" style="width: 128.333px; margin-right: 80px;">
+                                                <div class="partners-slide">
+                                                    <a href="#" class="client-logo">
+                                                        <figure class="partners-slide-inner">
+                                                            <img class="partners-slide-image"
+                                                                src="/uploads/<%=e.filename%>" alt="">
+                                                        </figure>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <% }) %>
+                                        </div>
+                                    </div>
+                                    <div class="owl-nav disabled"><button type="button" role="presentation"
+                                            class="owl-prev"><i class="fa fa-angle-left"></i></button><button
+                                            type="button" role="presentation" class="owl-next"><i
+                                                class="fa fa-angle-right"></i></button></div>
+                                    <div class="owl-dots disabled"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
             <section style="background-color: rgb(236, 233, 233);">
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="ot-heading text-center">
-                                <span>// our clients</span>
+                                <span> our clients</span>
                                 <h2 class="main-heading">We are Trusted </h2>
                             </div>
                         </div>
