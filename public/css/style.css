@@ -7519,7 +7519,6 @@ svg:not(:root) {
     margin: 0;
 }
 .list-items li {
-    padding-bottom: 8px;
     font-family: "Nunito Sans", Sans-serif;
     font-weight: 400;
     line-height: 1.86;

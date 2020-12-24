@@ -1,20 +1,75 @@
 <footer id="site-footer" class="site-footer footer-v1">
     <div class="container">
         <div class="row">
-            <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+            <div style="padding-right:0" class="col-lg-2 col-md-6 col-sm-6 col-12">
                 <div class="widget-footer">
-                    <h5 class="text-white">Services</h5>
+                    <h5 class="text-white">About Company</h5>
                     <ul class="list-items">
-                        <li class="list-item"><a href="web-development.html">Start a Business</a></li>
-                        <li class="list-item"><a href="mobile-development.html">Licenses/ Registration:</a></li>
-                        <li class="list-item"><a href="mobile-development.html">Labour Law Compliances</a></li>
-                        <li class="list-item"><a href="it-services.html">Payroll Outsourcing</a></li>
+                        <li class="list-item"><a href="#">About Us</a></li>
+                        <li class="list-item"><a href="#">Contact Us</a></li>
+                        <li class="list-item"><a href="#">Become A partner</a></li>
+                        <li class="list-item"><a href="#">Change your Consultant</a></li>
+                        <li class="list-item"><a href="#">Online Payment</a></li>
 
                     </ul>
                 </div>
             </div>
+            <div style="padding-right:0" class="col-lg-2 col-md-6 col-sm-6 col-12">
+                <div class="widget-footer">
+                    <h5 class="text-white">Company Policies</h5>
+                    <ul class="list-items">
+                        <li class="list-item"><a href="#">Privicy Policy</a></li>
+                        <li class="list-item"><a href="#">Terms Of Service</a></li>
+                        <li class="list-item"><a href="#">Terms Of Use</a></li>
+                        <li class="list-item"><a href="#">Refund Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div style="padding-right: 0;" class="col-lg-2 col-md-6 col-sm-6 col-12">
+                <div class="widget-footer">
+                    <h5 class="text-white">Popular Services</h5>
+                    <ul class="list-items">
+                        <li class="list-item">
+                            <a
+                                href="<%= latestFavourat.favourates.slug_service[0] %>"><%= latestFavourat.favourates.nameOfService[0] %></a>
+                        </li>
+                        <li class="list-item">
+                            <a
+                                href="<%= latestFavourat.favourates.slug_service[1] %>"><%= latestFavourat.favourates.nameOfService[1] %></a>
+                        </li>
+                        <li class="list-item">
+                            <a
+                                href="<%= latestFavourat.favourates.slug_service[2] %>"><%= latestFavourat.favourates.nameOfService[2] %></a>
+                        </li>
+                        <li class="list-item">
+                            <a
+                                href="<%= latestFavourat.favourates.slug_service[3] %>"><%= latestFavourat.favourates.nameOfService[3] %></a>
+                        </li>
+                        <li class="list-item">
+                            <a
+                                href="<%= latestFavourat.favourates.slug_service[4] %>"><%= latestFavourat.favourates.nameOfService[4] %></a>
+                        </li>
+                        <li class="list-item">
+                            <a
+                                href="<%= latestFavourat.favourates.slug_service[5] %>"><%= latestFavourat.favourates.nameOfService[5] %></a>
+                        </li>
+                        <li class="list-item">
+                            <a
+                                href="<%= latestFavourat.favourates.slug_service[6] %>"><%= latestFavourat.favourates.nameOfService[6] %></a>
+                        </li>
+                        <li class="list-item">
+                            <a
+                                href="<%= latestFavourat.favourates.slug_service[7] %>"><%= latestFavourat.favourates.nameOfService[7] %></a>
+                        </li>
+                        <li class="list-item">
+                            <a
+                                href="<%= latestFavourat.favourates.slug_service[8] %>"><%= latestFavourat.favourates.nameOfService[8] %></a>
+                        </li>
 
-            <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                    </ul>
+                </div>
+            </div>
+            <div style="padding-right:0" class="col-lg-2 col-md-6 col-sm-6 col-12">
                 <div class="widget-footer">
                     <h5 class="text-white">Knowledge Center</h5>
                     <ul class="list-items">
@@ -25,19 +80,17 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+            <div style="padding-right:0" class="col-lg-2 col-md-6 col-sm-6 col-12">
                 <div class="widget-footer">
                     <h5 class="text-white">Login</h5>
                     <ul class="list-items">
-                        <li class="list-item"><a href="it-services.html">Client</a></li>
-                        <li class="list-item"><a href="it-services.html">Team</a></li>
-                        <li class="list-item"><a href="it-services.html">Admin</a></li>
-                        <li class="list-item"><a href="it-services.html">Partner</a></li>
-
+                        <li class="list-item"><a href="/login/client">Client</a></li>
+                        <li class="list-item"><a href="/login/employee">Team</a></li>
+                        <li class="list-item"><a href="/login/admin">Admin</a></li>
                     </ul>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+            <div style="padding-right:0" class="col-lg-2 col-md-6 col-sm-6 col-12">
                 <div class="widget-footer">
                     <h5 class="text-white">Subscribe</h5>
                     <p>Follow our newsletter to stay updated about agency.</p>
@@ -54,10 +107,7 @@
             </div>
         </div>
         <div class="row mt-65">
-            <div class="col-md-3 mb-4 mb-md-0">
-                <img src="/images/2d-pnd.png" alt="" class="lazyloaded" data-ll-status="loaded">
-            </div>
-            <div class="col-md-6 text-left text-md-right align-self-center">
+            <div class="col-md-12 col-lg-12" style="text-align: center;">
                 <p class="copyright-text">Copyright © 2020 Rapport by ThemeModern. All Rights Reserved.</p>
             </div>
         </div>

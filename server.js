@@ -30,6 +30,7 @@ const dailyWages = require("./models/dailyWages");
 const lawUpdates = require("./models/lawUpdates");
 const { text, json } = require("body-parser");
 const { Logger } = require("mongodb");
+const clientIcons = require("./models/clientIcons");
 
 app.use(express.static(path.join(__dirname, "public")));
 app.set("view engine", "ejs");
@@ -144,6 +145,8 @@ let newOrder = {};
 app.get("/customer/dashboard", async function (req, res) {
     let auth = req.isAuthenticated();
     req.session.returnTo = req.originalUrl;
+    let allFavourate = await FavourateServices.find();
+    let latestFavourat = allFavourate[allFavourate.length - 1];
     if (auth) {
         let passedMessage = "";
         let orders = await CustomerResponse.find({ user: req.user.id });
@@ -156,6 +159,7 @@ app.get("/customer/dashboard", async function (req, res) {
             labour,
             HR,
             user: req.user,
+            latestFavourat,
         });
     } else {
         res.redirect("/login/customer");
@@ -210,6 +214,8 @@ app.post("/customer/dashboard", async function (req, res) {
 app.get("/blog", async (req, res) => {
     req.session.returnTo = req.originalUrl;
     let allBlogs = await Blog.find();
+    let allFavourate = await FavourateServices.find();
+    let latestFavourat = allFavourate[allFavourate.length - 1];
     let [startAbusiness, licenses, labour, HR] = await serviceSort();
     res.render("blog-grid", {
         startAbusiness,
@@ -218,12 +224,15 @@ app.get("/blog", async (req, res) => {
         labour,
         HR,
         allBlogs,
+        latestFavourat,
     });
 });
 app.get("/blogSingle/:blogId", async (req, res) => {
     req.session.returnTo = req.originalUrl;
     let singleBlog = await Blog.findById(req.params.blogId);
     let [startAbusiness, licenses, labour, HR] = await serviceSort();
+    let allFavourate = await FavourateServices.find();
+    let latestFavourat = allFavourate[allFavourate.length - 1];
     res.render("post", {
         startAbusiness,
         user: req.user,
@@ -231,12 +240,15 @@ app.get("/blogSingle/:blogId", async (req, res) => {
         labour,
         HR,
         singleBlog,
+        latestFavourat,
     });
 });
 app.get("/services/:slug", async (req, res) => {
     req.session.returnTo = req.originalUrl;
     let pageData = await servicePage.findOne({ slug: req.params.slug });
     let [startAbusiness, licenses, labour, HR] = await serviceSort();
+    let allFavourate = await FavourateServices.find();
+    let latestFavourat = allFavourate[allFavourate.length - 1];
     if (pageData) {
         res.render("servicePage", {
             startAbusiness,
@@ -245,6 +257,7 @@ app.get("/services/:slug", async (req, res) => {
             HR,
             ...pageData._doc,
             user: req.user,
+            latestFavourat,
         });
     } else {
         res.redirect("/error");
@@ -254,6 +267,8 @@ app.get("/lawUpdates", async function (req, res) {
     req.session.returnTo = req.originalUrl;
     let updates = await lawUpdates.find();
     let [startAbusiness, licenses, labour, HR] = await serviceSort();
+    let allFavourate = await FavourateServices.find();
+    let latestFavourat = allFavourate[allFavourate.length - 1];
     res.render("lawUpdates", {
         startAbusiness,
         licenses,
@@ -261,12 +276,15 @@ app.get("/lawUpdates", async function (req, res) {
         HR,
         user: req.user,
         updates,
+        latestFavourat,
     });
 });
 app.get("/minimumWages/:state", async function (req, res) {
     req.session.returnTo = req.originalUrl;
     let wages = await dailyWages.findOne({ state: req.params.state });
     let [startAbusiness, licenses, labour, HR] = await serviceSort();
+    let allFavourate = await FavourateServices.find();
+    let latestFavourat = allFavourate[allFavourate.length - 1];
     res.render("minimumWages", {
         startAbusiness,
         licenses,
@@ -274,9 +292,12 @@ app.get("/minimumWages/:state", async function (req, res) {
         HR,
         user: req.user,
         wages,
+        latestFavourat,
     });
 });
 app.get("/minimumWagesSelector", async function (req, res) {
+    let allFavourate = await FavourateServices.find();
+    let latestFavourat = allFavourate[allFavourate.length - 1];
     req.session.returnTo = req.originalUrl;
     let [startAbusiness, licenses, labour, HR] = await serviceSort();
     res.render("minimumWagesSelector", {
@@ -285,6 +306,7 @@ app.get("/minimumWagesSelector", async function (req, res) {
         labour,
         HR,
         user: req.user,
+        latestFavourat,
     });
 });
 app.post("/servicesSearch", async function (req, res) {
@@ -307,6 +329,8 @@ app.get("/orderForm/:id/:type", async function (req, res) {
     let auth = req.isAuthenticated();
     if (auth) {
         try {
+            let allFavourate = await FavourateServices.find();
+            let latestFavourat = allFavourate[allFavourate.length - 1];
             let serviceId = req.params.id;
             let serviceType = req.params.type;
             let [startAbusiness, licenses, labour, HR] = await serviceSort();
@@ -326,6 +350,7 @@ app.get("/orderForm/:id/:type", async function (req, res) {
                 nameOfService: allPricing.name,
                 idOfService: allPricing.id,
                 serviceType,
+                latestFavourat,
             });
         } catch (error) {
             console.error(error);
@@ -351,6 +376,7 @@ app.post("/orderForm", async function (req, res) {
                 };
                 const response = await instance.orders.create(options);
                 res.render("orderConfermation", {
+                    nameOfService: allPricing.name,
                     response,
                     customer_data: req.body,
                 });
@@ -387,6 +413,19 @@ app.post("/questionForm", async function (req, res) {
         res.end(error);
     }
 });
+app.get("/aboutUs", async function (req, res) {
+    let allFavourate = await FavourateServices.find();
+    let [startAbusiness, licenses, labour, HR] = await serviceSort();
+    let latestFavourat = allFavourate[allFavourate.length - 1];
+    res.render("aboutUs", {
+        latestFavourat,
+        user: req.user,
+        startAbusiness,
+        licenses,
+        labour,
+        HR,
+    });
+});
 // ========================= Authentication start =================== //
 
 //GET requset for login
@@ -395,6 +434,8 @@ app.get("/login/:type", async function (req, res) {
 
     let passedMessage = req.query.message;
     let [startAbusiness, licenses, labour, HR] = await serviceSort();
+    let allFavourate = await FavourateServices.find();
+    let latestFavourat = allFavourate[allFavourate.length - 1];
     if (type === "customer") {
         res.render("login", {
             startAbusiness,
@@ -403,6 +444,7 @@ app.get("/login/:type", async function (req, res) {
             HR,
             user: req.user,
             passedMessage,
+            latestFavourat,
         });
     } else if (type === "admin" || type === "employee") {
         res.render("adminPanel/authentication/login", {
@@ -418,6 +460,8 @@ app.get("/register/:type", async function (req, res) {
     req.session.returnTo = req.originalUrl;
     let passedMessage = req.query.message;
     let [startAbusiness, licenses, labour, HR] = await serviceSort();
+    let allFavourate = await FavourateServices.find();
+    let latestFavourat = allFavourate[allFavourate.length - 1];
     if (req.params.type === "customer") {
         res.render("register", {
             startAbusiness,
@@ -426,6 +470,7 @@ app.get("/register/:type", async function (req, res) {
             HR,
             user: req.user,
             passedMessage,
+            latestFavourat,
         });
     } else {
         res.render("adminPanel/authentication/register", {
@@ -1348,7 +1393,38 @@ app.post(
         }
     }
 );
-
+app.get("/admin/editClientIcons", async function (req, res) {
+    try {
+        if (req.isAuthenticated()) {
+            if (req.user.type === "admin" || req.user.type === "employee") {
+                let passedMessage = req.query.message;
+                let images = await clientIcons.find();
+                res.render("adminPanel/editClientImages", {
+                    passedMessage,
+                    images,
+                    user: req.user,
+                });
+            } else {
+                res.redirect("/login/admin");
+            }
+        } else {
+            res.redirect("/login/admin");
+        }
+    } catch (error) {
+        console.log(error);
+        res.redirect("/admin/error");
+    }
+});
+app.get("/admin/deleteClientIcons/:id", async function (req, res) {
+    try {
+        let id = req.params.id;
+        await clientIcons.findByIdAndRemove(id);
+        let message = encodeURIComponent("successfuly deleted");
+        res.redirect("/admin/editClientIcons?message=" + message);
+    } catch (error) {
+        res.redirect("/admin/error");
+    }
+});
 //404 routes
 app.get("/admin/*", function (req, res) {
     res.render("adminPanel/404", { user: req.user });
@@ -1356,8 +1432,17 @@ app.get("/admin/*", function (req, res) {
 // ================= admin panel finished ==================== //
 
 app.get("*", async function (req, res) {
+    let allFavourate = await FavourateServices.find();
+    let latestFavourat = allFavourate[allFavourate.length - 1];
     let [startAbusiness, licenses, labour, HR] = await serviceSort();
-    res.render("404", { startAbusiness, licenses, labour, HR, user: req.user });
+    res.render("404", {
+        startAbusiness,
+        licenses,
+        labour,
+        HR,
+        user: req.user,
+        latestFavourat,
+    });
 });
 
 app.listen(PORT, () => {

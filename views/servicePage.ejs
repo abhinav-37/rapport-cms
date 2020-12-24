@@ -142,9 +142,7 @@
             background: linear-gradient(left, transparent, rgba(121, 21, 21, 0.068), rgba(175, 50, 50, 0.02), transparent)
         }
 
-        ul {
-            list-style: square outside none;
-        }
+
 
         .procedure-icon {
             width: 20%;
@@ -192,10 +190,11 @@
         .service-box {
             border: 0;
             padding: 20px 0 0;
+            height: 100%;
         }
 
 
-        li {
+        .details ul li {
             line-height: 20px;
             display: flex;
         }
@@ -206,7 +205,6 @@
 <body class="royal_preloader">
     <div id="page" class="site">
         <%- include("partials/navbar",{service:"active"})  %>
-
         <div id="content" class="site-content">
             <div class="page-header flex-middle">
                 <div class="container">
@@ -225,7 +223,6 @@
                                 <span> choose your plan</span>
                                 <h2 class="main-heading">Flexible Pricing Plans</h2>
                             </div>
-
                         </div>
                     </div>
                     <div class="row justify-content-center">
@@ -239,11 +236,8 @@
                                     <div class="details ">
                                         <ul>
                                             <% for(let i=1; i<pricingCards.rapportStart.length; i++){%>
-
                                             <li class="active"><%= pricingCards.rapportStart[i] %> </li>
-
                                             <% } %>
-
                                         </ul>
                                     </div>
                                     <a href="/orderForm/<%=_id%>/rapportStart" class="octf-btn pricing-button">Choose
@@ -261,11 +255,8 @@
                                     <div class="details ">
                                         <ul>
                                             <% for(let i=1; i<pricingCards.rapportSelect.length; i++){%>
-
                                             <li class="active"><%= pricingCards.rapportSelect[i] %> </li>
-
                                             <% } %>
-
                                         </ul>
                                     </div>
                                     <a href="/orderForm/<%=_id%>/rapportSelect" class="octf-btn pricing-button">Choose
@@ -330,8 +321,6 @@
                             </div>
                         </div>
                         <% } %>
-
-
                     </div>
                 </div>
             </section>

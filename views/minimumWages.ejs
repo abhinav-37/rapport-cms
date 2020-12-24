@@ -45,7 +45,15 @@
 
         .schedule h6,
         .filename h6 {
-            color: black;
+            background-color: #5f5f5f;
+            color: white;
+            padding: 20px;
+        }
+
+        .schedule h6 {
+            background-color: #5f5f5f;
+            color: white;
+            padding: 20px;
         }
 
         .table td,
@@ -80,6 +88,7 @@
         <% if(wages){ %>
         <div style="text-align: center;padding:30px">
             <h6>Effective Date: <%= wages.effectiveDate %> </h6>
+            <a href="/minimumWagesSelector">Go Back</a>
         </div>
         <div class="container-fluid">
             <div class="row">
@@ -88,7 +97,7 @@
                 </div>
                 <div class="col-lg-8">
                     <table class="table ">
-                        <thead class="thead-dark">
+                        <thead style="background: #5f5f5f;color:white">
                             <tr class="table-head">
 
                                 <th scope="col">Category of workmen/Employees</th>
