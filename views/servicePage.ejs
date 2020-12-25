@@ -312,7 +312,7 @@
                         <div class="col-lg col-md mb-4 mb-lg-0">
                             <div class="service-box s-box">
                                 <span class="big-number">0<%= j+1 %> </span>
-                                <div class="top-image"><img src="/uploads/<%= slug %>websiteData<%= j+1 %>.png" alt="">
+                                <div class="top-image"><img src="/uploads/<%= typeof filename[j.toString()] !== "undefined" && filename[j.toString()].originalname %>" alt="">
                                 </div>
                                 <div class="content-box">
                                     <h5><%= procedure.procedureName[j] %> </h5>

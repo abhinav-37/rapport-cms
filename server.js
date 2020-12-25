@@ -669,10 +669,7 @@ let storage = multer.diskStorage({
         } else if (pathName === "admin/clientIcons") {
             cb(null, file.originalname.replace(/\s/g, ""));
         } else {
-            cb(
-                null,
-                req.body.serviceurl + pathName + count.toString() + "." + format
-            );
+            cb(null, file.originalname.replace(/\s/g, ""));
         }
     },
 });
@@ -795,6 +792,7 @@ app.post("/websiteData", upload.array("image"), async (req, res) => {
         advantages,
         steps: { stepsName, stepsDescription },
         faq: { faqQuestion, faqAnswer },
+        filename: req.files.length !== 0 && req.files,
     };
     let service = await servicePage.findById(submit_button_above);
     if (service) {
