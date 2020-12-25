@@ -22,7 +22,7 @@ const customerResponseSchema = new mongoose.Schema({
         required: true,
     },
     company_name: {
-        type: Number,
+        type: String,
         required: true,
     },
     email: {

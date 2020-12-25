@@ -48,6 +48,7 @@
             <div class="container">
                 <div class="blog-grid pgrid">
                     <div class="row">
+                        <% let count = 0 %> 
                         <% orders.forEach(function(u){ %>
                         <div class="col-lg-12 col-md-12 col-sm-12">
                             <article class="post-box blog-item">
@@ -57,6 +58,24 @@
                                             <div class="entry-meta">
                                                 <div class="post-cat">
                                                     <div class="row">
+                                                          <span class="byline col-lg-4 col-md-4 col-sm-4">
+                                                            <p rel="category tag"><span style="color: #43baff;">Name of Client:
+                                                                </span>
+                                                                <%= u.name  %>
+                                                            </p>
+                                                        </span>
+                                                          <span class="byline col-lg-4 col-md-4 col-sm-4">
+                                                            <p rel="category tag"><span style="color: #43baff;">Company Name: 
+                                                                </span>
+                                                                <%= u.company_name  %>
+                                                            </p>
+                                                        </span>
+                                                          <span class="byline col-lg-4 col-md-4 col-sm-4">
+                                                            <p rel="category tag"><span style="color: #43baff;">Given Email: 
+                                                                </span>
+                                                                <%= u.email  %>
+                                                            </p>
+                                                        </span>
                                                         <span class="byline col-lg-4 col-md-4 col-sm-4">
                                                             <p rel="category tag"><span style="color: #43baff;">Name of
                                                                     Service:
@@ -74,8 +93,26 @@
                                                                 <span style="color: #43baff;">
                                                                     Status:
                                                                 </span>
+                                                                <span style="color: #b52d5e;"
+                                                                   ><%= u.statusOfWork%></span>
+                                                            </p>
+                                                        </span>
+                                                        <span class="byline col-lg-12 col-md-12 col-sm-12">
+                                                            <p>
+                                                                <span style="color: #43baff;">
+                                                                    Billing Address:
+                                                                </span>
                                                                 <span
-                                                                    class="btn btn-primary"><%= u.statusOfWork%></span>
+                                                                    ><%= u.billingAddress%></span>
+                                                            </p>
+                                                        </span>
+                                                        <span class="byline col-lg-12 col-md-12 col-sm-12">
+                                                            <p>
+                                                                <span style="color: #43baff;">
+                                                                    Amount Paid:
+                                                                </span>
+                                                                <span
+                                                                    > RS. <%= JSON.parse(details[count].orderData).amount%> (includes 18% GST)</span>
                                                             </p>
                                                         </span>
                                                     </div>
@@ -93,6 +130,7 @@
                                 </div>
                             </article>
                         </div>
+                        <% count+=1 %> 
                         <% }) %>
 
 

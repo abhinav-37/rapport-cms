@@ -111,10 +111,10 @@
         <div id="content" class="site-content">
             <section class="contact-page">
                 <div class="container">
-                    <input type="text" value="<%= nameOfService %>" name="nameOfService" style="display: none;">
                     <div class="row">
                         <div class="col-lg-9">
                             <form action="/orderForm" method="post" class="wpcf7">
+                                <input type="text" value="<%= nameOfService %>" name="nameOfService" style="display: none;">
                                 <div class="main-form">
                                     <div class="stepOne" id="stepOne">
                                         <% if(passedMessage){ %>

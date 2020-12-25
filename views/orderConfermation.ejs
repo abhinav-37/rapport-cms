@@ -278,9 +278,9 @@
 
             }
             let amount = Number($("#amount_id").val()) / 100;
-            let totalAmount = amount + (amount * 0.18);
-            let cgstAmount = amount * 0.09;
-            let igstAmount = amount * 0.18;
+            let totalAmount = Math.round(((amount + (amount * 0.18)) + Number.EPSILON) * 100) / 100
+            let cgstAmount = Math.round(((amount * 0.09) + Number.EPSILON) * 100) / 100
+            let igstAmount =Math.round(((amount * 0.18) + Number.EPSILON) * 100) / 100
             $("#Total-amount-delhi").append(totalAmount)
             $("#Total-amount").append(totalAmount)
             $("#id_cgst").append(cgstAmount);

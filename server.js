@@ -150,8 +150,10 @@ app.get("/customer/dashboard", async function (req, res) {
     if (auth) {
         let passedMessage = "";
         let orders = await CustomerResponse.find({ user: req.user.id });
+        let details = await OrderData.find({ customer: req.user.id });
         let [startAbusiness, licenses, labour, HR] = await serviceSort();
         res.render("dashboard", {
+            details,
             orders,
             passedMessage,
             startAbusiness,
@@ -181,6 +183,7 @@ app.post("/customer/dashboard", async function (req, res) {
                         user: req.user.id,
                         ...newOrder,
                     });
+
                     newOrder = {};
                     await newresponse.save();
                     let passedMessage = "Order Successfull";
@@ -193,7 +196,14 @@ app.post("/customer/dashboard", async function (req, res) {
                     let orders = await CustomerResponse.find({
                         user: req.user.id,
                     });
+                    let allFavourate = await FavourateServices.find();
+                    let latestFavourat = allFavourate[allFavourate.length - 1];
+                    let details = await OrderData.find({
+                        customer: req.user.id,
+                    });
                     res.render("dashboard", {
+                        details,
+                        latestFavourat,
                         startAbusiness,
                         licenses,
                         labour,
@@ -431,7 +441,6 @@ app.get("/aboutUs", async function (req, res) {
 //GET requset for login
 app.get("/login/:type", async function (req, res) {
     let type = req.params.type;
-
     let passedMessage = req.query.message;
     let [startAbusiness, licenses, labour, HR] = await serviceSort();
     let allFavourate = await FavourateServices.find();
@@ -457,7 +466,6 @@ app.get("/login/:type", async function (req, res) {
 
 //GET request for regsiter
 app.get("/register/:type", async function (req, res) {
-    req.session.returnTo = req.originalUrl;
     let passedMessage = req.query.message;
     let [startAbusiness, licenses, labour, HR] = await serviceSort();
     let allFavourate = await FavourateServices.find();
@@ -634,7 +642,9 @@ app.post("/login/:type", async function (req, res) {
                     }
                 });
             } else {
-                let message = encodeURIComponent("Authetication error!");
+                let message = encodeURIComponent(
+                    "Your access is blocked by the admin!"
+                );
                 res.redirect("/login/customer?message=" + message);
             }
         } else {
@@ -642,7 +652,7 @@ app.post("/login/:type", async function (req, res) {
             res.redirect(`/login/${user.type}?message=` + message);
         }
     } else {
-        let message = encodeURIComponent("Authentication error!!");
+        let message = encodeURIComponent("Username or password is incorrect!");
         res.redirect("/login/" + req.params.type + "?message=" + message);
     }
 });
