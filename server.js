@@ -637,6 +637,9 @@ app.post("/login/:type", async function (req, res) {
                 let message = encodeURIComponent("Authetication error!");
                 res.redirect("/login/customer?message=" + message);
             }
+        } else {
+            let message = encodeURIComponent("you are supposed to login here!");
+            res.redirect(`/login/${user.type}?message=` + message);
         }
     } else {
         let message = encodeURIComponent("Authentication error!!");
