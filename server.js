@@ -652,7 +652,6 @@ app.get("/logout", function (req, res) {
 //========================== Admin panel ======================//
 //====multer config=========//
 
-let count = 0;
 let storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, __dirname + "/public/uploads");
@@ -661,7 +660,6 @@ let storage = multer.diskStorage({
         let parts = file.originalname.split(".");
         let format = parts[parts.length - 1];
         let pathName = req.route.path.substring(1);
-        count += 1;
         if (pathName === "blogsGenerator") {
             cb(null, file.originalname.replace(/\s/g, ""));
         } else if (pathName === "admin/dailyWages") {
