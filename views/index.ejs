@@ -580,13 +580,7 @@
 
                 </div>
             </section>
-            <div class="container">
-                    <section class="customer-logos slider">
-                        <% clientIcons.forEach(function(e){ %> 
-                        <div class="slide"><img src="/uploads/<%= e.filename %>" alt="<%= e.filename %>"></div>
-                        <% }) %> 
-                    </section>
-                </div>
+           
             <section class="elements-clients">
                 <div class="container">
                     <div class="row">
@@ -595,7 +589,11 @@
                             <div class="space-20"></div>
                         </div>
                     </div>
-                 
+                    <section class="customer-logos slider">
+                        <% clientIcons.forEach(function(e){ %> 
+                        <div class="slide"><img src="/uploads/<%= e.filename %>" alt="<%= e.filename %>"></div>
+                        <% }) %> 
+                    </section>
                 </div>
             </section>
             <section style="background-color: rgb(236, 233, 233);">

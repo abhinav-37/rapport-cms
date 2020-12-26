@@ -6,6 +6,7 @@ const path = require("path");
 const ejs = require("ejs");
 const mongoose = require("mongoose");
 const nodemailer = require("nodemailer");
+const fs = require("fs");
 const Razorpay = require("razorpay");
 const OrderData = require("./models/orderData");
 const Callback = require("./models/callback");
@@ -674,6 +675,8 @@ app.get("/logout", function (req, res) {
 
 //========================== Admin panel ======================//
 //====multer config=========//
+
+const pathForFiles = __dirname + "/public/uploads/";
 
 let storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -1437,10 +1440,13 @@ app.get("/admin/editClientIcons", async function (req, res) {
 app.get("/admin/deleteClientIcons/:id", async function (req, res) {
     try {
         let id = req.params.id;
+        let files = await clientIcons.findById(id);
+        fs.unlinkSync(pathForFiles + files.filename);
         await clientIcons.findByIdAndRemove(id);
         let message = encodeURIComponent("successfuly deleted");
         res.redirect("/admin/editClientIcons?message=" + message);
     } catch (error) {
+        console.log(error);
         res.redirect("/admin/error");
     }
 });
