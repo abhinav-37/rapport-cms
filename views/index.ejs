@@ -743,7 +743,7 @@
             $.ajax({
                 type: "POST",
                 url: "/questionForm",
-                data: data,
+                data: {data:JSON.stringify(data)} ,
                 success: function (data) {
                     console.log(data)
                     if (data === "Unsuccessfull, please fill all the fields!") {

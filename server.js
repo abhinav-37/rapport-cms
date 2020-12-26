@@ -419,11 +419,12 @@ app.post("/callback", async function (req, res) {
 });
 app.post("/questionForm", async function (req, res) {
     try {
-        let newQues = new QuestionInMind(req.body);
+        let newQues = new QuestionInMind(JSON.parse(req.body.data));
         await newQues.save();
         res.end("Done Sending the request!");
     } catch (error) {
-        res.end(error);
+        console.log(error);
+        res.end("Please fill all the required fields!");
     }
 });
 app.get("/aboutUs", async function (req, res) {
