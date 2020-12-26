@@ -12,6 +12,7 @@ const Callback = require("./models/callback");
 const FavourateServices = require("./models/favouriteServices");
 const ClientReviews = require("./models/clientReviews");
 const ClietnIcons = require("./models/clientIcons");
+const EmailSubs = require("./models/emailSubscriptions");
 //auth
 const session = require("express-session");
 const bodyParser = require("body-parser");
@@ -31,6 +32,7 @@ const lawUpdates = require("./models/lawUpdates");
 const { text, json } = require("body-parser");
 const { Logger } = require("mongodb");
 const clientIcons = require("./models/clientIcons");
+const { log } = require("console");
 
 app.use(express.static(path.join(__dirname, "public")));
 app.set("view engine", "ejs");
@@ -435,6 +437,14 @@ app.get("/aboutUs", async function (req, res) {
         labour,
         HR,
     });
+});
+app.post("/emailSubs", async function (req, res) {
+    let email = req.body.email;
+    let newemailSubs = new EmailSubs({
+        email,
+    });
+    await newemailSubs.save();
+    res.end("success");
 });
 // ========================= Authentication start =================== //
 
@@ -1434,6 +1444,27 @@ app.get("/admin/deleteClientIcons/:id", async function (req, res) {
         res.redirect("/admin/error");
     }
 });
+
+//email subs..
+app.get("/admin/emailSubscriptions", async function (req, res) {
+    let auth = req.isAuthenticated();
+    if (auth) {
+        let passedMessage = req.query.message;
+        if (req.user.type === "admin" || req.user.type === "employee") {
+            let emails = await EmailSubs.find();
+            res.render("adminPanel/emailSubscriptions", {
+                emails,
+                passedMessage,
+                user: req.user,
+            });
+        } else {
+            res.redirect("/login/admin");
+        }
+    } else {
+        res.redirect("/login/admin");
+    }
+});
+
 //404 routes
 app.get("/admin/*", function (req, res) {
     res.render("adminPanel/404", { user: req.user });

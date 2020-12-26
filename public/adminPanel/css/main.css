@@ -1392,7 +1392,7 @@ table.table-bordered th:last-child {
     padding: 14px 25px;
 }
 .table.style2 td {
-    padding: 30px 25px 20px;
+    padding: 5px;
 }
 .table.style2 td span {
     color: #555555;
