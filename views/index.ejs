@@ -151,7 +151,7 @@
     align-items: center;
         }
     </style>
-
+    <link rel="stylesheet" type="text/css" href="/css/infinite-slider.css">
     <!-- Newsletter styles -->
     <style>
         .container-fluid{
@@ -219,6 +219,13 @@
                 
                 padding: 0 20px;
             }
+        }
+    </style>
+    <!-- slider styles -->
+    <style>
+        .slick-slider .slick-track, .slick-slider .slick-list{
+            display: flex;
+            align-items: center;
         }
     </style>
 </head>
@@ -573,6 +580,13 @@
 
                 </div>
             </section>
+            <div class="container">
+                    <section class="customer-logos slider">
+                        <% clientIcons.forEach(function(e){ %> 
+                        <div class="slide"><img src="/uploads/<%= e.filename %>" alt="<%= e.filename %>"></div>
+                        <% }) %> 
+                    </section>
+                </div>
             <section class="elements-clients">
                 <div class="container">
                     <div class="row">
@@ -581,36 +595,7 @@
                             <div class="space-20"></div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="partners">
-                                <div class="owl-carousel owl-theme home-client-carousel owl-loaded owl-drag">
-                                    <div class="owl-stage-outer">
-                                        <div class="owl-stage"
-                                            style="transform: translate3d(-1249px, 0px, 0px); transition: all 0s ease 0s; width: 5000px;">
-                                            <% clientIcons.forEach(function(e){ %>
-                                            <div class="owl-item cloned" style="width: 128.333px; margin-right: 80px;">
-                                                <div class="partners-slide">
-                                                    <a href="#" class="client-logo">
-                                                        <figure class="partners-slide-inner">
-                                                            <img class="partners-slide-image"
-                                                                src="/uploads/<%=e.filename%>" alt="">
-                                                        </figure>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <% }) %>
-                                        </div>
-                                    </div>
-                                    <div class="owl-nav disabled"><button type="button" role="presentation"
-                                            class="owl-prev"><i class="fa fa-angle-left"></i></button><button
-                                            type="button" role="presentation" class="owl-next"><i
-                                                class="fa fa-angle-right"></i></button></div>
-                                    <div class="owl-dots disabled"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                 
                 </div>
             </section>
             <section style="background-color: rgb(236, 233, 233);">
@@ -795,6 +780,35 @@
                 }
             })
         })
+    </script>
+
+    <!-- script for carousel -->
+   
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.js"></script>
+
+    <script>
+        $(document).ready(function(){
+  $('.customer-logos').slick({
+    slidesToShow: 6,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 1000,
+    arrows: false,
+    dots: false,
+    pauseOnHover: false,
+    responsive: [{
+      breakpoint: 768,
+      settings: {
+        slidesToShow: 4
+      }
+    }, {
+      breakpoint: 520,
+      settings: {
+        slidesToShow: 3
+      }
+    }]
+  });
+});
     </script>
 </body>
 
