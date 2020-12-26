@@ -146,6 +146,80 @@
         .checked {
             color: orange !important;
         }
+        .owl-stage{
+            display: flex;
+    align-items: center;
+        }
+    </style>
+
+    <!-- Newsletter styles -->
+    <style>
+        .container-fluid{
+            background-image: url(https://cdn.pixabay.com/photo/2017/05/31/23/44/email-marketing-2362038_960_720.png);
+        }
+
+        .rows {
+            height: 50vh;
+            
+        }
+
+        .form-control {
+            display: block;
+            width: 100%;
+            min-height: calc(1.5em + .75rem + 2px);
+            padding: .575rem .75rem;
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: #495057;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid #ced4da;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            border-radius: 52px;
+            transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out
+        }
+
+        .card {
+            padding: 20px;
+            background-color: rgba(238, 238, 238, 0.678);
+            padding-bottom: 50px;
+            padding-top: 50px;
+            border: 0;
+            box-shadow: 5px 5px 10px rgb(119, 113, 113);
+        }
+
+        .form-control:focus {
+            color: #495057;
+            background-color: #fff;
+            border-color: #3DBCD3;
+            outline: 0;
+            box-shadow: none
+        }
+
+        .border-rad {
+            border-top-right-radius: 28px;
+            border-bottom-right-radius: 28px;
+            color: #fff;
+            background-color: #3DBCD3;
+            border-color: #3DBCD3
+        }
+
+        .border-rad:hover {
+            background-color:#3DBCD3;
+            border-color: #3DBCD3
+        }
+        @media(max-width: 992px){
+            .mx-5{
+                margin: 0 !important;
+            }
+            .card{
+                
+                padding: 0 20px;
+            }
+        }
     </style>
 </head>
 
@@ -213,8 +287,8 @@
                                 <div class="google-rating"> <img style="width:50px" src="images/googleLogo.png"
                                         alt="app rating"><span class="ml-2"><small>4.5
                                             of 5</small></span><span class="ml-2"><i class="fa fa-star checked"></i><i
-                                            class="fa fa-star checked"></i><i class="fa fa-star checked"></i><i
-                                            class="fas fa-star-half-alt checked"></i><i class="fa fa-star "></i></span>
+                                            class="fa fa-star checked"></i><i class="fa fa-star checked"></i><i class="fa fa-star checked"></i><i
+                                            class="fas fa-star-half-alt checked"></i></span>
                                 </div>
 
                             </div>
@@ -228,7 +302,7 @@
                         <div class="col-lg-5 col-md-12 align-self-center">
                             <div class="ot-heading">
                                 <span>about company</span>
-                                <h2 class="main-heading">Your Partner for <br> Software Innovation</h2>
+                              
                             </div>
                             <p class="mb-15">Rapport is the partner of choice for many of the world’s leading
                                 enterprises, SMEs and technology challengers. We help businesses elevate their value
@@ -503,7 +577,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
-                            <h2>Partners</h2>
+                            <h2> OUR VALUABLE CLIENTS</h2>
                             <div class="space-20"></div>
                         </div>
                     </div>
@@ -597,6 +671,22 @@
                     </div>
                 </div>
             </section>
+        </div>
+
+        <!-- =============== Newsletter area ========================================= -->
+        <div class="container-fluid">
+            <div class="row d-flex justify-content-center align-items-center rows ">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="text-center"> <img src="https://i.imgur.com/Dh7U4bp.png" width="200"> <span style="color:black" class="d-block mt-3">STAY UPDATE WITH US
+                                <br> Get helpful information from our newsletter!</span>
+                            <div class="mx-5">
+                                <div class="input-group mb-3 mt-4"> <input type="text" class="form-control" placeholder="Enter email" aria-label="Recipient's username" aria-describedby="button-addon2"> <button class="btn btn-success border-rad" type="button" id="button-addon2">Subscribe</button> </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <%- include("partials/footer") %>
         <!-- #site-footer -->
