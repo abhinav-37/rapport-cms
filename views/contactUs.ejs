@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <title>Rapport </title>
+    <link rel="shortcut icon" type="image/x-icon" href="images/favicon.png" />
+    <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="/css/flaticon.css" />
+    <link rel="stylesheet" type="text/css" href="/css/owl.carousel.min.css" />
+    <link rel="stylesheet" type="text/css" href="/css/owl.theme.css" />
+    <link rel="stylesheet" type="text/css" href="/css/magnific-popup.css" />
+
+    <link rel="stylesheet" href="/css/style.css" />
+    <% if(!passedMessage){ %>
+    <link rel="stylesheet" href="/css/royal-preload.css" />
+    <% } %>
+    <!-- REVOLUTION SLIDER CSS -->
+    <link rel="stylesheet" type="text/css" href="plugins/revolution/revolution/css/settings.css">
+    <!-- REVOLUTION NAVIGATION STYLE -->
+    <link rel="stylesheet" type="text/css" href="plugins/revolution/revolution/css/navigation.css">
+    <!-- styles for vertical tabs -->
+    <style>
+        .forgot-password {
+            text-align: right;
+
+        }
+
+
+
+        .alert {
+            border-radius: 0;
+            position: absolute;
+            top: 20px;
+        }
+
+        #content {
+            padding: 40px 0 180px;
+        }
+
+        @media (max-width: 956px) {
+            .forgot-password {
+                text-align: left;
+
+            }
+
+            .alert {
+
+                top: 20px;
+                right: 10px;
+            }
+
+            #content {
+                padding: 0;
+            }
+        }
+    </style>
+</head>
+
+<body class="royal_preloader">
+    <div id="page" class="site">
+        <%- include("./partials/navbar") %>
+        <div id="content" class="site-content">
+            <section class="contact-page">
+                <div class="container">
+                    <div class="row">
+                         <div class="offset-lg-1 col-lg-6 col-md-12 align-self-center">
+                            <div class="about-right">
+
+                                <form action="/customerMessage" method="post" class="wpcf7">
+                                    <div class="main-form">
+
+                                        <h2>GET IN TOUCH</h2>
+                                        <p class="font14">Required fields are
+                                            marked *
+                                        </p>
+                                        <p>
+                                            <input required type="text" id="question_name" name="name"
+                                                placeholder="Enter the name *">
+                                        </p>
+                                        <p>
+                                            <input type="text" id="question_comapny" name="comapnyName"
+                                                placeholder="Company Name">
+                                        </p>
+                                        <p>
+                                            <input required id="question_email" type="email" name="email"
+                                                placeholder="email *">
+                                        </p>
+                                        <p>
+                                            <input type="number" id="question_mobile" name="customerNumber" required
+                                                placeholder="Mobile *">
+                                        </p>
+                                        <p>
+                                            <input required id="question_enquiry" type="text" name="enquiryFor"
+                                                placeholder="Enquiry For? *">
+                                        </p>
+                                        <button id="question-submit" class="octf-btn octf-btn-light">Submit</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="col-lg-5">
+                            <div>
+                                <div class="space-5"></div>
+                                <div class="contact-info box-style1">
+                                    <i class="flaticon-world-globe"></i>
+                                    <div class="info-text">
+                                        <h6>Our Address:</h6>
+                                        <p>S-214, Pandav Nagar
+                                            New Delhi – 110092</p>
+                                    </div>
+                                </div>
+                                <div class="contact-info box-style1">
+                                    <i class="flaticon-envelope"></i>
+                                    <div class="info-text">
+                                        <h6>Our Mailbox:</h6>
+                                        <p>support@rapporthr.in</p>
+                                    </div>
+                                </div>
+                                <div class="contact-info box-style1">
+                                    <i class="flaticon-phone-1"></i>
+                                    <div class="info-text">
+                                        <h6>Our Phone:</h6>
+                                        <p>+91 9599553911</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+        </div>
+        <%- include("partials/footer") %>
+
+
+        <!-- #site-footer -->
+    </div><!-- #page -->
+    <a id="back-to-top" href="#" class="show"><i class="flaticon-up-arrow"></i></a>
+    <!-- jQuery -->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/jquery.magnific-popup.min.js"></script>
+    <script src="/js/jquery.isotope.min.js"></script>
+    <script src="/js/owl.carousel.min.js"></script>
+    <script src="/js/easypiechart.min.js"></script>
+    <script src="/js/jquery.countdown.min.js"></script>
+    <script src="/js/scripts.js"></script>
+    <script src="/js/header-mobile.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- REVOLUTION JS FILES -->
+
+    <script src="plugins/revolution/revolution/js/jquery.themepunch.tools.min.js"></script>
+    <script src="plugins/revolution/revolution/js/jquery.themepunch.revolution.min.js"></script>
+
+    <!-- SLIDER REVOLUTION 5.0 EXTENSIONS  (Load Extensions only on Local File Systems !  The following part can be removed on Server for On Demand Loading) -->
+    <script src="plugins/revolution/revolution/js/extensions/revolution-plugin.js"></script>
+
+    <!-- REVOLUTION SLIDER SCRIPT FILES -->
+    <script src="/js/rev-script-2.js"></script>
+    <script src="/js/royal_preloader.min.js"></script>
+    <script>
+        window.jQuery = window.$ = jQuery;
+        (function ($) {
+            "use strict";
+            //Preloader
+            Royal_Preloader.config({
+                mode: 'logo',
+                logo: '/images/2d-pnd.png',
+                logo_size: [250, 75],
+                showProgress: false,
+                showPercentage: true,
+                text_colour: '#000000',
+                background: '#ffffff'
+            });
+        })(jQuery);
+    </script>
+
+    <!-- for the contact us -->
+      <script>
+        $("#question-submit").click(function (e) {
+            e.preventDefault();
+            let data = { name: $("#question_name").val(), comapnyName: $("#question_comapny").val(), email: $("#question_email").val(), customerNumber: $("#question_mobile").val(), enquiryFor: $("#question_enquiry").val() };
+            $.ajax({
+                type: "POST",
+                url: "/questionForm",
+                data: {data:JSON.stringify(data)} ,
+                success: function (data) {
+                    console.log(data)
+                    if (data === "Unsuccessfull, please fill all the fields!") {
+                        window.alert(data);
+                    } else {
+                        window.alert(data);
+                        $("#question_name").val("");
+                        $("#question_comapny").val("");
+                        $("#question_email").val("");
+                        $("#question_mobile").val("");
+                        $("#question_enquiry").val("")
+                    }
+
+                }
+            })
+        })
+
+    </script>
+</body>
+
+</html>

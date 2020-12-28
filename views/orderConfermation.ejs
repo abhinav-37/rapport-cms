@@ -156,7 +156,6 @@
                 </address>
             </div>
             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-4">
-
                 <p>
                     <em> <strong>Order Id:</strong> <%= response.id %></em>
                 </p>
@@ -249,15 +248,26 @@
         </div>
 
         <script>
-            var options = {
+           
+            let amount = Math.round(Number($("#amount_id").val()) / 100);
+            let totalAmount = Math.round(amount + (amount * 0.18));
+            let cgstAmount = Math.round(amount * 0.09)
+            let igstAmount =Math.round(amount * 0.18)
+            $("#Total-amount-delhi").append(totalAmount)
+            $("#Total-amount").append(totalAmount)
+            $("#id_cgst").append(cgstAmount);
+            $("#id_sgst").append(cgstAmount);
+            $("#id_igst").append(igstAmount);
+
+             var options = {
                 "key": "rzp_test_W6LG94sImodYti", // Enter the Key ID generated from the Dashboard
-                "amount": Number($("#amount_id").val()) * 0.18 + Number($("#amount_id").val()), // Amount is in currency subunits
+                "amount": totalAmount*100, // Amount is in currency subunits
                 "currency": "INR",
                 "name": "Rapport HR Sollutions",
                 "description": "Transaction",
                 "image": "https://example.com/your_logo",
                 "order_id": $("#payment_id").val(), //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-                "callback_url": "http://localhost:8000/customer/dashboard",
+                "callback_url": "/customer/dashboard",
                 "prefill": {
                     "name": $("#customer-name").val(),
                     "email": $("#customer-email").val(),
@@ -272,20 +282,10 @@
             };
             var rzp1 = new Razorpay(options);
             document.getElementById('rzp-button1').onclick = function (e) {
-                console.log("reached")
                 rzp1.open();
                 e.preventDefault()
 
             }
-            let amount = Number($("#amount_id").val()) / 100;
-            let totalAmount = Math.round(((amount + (amount * 0.18)) + Number.EPSILON) * 100) / 100
-            let cgstAmount = Math.round(((amount * 0.09) + Number.EPSILON) * 100) / 100
-            let igstAmount =Math.round(((amount * 0.18) + Number.EPSILON) * 100) / 100
-            $("#Total-amount-delhi").append(totalAmount)
-            $("#Total-amount").append(totalAmount)
-            $("#id_cgst").append(cgstAmount);
-            $("#id_sgst").append(cgstAmount);
-            $("#id_igst").append(igstAmount)
         </script>
 </body>
 

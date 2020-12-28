@@ -145,6 +145,15 @@ app.get("/", async (req, res) => {
     }
 });
 let newOrder = {};
+app.get("/refundPolicy", function (req, res) {
+    res.render("CompanyPolicies/refundPolicy");
+});
+app.get("/termsOfService", function (req, res) {
+    res.render("CompanyPolicies/termsOfService");
+});
+app.get("/privacyPolicy", function (req, res) {
+    res.render("CompanyPolicies/privacyPolicy");
+});
 app.get("/customer/dashboard", async function (req, res) {
     let auth = req.isAuthenticated();
     req.session.returnTo = req.originalUrl;
@@ -447,6 +456,37 @@ app.post("/emailSubs", async function (req, res) {
     });
     await newemailSubs.save();
     res.end("success");
+});
+app.get("/contactUs", async function (req, res) {
+    let passedMessage = req.query.message;
+    let allFavourate = await FavourateServices.find();
+    let [startAbusiness, licenses, labour, HR] = await serviceSort();
+    let latestFavourat = allFavourate[allFavourate.length - 1];
+    res.render("contactUs", {
+        passedMessage,
+        user: req.user,
+        latestFavourat,
+        startAbusiness,
+        licenses,
+        labour,
+        HR,
+    });
+});
+//custom payment function
+app.get("/customPay", async function (req, res) {
+    res.render("customPay");
+});
+app.post("/customPay", async function (req, res) {
+    const options = {
+        amount: Number(req.body.amount) * 100,
+        currency: "INR",
+        receipt: shortid.generate(), //any unique id
+    };
+    const response = await instance.orders.create(options);
+    res.end(JSON.stringify(response));
+});
+app.post("/customPaymentCallback", function (req, res) {
+    res.render("customPay", { passedMessage: "done" });
 });
 // ========================= Authentication start =================== //
 
