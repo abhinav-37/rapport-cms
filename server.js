@@ -365,7 +365,7 @@ app.get("/orderForm/:id/:type", async function (req, res) {
                 startAbusiness,
                 licenses,
                 labour,
-                HR,
+                HR, 
                 user: req.user,
                 pricing,
                 passedMessage,
@@ -379,7 +379,7 @@ app.get("/orderForm/:id/:type", async function (req, res) {
             res.redirect("/error");
         }
     } else {
-        res.redirect("/login/customer");
+        res.redirect("/register/customer");
     }
 });
 app.post("/orderForm", async function (req, res) {

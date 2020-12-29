@@ -92,38 +92,31 @@
         </div>
         <div class="container-fluid">
             <div class="row">
-                <div class="col-lg-2 schedule" style="padding-left:40px">
-                    <h6 style="display: inline;"><%= wages.schedule %> </h6>
-                </div>
-                <div class="col-lg-8">
+                <div class="col-lg-12">
                     <table class="table ">
                         <thead style="background: #5f5f5f;color:white">
                             <tr class="table-head">
-
+                                <th><%= wages.schedule %></th>
                                 <th scope="col">Category of workmen/Employees</th>
                                 <th scope="col">Minimum rates of wages in Rupees <span class="rates-wages"><span>Per
                                             Month</span><span>Per
                                             Day</span></span></th>
-
+                                <th>Download latest Govt. Notification here <a target="_blank" href="/uploads/<%-wages.filename%>"
+                                    download="/uploads/<%-wages.filename%>"><i class="fas fa-file-pdf"></i></a></th>
                             </tr>
                         </thead>
                         <tbody>
                             <% for(let i=0; i<wages.category.length; i++){ %>
                             <tr>
-
+                                <td></td>
                                 <td> <%= wages.category[i] %> </td>
                                 <td class="rates-wages"><span><%= wages.minimumRates.ratesPerMonth[i] %> </span>
                                     <span><%= wages.minimumRates.ratesPerDay[i] %> </span></td>
-
+                                <td></td>
                             </tr>
                             <% } %>
                         </tbody>
                     </table>
-                </div>
-                <div class="col-lg-2 filename">
-                    <h6>Download latest Govt. Notification here <a target="_blank" href="/uploads/<%-wages.filename%>"
-                            download="/uploads/<%-wages.filename%>"><i class="fas fa-file-pdf"></i></a>
-                    </h6>
                 </div>
             </div>
         </div>

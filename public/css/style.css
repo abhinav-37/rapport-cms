@@ -994,11 +994,11 @@ a {
     -moz-transition: all 0.3s linear;
     -o-transition: all 0.3s linear;
     -ms-transition: all 0.3s linear;
-    color: #7141b1;
+    color: #41b19c;
     text-decoration: none;
 }
 a:visited {
-    color: #7141b1;
+    color: #418db1;
 }
 a:hover,
 a:focus,
