@@ -54,7 +54,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 //mongo db
 const mongoURI =
-  "mongodb+srv://admin-Abhinav:admin-Abhinav@cluster0-fz1t0.mongodb.net/rapport";
+    "Enter mongodb uri";
 mongoose
   .connect(mongoURI, {
     useNewUrlParser: true,
